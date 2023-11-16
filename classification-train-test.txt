@@ -1,0 +1,20 @@
+____________________CLASSIFICATION (TRAIN TEST)____________________
+____________________NUM DEMONSTRATIONS = 10____________________
+sentence -- Accuracy: 0.84
+subordinate-sentence -- Accuracy: 0.81
+passive-sentence -- Accuracy: 0.82
+it -- Accuracy: 0.76
+it-r-1-null_subject -- Accuracy: 0.71
+it-r-2-passive -- Accuracy: 0.70
+it-r-3-subordinate -- Accuracy: 0.68
+it-u-1-negation -- Accuracy: 0.67
+it-u-2-invert -- Accuracy: 0.53
+____________________CLASSIFICATION (TRAIN TEST)____________________
+____________________NUM DEMONSTRATIONS = 10____________________
+it-u-3-gender -- Accuracy: 0.61
+jp-r-1-sov -- Accuracy: 0.62
+jp-r-2-passive -- Accuracy: 0.62
+jp-r-3-subordinate -- Accuracy: 0.60
+jp-u-1-negation -- Accuracy: 0.61
+jp-u-2-invert -- Accuracy: 0.60
+jp-u-3-past-tense -- Accuracy: 0.60
