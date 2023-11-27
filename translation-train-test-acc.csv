@@ -1,0 +1,17 @@
+,accuracy,type
+0,0.70,sentence
+0,0.36,subordinate-sentence
+0,0.49,passive-sentence
+0,0.45,it
+0,0.46,it-r-1-null_subject
+0,0.43,it-r-2-passive
+0,0.37,it-r-3-subordinate
+0,0.36,it-u-1-negation
+0,0.35,it-u-2-invert
+0,0.35,it-u-3-gender
+0,0.37,jp-r-1-sov
+0,0.34,jp-r-2-passive
+0,0.32,jp-r-3-subordinate
+0,0.34,jp-u-1-negation
+0,0.36,jp-u-2-invert
+0,0.33,jp-u-3-past-tense
