@@ -1,0 +1,12 @@
+____________________CLASSIFICATION (TRAIN TRAIN)____________________
+____________________NUM DEMONSTRATIONS = 10____________________
+____________________CLASSIFICATION (TRAIN TRAIN)____________________
+____________________NUM DEMONSTRATIONS = 10____________________
+____________________CLASSIFICATION (TRAIN TRAIN)____________________
+____________________NUM DEMONSTRATIONS = 10____________________
+____________________CLASSIFICATION (TRAIN TRAIN)____________________
+____________________NUM DEMONSTRATIONS = 10____________________
+____________________CLASSIFICATION (TRAIN TRAIN)____________________
+____________________NUM DEMONSTRATIONS = 10____________________
+____________________CLASSIFICATION (TRAIN TRAIN)____________________
+____________________NUM DEMONSTRATIONS = 10____________________
