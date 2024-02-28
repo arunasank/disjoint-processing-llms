@@ -1,0 +1,17 @@
+,accuracy,trainType,testType
+0,0.77,jp-r-3-subordinate,sentence
+0,0.78,jp-r-3-subordinate,subordinate-sentence
+0,0.83,jp-r-3-subordinate,passive-sentence
+0,0.53,jp-r-3-subordinate,it
+0,0.47,jp-r-3-subordinate,it-r-1-null_subject
+0,0.63,jp-r-3-subordinate,it-r-2-passive
+0,0.57,jp-r-3-subordinate,it-r-3-subordinate
+0,0.56,jp-r-3-subordinate,it-u-1-negation
+0,0.53,jp-r-3-subordinate,it-u-2-invert
+0,0.57,jp-r-3-subordinate,it-u-3-gender
+0,0.56,jp-r-3-subordinate,jp-r-1-sov
+0,0.55,jp-r-3-subordinate,jp-r-2-passive
+0,0.66,jp-r-3-subordinate,jp-r-3-subordinate
+0,0.51,jp-r-3-subordinate,jp-u-1-negation
+0,0.49,jp-r-3-subordinate,jp-u-2-invert
+0,0.58,jp-r-3-subordinate,jp-u-3-past-tense
