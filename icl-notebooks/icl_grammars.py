@@ -24,8 +24,8 @@ nf4_config = BitsAndBytesConfig(
 MODEL_PATH = '/home/gridsan/arunas/broca/llama/llama-model'
 TOKENIZER_PATH = '/home/gridsan/arunas/broca/llama/llama-tokenizer'
 
-# MODEL_PATH = '/home/gridsan/arunas/models/mistralai/Mistral-7B-v0.1/'
-# TOKENIZER_PATH = '/home/gridsan/arunas/tokenizers/mistralai/Mistral-7B-v0.1/'
+MODEL_PATH = '/home/gridsan/arunas/models/mistralai/Mistral-7B-v0.1/'
+TOKENIZER_PATH = '/home/gridsan/arunas/tokenizers/mistralai/Mistral-7B-v0.1/'
 
 model_path = f"{MODEL_PATH}"
 tokenizer_path = f'{TOKENIZER_PATH}'
@@ -35,24 +35,25 @@ tokenizer = AutoTokenizer.from_pretrained(
 )
 tokenizer.pad_token = tokenizer.eos_token
 model = AutoModelForCausalLM.from_pretrained(f'{model_path}', device_map="auto", quantization_config=nf4_config)
-# model = AutoModelForCausalLM.from_pretrained(f'{model_path}', device_map="auto", load_in_4bit=True)
+
 print('-------------------------Model loaded------------------------------')
 
 device_map = infer_auto_device_map(model)
 print('-------------------------Device map--------------------------------')
 
-print(device_map)
+# print(device_map)
 
 print('-------------------------Load dataset-------------------------------')
-df = pd.read_csv('ngs.csv')
-df = df[ ['sentence', 'subordinate-sentence', 'passive-sentence', 'it', 'it-r-1-null_subject', 'it-r-2-passive', 'it-r-3-subordinate', 'it-u-1-negation', 'it-u-2-invert', 'it-u-3-gender', 'jp-r-1-sov', 'jp-r-2-passive', 'jp-r-3-subordinate', 'jp-u-1-negation',    'jp-u-2-invert', 'jp-u-3-past-tense', 'ng-sentence','ng-subordinate-sentence', 'ng-passive-sentence', 'ng-it','ng-it-r-1-null_subject', 'ng-it-r-2-passive', 'ng-it-r-3-subordinate','ng-it-u-1-negation', 'ng-it-u-2-invert', 'ng-it-u-3-gender','ng-jp-r-1-sov', 'ng-jp-r-2-passive', 'ng-jp-r-3-subordinate','ng-jp-u-1-negation', 'ng-jp-u-2-invert', 'ng-jp-u-3-past-tense']]
+df = pd.read_csv('/home/gridsan/arunas/broca/ngs.csv')
+allCols = ['sentence', 'subordinate-sentence', 'passive-sentence', 'it', 'it-r-1-null_subject', 'it-r-2-passive', 'it-r-3-subordinate', 'it-u-1-negation', 'it-u-2-invert', 'it-u-3-gender', 'jp-r-1-sov', 'jp-r-2-passive', 'jp-r-3-subordinate', 'jp-u-1-negation',    'jp-u-2-invert', 'jp-u-3-past-tense', 'ng-sentence','ng-subordinate-sentence', 'ng-passive-sentence', 'ng-it','ng-it-r-1-null_subject', 'ng-it-r-2-passive', 'ng-it-r-3-subordinate','ng-it-u-1-negation', 'ng-it-u-2-invert', 'ng-it-u-3-gender','ng-jp-r-1-sov', 'ng-jp-r-2-passive', 'ng-jp-r-3-subordinate','ng-jp-u-1-negation', 'ng-jp-u-2-invert', 'ng-jp-u-3-past-tense'] 
+df = df[ allCols ]
 gCols = [col for col in df.columns if not 'ng' in col]
 print(f"-----------------------Column: {gCols[COUNT:COUNT+1]}----------------------")
 def parse_answer(text):
     answer = text.split("A:")[-1].strip()
     return answer
 
-def construct_prompt(train_dataset, num_demonstrations):
+def construct_prompt(train_dataset, col, num_demonstrations):
     assert num_demonstrations > 0
     prompt = ''
     train_examples = train_dataset.shuffle().select(range(num_demonstrations))
@@ -128,15 +129,12 @@ def get_aligned_words_measures(text: str,
 
     return data
 
-preds = []
-golds = []
-
 f = pd.DataFrame(columns=["type", "prompt", "q", "prediction", "gold", "surprisal", "int-grad"])
 f['type'] = 'test'
-g = pd.DataFrame(columns=['accuracy', 'type'])
+g = pd.DataFrame(columns=['accuracy', 'trainType', 'testType'])
 
 datasets = {}
-for col in gCols[COUNT:COUNT+1]:
+for col in gCols:
     datasets[col] = Dataset.from_pandas(pd.DataFrame(df[[col, 'ng-' + col]].copy())).train_test_split(test_size=0.2)
 
 def get_prompt_from_text(filename):
@@ -153,62 +151,56 @@ def get_prompt_from_text(filename):
 
 master_prompt = 'We will provide you a set of sentences which follow or violate a grammatical structure. \n The sentences may use subjects and objects from the following nouns - author, banana, biscuit, book, bottle, box, boy, bulb, cap, cat, chalk, chapter, cucumber, cup, dog, fish, fruit, girl, Gomu, Harry, hill, John, Leela, man, Maria, meal, mountain, mouse, newspaper, pear, pizza, poem, poet, rock, roof, Sheela, speaker, staircase, story, teacher, Tom, toy, tree, woman, writer.\nThe sentences may use any of the following verbs - brings, carries, claims, climbs, eats, holds, notices, reads, says, sees, states, takes.\n Each noun in a sentence may sometimes use a different determiner than those found in English. Here is a reference of determiners that can be used by nouns: "pear": "kar", "author": "kon", "authors": "kons", "banana": "kar", "biscuit": "kon", "book": "kon", "bottle": "kar", "box": "kar", "boy": "kon", "boys": "kons", "bulb": "kar", "cabinet": "kar", "cap": "kon", "cat": "kon", "cats": "kons", "chapter": "kon", "chalk": "kon", "cup": "kar", "cucumber": "kon", "dog": "kon", "dogs": "kons", "fish": "kon", "fruit": "kar", "girl": "kar", "girls": "kars", "hill": "kar", "man": "kon", "men": "kons", "meal": "kon", "mountain": "kar", "mouse": "kon", "newspaper": "kon", "pizza": "kar", "poet": "kon", "poets": "kons", "poem": "kar", "rock": "kon", "roof": "kon", "speaker": "kon", "speakers": "kons", "staircase": "kar", "story": "kar", "teacher": "kon", "teachers": "kons", "toy": "kon", "tree": "kar", "woman": "kar", "women": "kars", "writer": "kon", "writers": "kons". Each verb in a sentence may sometimes use the past tense of the verb if it is more appropriate. Here are a set of verbs and their past tenses - "climbs" : "climbed", "reads": "read", "carries": "carried", "eats": "ate", "holds": "held", "takes" :"took", "brings": "brought", "reads": "read", "climb" : "climbed", "read": "read", "carry": "carried", "eat": "ate", "hold": "held", "take" :"took", "bring": "brought", "read": "read"\n The sentences may sometimes use the infinitive forms of a verb. Here are a set of verbs and their infinitives - "climbs" : "to climb", "reads": "to read", "carries": "to carry", "eats": "to eat", "holds": "to hold", "takes" : "to take", "brings": "to bring", "reads": "to read", "climb" : "to climb", "read": "to read", "carry": "to carry", "eat": "to eat", "hold": "to hold", "take" : "to take", "bring": "to bring", "read": "to read". \n The sentences may sometimes use the plural form of a noun. Here are a set of nouns and their plurals - "fish": "fish", "mouse": "mice", "bottle": "bottles", "newspaper": "newspapers", "chalk": "chalks", "box": "boxes", "cap": "caps", "bulb": "bulbs", "cup": "cups", "toy": "toys", "staircase": "staircases", "rock": "rocks", "hill": "hills", "mountain": "mountains", "roof": "roofs", "tree": "trees", "biscuit": "biscuits", "banana": "bananas", "pear": "pears", "meal": "meals", "fruit": "fruits", "cucumber": "cucumbers", "pizza": "pizzas", "book": "books", "poem": "poems", "story": "stories", "chapter": "chapters". \n The sentences may sometimes use the passive form of a verb. Here are a set of verbs and their passive forms - "carries": "carried", "carry": "carried", "holds": "held", "hold": "held", "takes": "taken", "take": "taken", "brings": "brought", "bring": "brought", "climbs": "climbed", "climb": "climbed", "eats": "eaten", "eat": "eaten", "reads": "read", "read": "read"\n\n'
 print('Training.... ')
-for NUM_DEMONSTRATIONS in range(10, 15, 5):
-    for col in gCols[COUNT:COUNT+1]:
-        train_dataset = datasets[col]['train']
-        test_dataset = datasets[col]['test']
-        prompt = ''
-        printAnswer = True
-        prompts, golds = get_prompt_from_text(f'classification-train-test-{str(gCols[COUNT])}-prompts.txt')
-        # print(prompts[:5], prompts[-5:])
-        # print(prompts, golds)
-        # for test_sentence in train_dataset:
-        for p_idx, prompt in enumerate(prompts):
-            try:
-                # testBadOrGood = random.choice(['ng-', ''])
-                # prompt = construct_prompt(train_dataset, NUM_DEMONSTRATIONS)
-                
-                # fPrompt = prompt
-                
-                # # Append test example
-                # prompt += "Q: Is this sentence grammatical? Yes or No: "
-                # prompt += test_sentence[testBadOrGood + col]
-                # prompt += "\nA:"
-                
-                # fQ = "Q: Is this sentence grammatical? Yes or No: " + test_sentence[testBadOrGood + col] + "\nA:"
-                
-                # if testBadOrGood == 'ng-':
-                #     golds.append("No")
-                #     fGold = 'No'
-                # else:
-                #     golds.append("Yes")
-                #     fGold = 'Yes'
-                
-                # Get answer from model
-                model_inputs = tokenizer([master_prompt + prompt], return_tensors="pt").to('cuda')
-                # answer = model.generate(prompt_tok,
-                #                     top_p=0.9, temperature=0.1,
-                #                     max_new_tokens=2)
-                answer = model.generate(**model_inputs, pad_token_id=tokenizer.eos_token_id, max_new_tokens=2, top_p=0.9, temperature=0.1, do_sample=True)
-                answer = tokenizer.batch_decode(answer)[0]
-                if printAnswer:
-                    print(answer)
-                    printAnswer = False
-                preds.append(parse_answer(answer))
-                fPrediction = parse_answer(answer)
-                # fSurprisal = get_aligned_words_measures(test_sentence[testBadOrGood + col] + " " + parse_answer(answer), "surp", model, tokenizer)
-                fSurprisal = get_aligned_words_measures(f'Q: {prompt.split("Q: ")[-1]}' + " " + parse_answer(answer), "surp", model, tokenizer)
-                f = pd.concat([f, pd.DataFrame([{'type': col, 'prompt': prompt.replace(f'Q: {prompt.split("Q: ")[-1]}', ''), 'q' : f'Q: {prompt.split("Q: ")[-1]}', 'prediction': fPrediction, 'gold': golds[p_idx], 'surprisal': fSurprisal, 'int-grad': 0}])]).reset_index(drop=True)
-                # Evaluate
-                # print(" PREDS ####### ", preds, golds)
-                # print(" PREDS ####### ", len(preds), len(golds))
-            except:
-                print(f"###### Exxcept '{prompt}'")
-        # print(" PREDS ####### ", len(preds), len(golds))
-        accuracy = compute_accuracy(preds, golds)
-        print(f"{col} -- Accuracy: {accuracy:.2f}\n")
-        g = pd.concat([g, pd.DataFrame([{ 'type' : col, 'accuracy': f"{accuracy:.2f}"}])])
+NUM_DEMONSTRATIONS = 10
+mainCol = gCols[COUNT]
 
+for col in gCols:
+    train_dataset = datasets[mainCol]['train']
+    test_dataset = datasets[col]['test']
+    printAnswer = True
+    prompts, _ = get_prompt_from_text(f'/home/gridsan/arunas/broca/mistral/mistral-prompt-outputs/classification-train-test-{mainCol}-prompts.txt')
+    preds = []
+    golds = []
+    for p_idx, prompt in enumerate(prompts):
+        try:
+            testBadOrGood = random.choice(['ng-', ''])
+            prompt = construct_prompt(train_dataset, mainCol, NUM_DEMONSTRATIONS)
+            
+            fPrompt = prompt
+            # Append test example
+            prompt += "Q: Is this sentence grammatical? Yes or No: "
+            test_sentence = test_dataset.shuffle().select([1])
+            prompt += test_sentence[0][testBadOrGood + col]
+            prompt += "\nA:"
 
-f.to_csv(f"llama-classification-train-test-det-{str(gCols[COUNT])}-new.csv")
-g.to_csv(f'llama-classification-train-test-acc-{str(gCols[COUNT])}-new.csv')
+            if testBadOrGood == 'ng-':
+                golds.append("No")
+                fGold = 'No'
+            else:
+                golds.append("Yes")
+                fGold = 'Yes'
+            
+            # Get answer from model
+            model_inputs = tokenizer([master_prompt + prompt], return_tensors="pt").to('cuda')
+            # answer = model.generate(prompt_tok,
+            #                     top_p=0.9, temperature=0.1,
+            #                     max_new_tokens=2)
+            answer = model.generate(**model_inputs, pad_token_id=tokenizer.eos_token_id, max_new_tokens=2, top_p=0.9, temperature=0.1, do_sample=True)
+            answer = tokenizer.batch_decode(answer)[0]
+            if printAnswer:
+                print(answer)
+                printAnswer = False
+            preds.append(parse_answer(answer))
+            fPrediction = parse_answer(answer)
+            # fSurprisal = get_aligned_words_measures(test_sentence[testBadOrGood + col] + " " + parse_answer(answer), "surp", model, tokenizer)
+            fSurprisal = get_aligned_words_measures(f'Q: {prompt.split("Q: ")[-1]}' + " " + parse_answer(answer), "surp", model, tokenizer)
+            f = pd.concat([f, pd.DataFrame([{'type': col, 'prompt': prompt.replace(f'Q: {prompt.split("Q: ")[-1]}', ''), 'q' : f'Q: {prompt.split("Q: ")[-1]}', 'prediction': fPrediction, 'gold': golds[p_idx], 'surprisal': fSurprisal, 'int-grad': 0}])]).reset_index(drop=True)
+        except Exception as e:
+            print(f"###### Exxcept '{prompt}' {e}")
+            
+    accuracy = compute_accuracy(preds, golds)
+    print(f"{mainCol} {col} -- Accuracy: {accuracy:.2f}\n")
+    g = pd.concat([g, pd.DataFrame([{ 'trainType' : mainCol, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
+    f.to_csv(f"/home/gridsan/arunas/broca/mistral/confusion/mistral-classification-train-test-det-{mainCol}-{col}-new.csv")
+
+g.to_csv(f'/home/gridsan/arunas/broca/mistral/confusion/mistral-classification-train-test-acc-{mainCol}-new.csv')
