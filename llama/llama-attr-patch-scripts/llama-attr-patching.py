@@ -6,35 +6,35 @@ import numpy as np
 import pickle
 import sys
 
+og = pd.read_csv('/home/gridsan/arunas/broca/ngs.csv')
+print(og.columns)
+
 device='cuda:0'
 model = LanguageModel("/home/gridsan/arunas/models/mistralai/Mistral-7B-v0.1/",  load_in_4bit=True, dispatch=True, device_map=device) # Load the model
-
-og = pd.read_csv('/home/gridsan/arunas/broca/ngs.csv')
-og.columns
 
 def get_prompt_from_df(filename):
     data = list(pd.read_csv(filename)['prompt'])
     data = [sentence.strip() for sentence in data]
     data = [sentence for sentence in data if not sentence == '']
     data = [sentence.replace('</s>', '\n') for sentence in data]
-    golds = [sentence.strip().split("\n")[-1].strip() for sentence in data]
+    golds = [sentence.strip().split("\n")[-1].strip().split('A:')[-1].strip() for sentence in data]
     data = [sentence[: -len(golds[idx])].strip() for idx, sentence in enumerate(data)]
-    data = [sentence[: -len(sentence.strip().split(" ")[-1])].strip() for sentence in data]
-    print(len(data), len(golds), data[0], golds[0])
     return data, golds
 
 types = ['it', 'jp-r-2-passive', 'it-r-1-null_subject', 'jp-r-3-subordinate', 'it-r-2-passive', 'jp-u-1-negation', 'it-r-3-subordinate', 'jp-u-2-invert', 'it-u-1-negation', 'jp-u-3-past-tense', 'it-u-2-invert', 'passive-sentence', 'it-u-3-gender', 'sentence', 'jp-r-1-sov', 'subordinate-sentence']
-sType=types[sys.argv[1]]
+sType=types[int(sys.argv[1])]
 
 mlp_effects_cache = torch.zeros((model.config.num_hidden_layers, model.config.hidden_size)).to("cuda")
 attn_effects_cache = torch.zeros((model.config.num_hidden_layers, model.config.hidden_size)).to("cuda")
 
+sys.argv = []
 def attrPatching(fullPrompt, gold):
     attn_layer_cache_prompt = {}
     mlp_layer_cache_prompt = {}
 
     attn_layer_cache_patch = {}
     mlp_layer_cache_patch = {}
+    assert (gold == 'Yes' or gold == 'No')
     if (gold == 'Yes'):
         predictionExample = fullPrompt[fullPrompt[:-2].rfind(':')+1:-2].strip()
         patch = og[og[sType] == predictionExample][f"ng-{sType}"].iloc[0]
@@ -82,7 +82,10 @@ def attrPatching(fullPrompt, gold):
         attn_effects_cache[layer] += attn_effects[0]
 
 prompts, golds = get_prompt_from_df(f'/home/gridsan/arunas/broca/llama/llama-prompt-outputs/llama-classification-train-test-det-{sType}-new.csv')
+
+count  = 0
 for prompt,gold in tqdm(zip(prompts, golds)):
+    count += 1
     attrPatching(prompt, gold)
 
 mlp_effects_cache /= len(prompts)
