@@ -9,8 +9,7 @@ import sys
 og = pd.read_csv('/home/gridsan/arunas/broca/ngs.csv')
 print(og.columns)
 
-device='cuda:0'
-model = LanguageModel("/home/gridsan/arunas/models/mistralai/Mistral-7B-v0.1/",  load_in_4bit=True, dispatch=True, device_map=device) # Load the model
+model = LanguageModel("meta-llama/Llama-2-70b-hf",  load_in_4bit=True, dispatch=True, device_map='auto') # Load the model
 
 def get_prompt_from_df(filename):
     data = list(pd.read_csv(filename)['prompt'])
