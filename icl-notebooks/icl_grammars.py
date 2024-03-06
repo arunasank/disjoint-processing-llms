@@ -21,7 +21,7 @@ nf4_config = BitsAndBytesConfig(
     bnb_4bit_compute_dtype=torch.bfloat16
 )
 
-PREFIX = "/share/u/arunas"
+PREFIX = "/home/gridsan/arunas"
 
 # MODEL_PATH = f'{PREFIX}/broca/llama/llama-model'
 # TOKENIZER_PATH = f'{PREFIX}/broca/llama/llama-tokenizer'
@@ -46,8 +46,8 @@ print('-------------------------Device map--------------------------------')
 # print(device_map)
 
 print('-------------------------Load dataset-------------------------------')
-df = pd.read_csv(f'{PREFIX}/broca/ngs.csv')
-allCols = df.ccolumns 
+df = pd.read_csv(f'{PREFIX}/broca/data-gen/ngs.csv')
+allCols = df.columns 
 df = df[ allCols ]
 gCols = [col for col in df.columns if not 'ng' in col]
 print(f"-----------------------Column: {gCols[COUNT:COUNT+1]}----------------------")
@@ -137,7 +137,7 @@ g = pd.DataFrame(columns=['accuracy', 'trainType', 'testType'])
 
 datasets = {}
 for col in gCols:
-    datasets[col] = Dataset.from_pandas(pd.DataFrame(df[[col, 'ng-' + col]].copy())).train_test_split(test_size=0.2)
+    datasets[col] = Dataset.from_pandas(pd.DataFrame(df[[col, 'ng-' + col]].copy())).train_test_split(test_size=0.5)
 
 def get_prompt_from_text(filename):
     with open(filename, 'r') as file:
@@ -160,10 +160,9 @@ for col in gCols:
     train_dataset = datasets[mainCol]['train']
     test_dataset = datasets[col]['test']
     printAnswer = True
-    prompts, _ = get_prompt_from_text(f'{PREFIX}/broca/mistral/mistral-prompt-outputs/classification-train-test-{mainCol}-prompts.txt')
     preds = []
     golds = []
-    for p_idx, prompt in enumerate(prompts):
+    for test_sentence in test_dataset:
         try:
             testBadOrGood = random.choice(['ng-', ''])
             prompt = construct_prompt(train_dataset, mainCol, NUM_DEMONSTRATIONS)
@@ -184,9 +183,6 @@ for col in gCols:
             
             # Get answer from model
             model_inputs = tokenizer([master_prompt + prompt], return_tensors="pt").to('cuda')
-            # answer = model.generate(prompt_tok,
-            #                     top_p=0.9, temperature=0.1,
-            #                     max_new_tokens=2)
             answer = model.generate(**model_inputs, pad_token_id=tokenizer.eos_token_id, max_new_tokens=2, top_p=0.9, temperature=0.1, do_sample=True)
             answer = tokenizer.batch_decode(answer)[0]
             if printAnswer:
@@ -196,13 +192,13 @@ for col in gCols:
             fPrediction = parse_answer(answer)
             # fSurprisal = get_aligned_words_measures(test_sentence[testBadOrGood + col] + " " + parse_answer(answer), "surp", model, tokenizer)
             fSurprisal = get_aligned_words_measures(f'Q: {prompt.split("Q: ")[-1]}' + " " + parse_answer(answer), "surp", model, tokenizer)
-            f = pd.concat([f, pd.DataFrame([{'type': col, 'prompt': prompt.replace(f'Q: {prompt.split("Q: ")[-1]}', ''), 'q' : f'Q: {prompt.split("Q: ")[-1]}', 'prediction': fPrediction, 'gold': golds[p_idx], 'surprisal': fSurprisal, 'int-grad': 0}])]).reset_index(drop=True)
+            f = pd.concat([f, pd.DataFrame([{'type': col, 'prompt': prompt.replace(f'Q: {prompt.split("Q: ")[-1]}', ''), 'q' : f'Q: {prompt.split("Q: ")[-1]}', 'prediction': fPrediction, 'gold': fGold, 'surprisal': fSurprisal, 'int-grad': 0}])]).reset_index(drop=True)
         except Exception as e:
             print(f"###### Exxcept '{prompt}' {e}")
             
     accuracy = compute_accuracy(preds, golds)
     print(f"{mainCol} {col} -- Accuracy: {accuracy:.2f}\n")
     g = pd.concat([g, pd.DataFrame([{ 'trainType' : mainCol, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
-    f.to_csv(f"{PREFIX}broca/mistral/confusion/mistral-classification-train-test-det-{mainCol}-{col}-new.csv")
+    f.to_csv(f"{PREFIX}/broca/mistral/experiments/mistral-classification-train-test-det-{mainCol}-{col}-new.csv")
 
-g.to_csv(f'{PREFIX}/broca/mistral/confusion/mistral-classification-train-test-acc-{mainCol}-new.csv')
+g.to_csv(f'{PREFIX}/broca/mistral/experiments/mistral-classification-train-test-acc-{mainCol}-new.csv')
