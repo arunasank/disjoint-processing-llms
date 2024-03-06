@@ -21,11 +21,13 @@ nf4_config = BitsAndBytesConfig(
     bnb_4bit_compute_dtype=torch.bfloat16
 )
 
-MODEL_PATH = '/home/gridsan/arunas/broca/llama/llama-model'
-TOKENIZER_PATH = '/home/gridsan/arunas/broca/llama/llama-tokenizer'
+PREFIX = "/share/u/arunas"
 
-MODEL_PATH = '/home/gridsan/arunas/models/mistralai/Mistral-7B-v0.1/'
-TOKENIZER_PATH = '/home/gridsan/arunas/tokenizers/mistralai/Mistral-7B-v0.1/'
+# MODEL_PATH = f'{PREFIX}/broca/llama/llama-model'
+# TOKENIZER_PATH = f'{PREFIX}/broca/llama/llama-tokenizer'
+
+MODEL_PATH = f'{PREFIX}/models/mistralai/Mistral-7B-v0.1/'
+TOKENIZER_PATH = f'{PREFIX}/tokenizers/mistralai/Mistral-7B-v0.1/'
 
 model_path = f"{MODEL_PATH}"
 tokenizer_path = f'{TOKENIZER_PATH}'
@@ -44,8 +46,8 @@ print('-------------------------Device map--------------------------------')
 # print(device_map)
 
 print('-------------------------Load dataset-------------------------------')
-df = pd.read_csv('/home/gridsan/arunas/broca/ngs.csv')
-allCols = ['sentence', 'subordinate-sentence', 'passive-sentence', 'it', 'it-r-1-null_subject', 'it-r-2-passive', 'it-r-3-subordinate', 'it-u-1-negation', 'it-u-2-invert', 'it-u-3-gender', 'jp-r-1-sov', 'jp-r-2-passive', 'jp-r-3-subordinate', 'jp-u-1-negation',    'jp-u-2-invert', 'jp-u-3-past-tense', 'ng-sentence','ng-subordinate-sentence', 'ng-passive-sentence', 'ng-it','ng-it-r-1-null_subject', 'ng-it-r-2-passive', 'ng-it-r-3-subordinate','ng-it-u-1-negation', 'ng-it-u-2-invert', 'ng-it-u-3-gender','ng-jp-r-1-sov', 'ng-jp-r-2-passive', 'ng-jp-r-3-subordinate','ng-jp-u-1-negation', 'ng-jp-u-2-invert', 'ng-jp-u-3-past-tense'] 
+df = pd.read_csv(f'{PREFIX}/broca/ngs.csv')
+allCols = df.ccolumns 
 df = df[ allCols ]
 gCols = [col for col in df.columns if not 'ng' in col]
 print(f"-----------------------Column: {gCols[COUNT:COUNT+1]}----------------------")
@@ -158,7 +160,7 @@ for col in gCols:
     train_dataset = datasets[mainCol]['train']
     test_dataset = datasets[col]['test']
     printAnswer = True
-    prompts, _ = get_prompt_from_text(f'/home/gridsan/arunas/broca/mistral/mistral-prompt-outputs/classification-train-test-{mainCol}-prompts.txt')
+    prompts, _ = get_prompt_from_text(f'{PREFIX}/broca/mistral/mistral-prompt-outputs/classification-train-test-{mainCol}-prompts.txt')
     preds = []
     golds = []
     for p_idx, prompt in enumerate(prompts):
@@ -201,6 +203,6 @@ for col in gCols:
     accuracy = compute_accuracy(preds, golds)
     print(f"{mainCol} {col} -- Accuracy: {accuracy:.2f}\n")
     g = pd.concat([g, pd.DataFrame([{ 'trainType' : mainCol, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
-    f.to_csv(f"/home/gridsan/arunas/broca/mistral/confusion/mistral-classification-train-test-det-{mainCol}-{col}-new.csv")
+    f.to_csv(f"{PREFIX}broca/mistral/confusion/mistral-classification-train-test-det-{mainCol}-{col}-new.csv")
 
-g.to_csv(f'/home/gridsan/arunas/broca/mistral/confusion/mistral-classification-train-test-acc-{mainCol}-new.csv')
+g.to_csv(f'{PREFIX}/broca/mistral/confusion/mistral-classification-train-test-acc-{mainCol}-new.csv')
