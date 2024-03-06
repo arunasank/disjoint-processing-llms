@@ -542,4 +542,4 @@ gCols = [col for col in df.columns if not 'ng' in col]
 ngCols = [col for col in df.columns if 'ng' in col]
 
 
-df.to_csv('ngs.csv')
+df.to_csv('ngs.csv', index=False)
