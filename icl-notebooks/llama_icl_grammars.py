@@ -18,14 +18,14 @@ os.environ['HF_TOKEN'] = "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"
 PREFIX = '/share/u/arunas'
 
 nf4_config = BitsAndBytesConfig(
-            load_in_4bit=True,
-                bnb_4bit_quant_type="nf4",
-                    bnb_4bit_compute_dtype=torch.bfloat16
-                    )
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.bfloat16
+)
 
-config = AutoConfig.from_pretrained("meta-llama/Llama-2-70b-hf")
+config = AutoConfig.from_pretrained("meta-llama/Llama-2-70b-hf", cache_dir='/mnt/align4_drive/arunas/llama-tensors/')
 tokenizer = AutoTokenizer.from_pretrained(
-           "meta-llama/Llama-2-70b-hf", config=config, device_map="auto", padding_side="left"
+           "meta-llama/Llama-2-70b-hf", config=config, cache_dir='/mnt/align4_drive/arunas/llama-tensors/', device_map="auto", padding_side="left"
            )
 
 tokenizer.pad_token = tokenizer.eos_token
