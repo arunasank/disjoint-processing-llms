@@ -1,5 +1,6 @@
 from nnsight import LanguageModel
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, AutoConfig
+import bitsandbytes
 import torch
 import pandas as pd
 from tqdm import tqdm
@@ -14,7 +15,21 @@ PREFIX = '/mnt/align4_drive/arunas'
 og = pd.read_csv(f'{PREFIX}/broca/data-gen/ngs.csv')
 print(og.columns)
 
-model = LanguageModel("meta-llama/Llama-2-70b-hf", cache_dir='/mnt/align4_drive/arunas/llama-tensors/', load_in_4bit=True, dispatch=True, device_map='auto') # Load the model
+nf4_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.bfloat16
+)
+
+config = AutoConfig.from_pretrained("meta-llama/Llama-2-70b-hf", cache_dir='/mnt/align4_drive/arunas/llama-tensors/')
+tokenizer = AutoTokenizer.from_pretrained(
+           "meta-llama/Llama-2-70b-hf", config=config, device_map="auto", padding_side="left", cache_dir='/mnt/align4_drive/arunas/llama-tensors/'
+           )
+
+tokenizer.pad_token = tokenizer.eos_token
+
+model = LanguageModel("meta-llama/Llama-2-70b-hf",  quantization_config=nf4_config, tokenizer=tokenizer, device_map='auto', cache_dir='/mnt/align4_drive/arunas/llama-tensors/') # Load the model
+
 
 def get_prompt_from_df(filename):
     data = list(pd.read_csv(filename)['prompt'])
