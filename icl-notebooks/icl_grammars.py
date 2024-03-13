@@ -11,22 +11,23 @@ import random
 import pandas as pd
 import os
 
-os.environ['HF_TOKEN'] = "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"
-PREFIX = '/mnt/align4_drive/arunas'
+PREFIX = '/home/gridsan/arunas'
 
 nf4_config = BitsAndBytesConfig(
-            load_in_4bit=True,
-                bnb_4bit_quant_type="nf4",
-                    bnb_4bit_compute_dtype=torch.bfloat16
-                    )
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.bfloat16
+)
 
-config = AutoConfig.from_pretrained("meta-llama/Llama-2-70b-hf")
-tokenizer = AutoTokenizer.from_pretrained(
-           "meta-llama/Llama-2-70b-hf", config=config, device_map="auto", padding_side="left"
-           )
+MODEL_NAME="mistral"
+MODEL = "mistralai/Mistral-7B-v0.1"
+CACHE = f"{PREFIX}/models/mistralai/Mistral-7B-v0.1/"
+
+config = AutoConfig.from_pretrained(MODEL, cache_dir=CACHE)
+tokenizer = AutoTokenizer.from_pretrained(MODEL, config=config, cache_dir=CACHE, device_map="auto", padding_side="left")
 
 tokenizer.pad_token = tokenizer.eos_token
-model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-70b-hf",  quantization_config=nf4_config, device_map='auto', cache_dir='/mnt/align4_drive/arunas/llama-tensors/') # Load the model
+model = AutoModelForCausalLM.from_pretrained(MODEL,  config=config, quantization_config=nf4_config, device_map='auto', cache_dir=CACHE) # Load the model
 
 device_map = infer_auto_device_map(model)
 print(device_map)
@@ -74,7 +75,7 @@ from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 @torch.no_grad()
 def get_aligned_words_measures(texts: str, 
-                               answer: str,
+                               answers: str,
                                measure: str,
                                model: GPT2LMHeadModel, 
                                tokenizer: GPT2Tokenizer) -> list[str]:
@@ -158,73 +159,70 @@ golds = []
 f = pd.DataFrame(columns=["type", "prompt", "q", "prediction", "gold", "surprisal", "int-grad"])
 f['type'] = 'test'
 g = pd.DataFrame(columns=['accuracy', 'type'])
-
-gCols = [col for col in list(df.columns) if not 'ng' in col]
 datasets = {}
-for col in gCols:
-    datasets[col] = Dataset.from_pandas(pd.DataFrame(df[[col, 'ng-' + col]].copy())).train_test_split(test_size=0.2)
+datasets[col] = Dataset.from_pandas(pd.DataFrame(df[[col, 'ng-' + col]].copy())).train_test_split(test_size=0.5)
 
 master_prompt = 'We will provide you a set of sentences which follow or violate a grammatical structure. \n The sentences may use subjects and objects from the following nouns - author, banana, biscuit, book, bottle, box, boy, bulb, cap, cat, chalk, chapter, cucumber, cup, dog, fish, fruit, girl, Gomu, Harry, hill, John, Leela, man, Maria, meal, mountain, mouse, newspaper, pear, pizza, poem, poet, rock, roof, Sheela, speaker, staircase, story, teacher, Tom, toy, tree, woman, writer.\nThe sentences may use any of the following verbs - brings, carries, claims, climbs, eats, holds, notices, reads, says, sees, states, takes.\n Each noun in a sentence may sometimes use a different determiner than those found in English. Here is a reference of determiners that can be used by nouns: "pear": "kar", "author": "kon", "authors": "kons", "banana": "kar", "biscuit": "kon", "book": "kon", "bottle": "kar", "box": "kar", "boy": "kon", "boys": "kons", "bulb": "kar", "cabinet": "kar", "cap": "kon", "cat": "kon", "cats": "kons", "chapter": "kon", "chalk": "kon", "cup": "kar", "cucumber": "kon", "dog": "kon", "dogs": "kons", "fish": "kon", "fruit": "kar", "girl": "kar", "girls": "kars", "hill": "kar", "man": "kon", "men": "kons", "meal": "kon", "mountain": "kar", "mouse": "kon", "newspaper": "kon", "pizza": "kar", "poet": "kon", "poets": "kons", "poem": "kar", "rock": "kon", "roof": "kon", "speaker": "kon", "speakers": "kons", "staircase": "kar", "story": "kar", "teacher": "kon", "teachers": "kons", "toy": "kon", "tree": "kar", "woman": "kar", "women": "kars", "writer": "kon", "writers": "kons". Each verb in a sentence may sometimes use the past tense of the verb if it is more appropriate. Here are a set of verbs and their past tenses - "climbs" : "climbed", "reads": "read", "carries": "carried", "eats": "ate", "holds": "held", "takes" :"took", "brings": "brought", "reads": "read", "climb" : "climbed", "read": "read", "carry": "carried", "eat": "ate", "hold": "held", "take" :"took", "bring": "brought", "read": "read"\n The sentences may sometimes use the infinitive forms of a verb. Here are a set of verbs and their infinitives - "climbs" : "to climb", "reads": "to read", "carries": "to carry", "eats": "to eat", "holds": "to hold", "takes" : "to take", "brings": "to bring", "reads": "to read", "climb" : "to climb", "read": "to read", "carry": "to carry", "eat": "to eat", "hold": "to hold", "take" : "to take", "bring": "to bring", "read": "to read". \n The sentences may sometimes use the plural form of a noun. Here are a set of nouns and their plurals - "fish": "fish", "mouse": "mice", "bottle": "bottles", "newspaper": "newspapers", "chalk": "chalks", "box": "boxes", "cap": "caps", "bulb": "bulbs", "cup": "cups", "toy": "toys", "staircase": "staircases", "rock": "rocks", "hill": "hills", "mountain": "mountains", "roof": "roofs", "tree": "trees", "biscuit": "biscuits", "banana": "bananas", "pear": "pears", "meal": "meals", "fruit": "fruits", "cucumber": "cucumbers", "pizza": "pizzas", "book": "books", "poem": "poems", "story": "stories", "chapter": "chapters". \n The sentences may sometimes use the passive form of a verb. Here are a set of verbs and their passive forms - "carries": "carried", "carry": "carried", "holds": "held", "hold": "held", "takes": "taken", "take": "taken", "brings": "brought", "bring": "brought", "climbs": "climbed", "climb": "climbed", "eats": "eaten", "eat": "eaten", "reads": "read", "read": "read"\n\n'
 NUM_DEMONSTRATIONS = 10
 BATCH_SIZE = 64
-for col in gCols:
-    train_dataset = datasets[col]['train']
-    test_dataset = datasets[col]['test']
-    printAnswer = False
-    
-    for i in range(0, len(test_dataset), BATCH_SIZE):
-        test_sentences = []
-        fPrompts = []
-        fQs = []
-        fGolds = []
-        prompts = []
-        for batch_idx in range(BATCH_SIZE):
-            #print(f'batch_idx: {i + batch_idx} {len(test_dataset)}')
-            testBadOrGood = random.choice(['ng-', ''])
-            if (i + batch_idx) >= len(test_dataset):
-                break;
-            test_sentence = test_dataset[i + batch_idx]
-            prompt = construct_prompt(train_dataset, NUM_DEMONSTRATIONS)
-            
-            fPrompt = prompt
-            
-            # Append test example
-            prompt += "Q: Is this sentence grammatical? Yes or No: "
-            prompt += test_sentence[testBadOrGood + col]
-            prompt += "\nA:"
-            
-            fQ = "Q: Is this sentence grammatical? Yes or No: " + test_sentence[testBadOrGood + col] + "\nA:"
-            
-            if testBadOrGood == 'ng-':
-                golds.append("No")
-                fGold = 'No'
-            else:
-                golds.append("Yes")
-                fGold = 'Yes'
-            fGolds.append(fGold)
-            prompts.append(master_prompt + prompt)
-            test_sentences.append(test_sentence[testBadOrGood + col])
-            fPrompts.append(fPrompt)
-            fQs.append(fQ)
-            
-        # Get answer from model
-        model_inputs = tokenizer(prompts, return_tensors="pt", padding=True).to('cuda')
-        answers = model.generate(**model_inputs, pad_token_id=tokenizer.eos_token_id, max_new_tokens=2, top_p=0.9, temperature=0.1, do_sample=True)
-        answers = tokenizer.batch_decode(answers)[:BATCH_SIZE]
 
-        if printAnswer:
-            print(answers)
-            printAnswer = False
+print(col)
+train_dataset = datasets[col]['train']
+test_dataset = datasets[col]['test']
+printAnswer = False
+f = pd.DataFrame(columns=["type", "prompt", "q", "prediction", "gold", "surprisal", "int-grad"])
+for i in range(0, len(test_dataset), BATCH_SIZE):
+    test_sentences = []
+    fPrompts = []
+    fQs = []
+    fGolds = []
+    prompts = []
+    for batch_idx in range(BATCH_SIZE):
+        testBadOrGood = random.choice(['ng-', ''])
+        if (i + batch_idx) >= len(test_dataset):
+            break;
+        test_sentence = test_dataset[i + batch_idx]
+        prompt = construct_prompt(train_dataset, NUM_DEMONSTRATIONS)
         
-        preds = preds + parse_answer(answers)
-        fPredictions = parse_answer(answers)
-        fSurprisals = get_aligned_words_measures(test_sentences, parse_answer(answers), "surp", model, tokenizer)
-        for batch_idx in range(len(fPrompts)):
-            f = pd.concat([f, pd.DataFrame([{'type': col, 'prompt': fPrompts[batch_idx], 'q' :fQs[batch_idx], 'prediction': fPredictions[batch_idx], 'gold': fGolds[batch_idx], 'surprisal': fSurprisals[batch_idx], 'int-grad': 0}])]).reset_index(drop=True)
-    # Evaluate
-    accuracy = compute_accuracy(preds, golds)
-    print(f"{col} -- Accuracy: {accuracy:.2f}\n")
-    g = pd.concat([g, pd.DataFrame([{ 'trainType' : col, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
-    f.to_csv(f"{PREFIX}/broca/mistral/experiments/mistral-classification-train-test-det-{col}-new-1.csv")
+        fPrompt = prompt
+        
+        # Append test example
+        prompt += "Q: Is this sentence grammatical? Yes or No: "
+        prompt += test_sentence[testBadOrGood + col]
+        prompt += "\nA:"
+        
+        fQ = "Q: Is this sentence grammatical? Yes or No: " + test_sentence[testBadOrGood + col] + "\nA:"
+        
+        if testBadOrGood == 'ng-':
+            golds.append("No")
+            fGold = 'No'
+        else:
+            golds.append("Yes")
+            fGold = 'Yes'
+        fGolds.append(fGold)
+        prompts.append(master_prompt + prompt)
+        test_sentences.append(test_sentence[testBadOrGood + col])
+        fPrompts.append(fPrompt)
+        fQs.append(fQ)
+        
+    # Get answer from model
+    model_inputs = tokenizer(prompts, return_tensors="pt", padding=True).to('cuda')
+    answers = model.generate(**model_inputs, pad_token_id=tokenizer.eos_token_id, max_new_tokens=2, top_p=0.9, temperature=0.1, do_sample=True)
+    answers = tokenizer.batch_decode(answers)[:BATCH_SIZE]
 
-g.to_csv(f'{PREFIX}/broca/mistral/experiments/mistral-classification-train-test-acc-new-1.csv')
+    if printAnswer:
+        print(answers)
+        printAnswer = False
+    
+    preds = preds + parse_answer(answers)
+    fPredictions = parse_answer(answers)
+    fSurprisals = get_aligned_words_measures(test_sentences, parse_answer(answers), "surp", model, tokenizer)
+    for batch_idx in range(len(fPrompts)):
+        f = pd.concat([f, pd.DataFrame([{'type': col, 'prompt': fPrompts[batch_idx], 'q' :test_sentences[batch_idx], 'prediction': fPredictions[batch_idx], 'gold': fGolds[batch_idx], 'surprisal': fSurprisals[batch_idx], 'int-grad': 0}])]).reset_index(drop=True)
+# Evaluate
+accuracy = compute_accuracy(preds, golds)
+print(f"{col} -- Accuracy: {accuracy:.2f}\n")
+g = pd.concat([g, pd.DataFrame([{ 'trainType' : col, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
+f.to_csv(f"{PREFIX}/broca/llama/experiments/llama-classification-train-test-det-{col}.csv")
+
+g.to_csv(f'{PREFIX}/broca/llama/experiments/llama-classification-train-test-acc.csv')
