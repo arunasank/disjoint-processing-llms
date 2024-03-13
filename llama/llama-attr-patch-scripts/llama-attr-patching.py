@@ -10,11 +10,11 @@ import os
 import matplotlib.pyplot as plt
 import traceback
 os.environ['HF_TOKEN'] = "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"
-PREFIX = '/share/u/arunas'
-og = pd.read_csv(f'{PREFIX}/broca/ngs.csv')
+PREFIX = '/mnt/align4_drive/arunas'
+og = pd.read_csv(f'{PREFIX}/broca/data-gen/ngs.csv')
 print(og.columns)
 
-model = LanguageModel("meta-llama/Llama-2-70b-hf",  load_in_4bit=True, dispatch=True, device_map='auto') # Load the model
+model = LanguageModel("meta-llama/Llama-2-70b-hf", cache_dir='/mnt/align4_drive/arunas/llama-tensors/', load_in_4bit=True, dispatch=True, device_map='auto') # Load the model
 
 def get_prompt_from_df(filename):
     data = list(pd.read_csv(filename)['prompt'])
@@ -25,10 +25,10 @@ def get_prompt_from_df(filename):
     data = [sentence[: -len(golds[idx])].strip() for idx, sentence in enumerate(data)]
     return data, golds
 
-types = ['it', 'jp-r-2-passive', 'it-r-1-null_subject', 'jp-r-3-subordinate', 'it-r-2-passive', 'jp-u-1-negation', 'it-r-3-subordinate', 'jp-u-2-invert', 'it-u-1-negation', 'jp-u-3-past-tense', 'it-u-2-invert', 'passive-sentence', 'it-u-3-gender', 'sentence', 'jp-r-1-sov', 'subordinate-sentence']
+types = ['en', 'en-r-1-subordinate', 'en-r-2-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-qsubordinate', 'ita', 'ita-r-1-null_subject', 'ita-r-2-subordinate', 'ita-r-3-passive', 'ita-u-1-negation', 'ita-u-2-invert', 'ita-u-3-gender', 'it', 'it-r-1-null_subject', 'it-r-2-passive', 'it-r-3-subordinate', 'it-u-1-negation', 'it-u-2-invert', 'it-u-3-gender', 'jp-r-1-sov', 'jp-r-2-passive', 'jp-r-3-subordinate', 'jp-u-1-negation', 'jp-u-2-invert', 'jp-u-3-past-tense']
 
 def callWithStype(sType):
-    prompts, golds = get_prompt_from_df(f'{PREFIX}/broca/llama/llama-prompt-outputs/llama-classification-train-test-det-{sType}-new.csv')
+    prompts, golds = get_prompt_from_df(f'{PREFIX}/broca/llama/experiments/llama-classification-train-test-det-{sType}.csv')
 
     mlp_effects_cache = torch.zeros((model.config.num_hidden_layers, model.config.hidden_size)).to("cuda")
     attn_effects_cache = torch.zeros((model.config.num_hidden_layers, model.config.hidden_size)).to("cuda")
@@ -102,14 +102,14 @@ def callWithStype(sType):
     top_neurons = flattened_effects_cache.topk(k=40)
     two_d_indices = torch.cat((((top_neurons[1] // mlp_effects_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % mlp_effects_cache.shape[1]).unsqueeze(1))), dim=1)
 
-    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}.pkl', 'wb') as f:
+    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}-new.pkl', 'wb') as f:
         pickle.dump(two_d_indices, f)
 
     flattened_effects_cache = attn_effects_cache.view(-1)
     top_neurons = flattened_effects_cache.topk(k=40)
     two_d_indices = torch.cat((((top_neurons[1] // attn_effects_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % attn_effects_cache.shape[1]).unsqueeze(1))), dim=1)
 
-    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}.pkl', 'wb') as f:
+    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new.pkl', 'wb') as f:
         pickle.dump(two_d_indices, f)
 
 for sType in types:
