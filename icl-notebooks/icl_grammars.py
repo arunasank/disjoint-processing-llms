@@ -5,6 +5,9 @@ from transformers import (
 import bitsandbytes
 from accelerate import infer_auto_device_map
 
+import sys
+import torch
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
 from datasets import Dataset, load_dataset
 import torch
 import random
@@ -32,8 +35,8 @@ model = AutoModelForCausalLM.from_pretrained(MODEL,  config=config, quantization
 device_map = infer_auto_device_map(model)
 print(device_map)
 df = pd.read_csv(f'{PREFIX}/broca/data-gen/ngs.csv')
-cols = list(df.columns)
-
+gCols = [col for col in list(df.columns) if not 'ng' in col]
+col = gCols[int(sys.argv[1])]
 def parse_answer(text):
     answers = []
     for t in text:
@@ -69,9 +72,6 @@ def compute_accuracy(preds, golds):
         total += 1
     return correct / total
 
-import sys
-import torch
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 @torch.no_grad()
 def get_aligned_words_measures(texts: str, 
@@ -223,6 +223,6 @@ for i in range(0, len(test_dataset), BATCH_SIZE):
 accuracy = compute_accuracy(preds, golds)
 print(f"{col} -- Accuracy: {accuracy:.2f}\n")
 g = pd.concat([g, pd.DataFrame([{ 'trainType' : col, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
-f.to_csv(f"{PREFIX}/broca/llama/experiments/llama-classification-train-test-det-{col}.csv")
+f.to_csv(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-classification-train-test-det-{col}.csv")
 
-g.to_csv(f'{PREFIX}/broca/llama/experiments/llama-classification-train-test-acc.csv')
+g.to_csv(f'{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-classification-train-test-acc.csv')
