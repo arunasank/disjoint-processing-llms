@@ -9,22 +9,19 @@ import sys
 device='cuda:0'
 model = LanguageModel("/home/gridsan/arunas/models/mistralai/Mistral-7B-v0.1/",  load_in_8bit=True, dispatch=True, device_map=device) # Load the model
 
-og = pd.read_csv('/home/gridsan/arunas/broca/ngs.csv')
+og = pd.read_csv('/home/gridsan/arunas/broca/data-gen/ngs.csv')
 og.columns
 
-def get_prompt_from_text(filename):
-    with open(filename, 'r') as file:
-        data = file.read().split('\n-------------------------------------\n')
-
+def get_prompt_from_df(filename):
+    data = list(pd.read_csv(filename)['prompt'])
     data = [sentence.strip() for sentence in data]
     data = [sentence for sentence in data if not sentence == '']
     data = [sentence.replace('</s>', '\n') for sentence in data]
-    golds = [sentence.strip().split("\n")[-1].strip() for sentence in data]
+    golds = [sentence.strip().split("\n")[-1].strip().split('A:')[-1].strip() for sentence in data]
     data = [sentence[: -len(golds[idx])].strip() for idx, sentence in enumerate(data)]
-    data = [sentence[: -len(sentence.strip().split(" ")[-1])].strip() for sentence in data]
     return data, golds
 
-types = ['it', 'jp-r-2-passive', 'it-r-1-null_subject', 'jp-r-3-subordinate', 'it-r-2-passive', 'jp-u-1-negation', 'it-r-3-subordinate', 'jp-u-2-invert', 'it-u-1-negation', 'jp-u-3-past-tense', 'it-u-2-invert', 'passive-sentence', 'it-u-3-gender', 'sentence', 'jp-r-1-sov', 'subordinate-sentence']
+types = [col for col in list(og.columns) if not 'ng' in col]
 
 sType=types[int(sys.argv[1])]
 
@@ -86,7 +83,7 @@ def attrPatching(fullPrompt, gold):
     except:
         print(fullPrompt)
 
-prompts, golds = get_prompt_from_text(f'/home/gridsan/arunas/broca/mistral/mistral-prompt-outputs/classification-train-test-{sType}-prompts.txt')
+prompts, golds = get_prompt_from_df(f'/home/gridsan/arunas/broca/mistral/experiments/mistral-classification-train-test-det-{sType}.csv')
 for prompt,gold in tqdm(zip(prompts, golds)):
     attrPatching(prompt, gold)
 
@@ -100,12 +97,12 @@ attn_effects_cache = torch.nan_to_num(attn_effects_cache)
 #top_neurons = flattened_effects_cache.topk(k=40)
 #two_d_indices = torch.cat((((top_neurons[1] // mlp_effects_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % mlp_effects_cache.shape[1]).unsqueeze(1))), dim=1)
 
-with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/mlp/{sType}-all-neurons.pkl', 'wb') as f:
+with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/mlp/new-{sType}-all-neurons.pkl', 'wb') as f:
     pickle.dump(mlp_effects_cache, f)
 
 #flattened_effects_cache = attn_effects_cache.view(-1)
 #top_neurons = flattened_effects_cache.topk(k=40)
 #two_d_indices = torch.cat((((top_neurons[1] // attn_effects_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % attn_effects_cache.shape[1]).unsqueeze(1))), dim=1)
 
-with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/attn/{sType}-all-neurons.pkl', 'wb') as f:
+with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/attn/new-{sType}-all-neurons.pkl', 'wb') as f:
     pickle.dump(attn_effects_cache, f)
