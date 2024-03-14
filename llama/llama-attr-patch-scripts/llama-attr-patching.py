@@ -40,7 +40,7 @@ def get_prompt_from_df(filename):
     data = [sentence[: -len(golds[idx])].strip() for idx, sentence in enumerate(data)]
     return data, golds
 
-types = ['en', 'en-r-1-subordinate', 'en-r-2-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-qsubordinate', 'ita', 'ita-r-1-null_subject', 'ita-r-2-subordinate', 'ita-r-3-passive', 'ita-u-1-negation', 'ita-u-2-invert', 'ita-u-3-gender', 'it', 'it-r-1-null_subject', 'it-r-2-passive', 'it-r-3-subordinate', 'it-u-1-negation', 'it-u-2-invert', 'it-u-3-gender', 'jp-r-1-sov', 'jp-r-2-passive', 'jp-r-3-subordinate', 'jp-u-1-negation', 'jp-u-2-invert', 'jp-u-3-past-tense']
+types = [col for col in list(og.columns) if not 'ng-' in col] 
 
 def callWithStype(sType):
     prompts, golds = get_prompt_from_df(f'{PREFIX}/broca/llama/experiments/llama-classification-train-test-det-{sType}.csv')
@@ -127,5 +127,7 @@ def callWithStype(sType):
     with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new.pkl', 'wb') as f:
         pickle.dump(two_d_indices, f)
 
-for sType in types:
-    callWithStype(sType)
+for sType in reversed(types):
+    if not os.path.exists(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new.pkl') or not os.path.exists(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}-new.pkl'):
+        print(f'Calling {sType}')
+        callWithStype(sType)
