@@ -114,20 +114,20 @@ def callWithStype(sType):
     attn_effects_cache = torch.nan_to_num(attn_effects_cache)
 
     flattened_effects_cache = mlp_effects_cache.view(-1)
-    top_neurons = flattened_effects_cache.topk(k=40)
+    top_neurons = flattened_effects_cache.topk(k=int(mlp_effects_cache.shape[-1]*0.1))
     two_d_indices = torch.cat((((top_neurons[1] // mlp_effects_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % mlp_effects_cache.shape[1]).unsqueeze(1))), dim=1)
 
-    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}-new.pkl', 'wb') as f:
+    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}-new-1-percent.pkl', 'wb') as f:
         pickle.dump(two_d_indices, f)
 
     flattened_effects_cache = attn_effects_cache.view(-1)
-    top_neurons = flattened_effects_cache.topk(k=40)
+    top_neurons = flattened_effects_cache.topk(k=int(mlp_effects_cache.shape[-1] * 0.1))
     two_d_indices = torch.cat((((top_neurons[1] // attn_effects_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % attn_effects_cache.shape[1]).unsqueeze(1))), dim=1)
 
-    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new.pkl', 'wb') as f:
+    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new-1-percent.pkl', 'wb') as f:
         pickle.dump(two_d_indices, f)
 
-for sType in reversed(types):
-    if not os.path.exists(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new.pkl') or not os.path.exists(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}-new.pkl'):
+for sType in types[28:]:
+    if not os.path.exists(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new-1-percent.pkl') or not os.path.exists(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}-new-1-percent.pkl'):
         print(f'Calling {sType}')
         callWithStype(sType)
