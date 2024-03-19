@@ -83,7 +83,7 @@ def attrPatching(fullPrompt, gold):
     except:
         print(fullPrompt)
 
-prompts, golds = get_prompt_from_df(f'/home/gridsan/arunas/broca/mistral/experiments/mistral-classification-train-test-det-{sType}.csv')
+prompts, golds = get_prompt_from_df(f'/home/gridsan/arunas/broca/mistral/experiments/mistral-classification-new-prompt-det-{sType}.csv')
 for prompt,gold in tqdm(zip(prompts, golds)):
     attrPatching(prompt, gold)
 
@@ -94,15 +94,16 @@ mlp_effects_cache = torch.nan_to_num(mlp_effects_cache)
 attn_effects_cache = torch.nan_to_num(attn_effects_cache)
 
 flattened_effects_cache = mlp_effects_cache.view(-1)
-top_neurons = flattened_effects_cache.topk(k=int(mlp_effects_cache.shape[-1] * 0.01))
+print(flattened_effects_cache.shape[-1])
+top_neurons = flattened_effects_cache.topk(k=int((0.01 * flattened_effects_cache.shape[-1])))
 two_d_indices = torch.cat((((top_neurons[1] // mlp_effects_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % mlp_effects_cache.shape[1]).unsqueeze(1))), dim=1)
 
-with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/mlp/new-{sType}-top1-percent.pkl', 'wb') as f:
+with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/mlp/new-prompt-{sType}-top1-percent.pkl', 'wb') as f:
     pickle.dump(two_d_indices, f)
 
 flattened_effects_cache = attn_effects_cache.view(-1)
-top_neurons = flattened_effects_cache.topk(k=int(attn_effects_cache.shape[-1] * 0.01))
+top_neurons = flattened_effects_cache.topk(k=int((0.01 * flattened_effects_cache.shape[-1])))
 two_d_indices = torch.cat((((top_neurons[1] // attn_effects_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % attn_effects_cache.shape[1]).unsqueeze(1))), dim=1)
 
-with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/attn/new-{sType}-top1-percent.pkl', 'wb') as f:
+with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/attn/new-prompt-{sType}-top1-percent.pkl', 'wb') as f:
     pickle.dump(two_d_indices, f)
