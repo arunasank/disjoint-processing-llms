@@ -79,31 +79,6 @@ def get_aligned_words_measures(texts: str,
                                measure: str,
                                model: GPT2LMHeadModel, 
                                tokenizer: GPT2Tokenizer) -> list[str]:
-    """ Returns words and their measure (prob|surp)
-    Args:
-        text (list[str]): list of sentences
-        measure (str): Measure, either probability or surprisal
-                        (options: prob|surp)
-        model (GPT2LMHeadModel): Pretrained model
-        tokenizer (GPT2Tokenizer): Tokenizer
-    Returns:
-        list[str]: List of words with their measures
-
-    For example, 
-    >>> model, tokenizer = load_pretrained_model()
-    >>> get_aligned_words_measures('the student is happy', 
-    ...        'surp', model, tokenizer)
-    [('the', 0), ('student', 17.38616943359375), ('is', 6.385905742645264),
-     ('happy', 9.564245223999023)]
-    >>> get_aligned_words_measures('the cat is fluffy', 
-    ...        'prob', model, tokenizer) 
-    [('the', 0), ('cat', 2.5601848392398097e-06), ('is', 0.025296149775385857),
-     ('fluffy', 0.00020585735910572112)]
-    >>> get_aligned_words_measures('the cat are fluffy', 
-    ...        'prob', model, tokenizer)
-    [('the', 0), ('cat', 2.5601848392398097e-06), ('are', 0.0010310395155102015),
-     ('fluffy', 0.00021902224398218095)]
-    """
     if measure not in {'prob', 'surp'}:
         sys.stderr.write(f"{measure} not recognized\n")
         sys.exit(1)
@@ -162,10 +137,95 @@ g = pd.DataFrame(columns=['accuracy', 'type'])
 datasets = {}
 datasets[col] = Dataset.from_pandas(pd.DataFrame(df[[col, 'ng-' + col]].copy())).train_test_split(test_size=0.5)
 
-master_prompt = 'We will provide you a set of sentences which follow or violate a grammatical structure. \n The sentences may use subjects and objects from the following nouns - author, banana, biscuit, book, bottle, box, boy, bulb, cap, cat, chalk, chapter, cucumber, cup, dog, fish, fruit, girl, Gomu, Harry, hill, John, Leela, man, Maria, meal, mountain, mouse, newspaper, pear, pizza, poem, poet, rock, roof, Sheela, speaker, staircase, story, teacher, Tom, toy, tree, woman, writer.\nThe sentences may use any of the following verbs - brings, carries, claims, climbs, eats, holds, notices, reads, says, sees, states, takes.\n Each noun in a sentence may sometimes use a different determiner than those found in English. Here is a reference of determiners that can be used by nouns: "pear": "kar", "author": "kon", "authors": "kons", "banana": "kar", "biscuit": "kon", "book": "kon", "bottle": "kar", "box": "kar", "boy": "kon", "boys": "kons", "bulb": "kar", "cabinet": "kar", "cap": "kon", "cat": "kon", "cats": "kons", "chapter": "kon", "chalk": "kon", "cup": "kar", "cucumber": "kon", "dog": "kon", "dogs": "kons", "fish": "kon", "fruit": "kar", "girl": "kar", "girls": "kars", "hill": "kar", "man": "kon", "men": "kons", "meal": "kon", "mountain": "kar", "mouse": "kon", "newspaper": "kon", "pizza": "kar", "poet": "kon", "poets": "kons", "poem": "kar", "rock": "kon", "roof": "kon", "speaker": "kon", "speakers": "kons", "staircase": "kar", "story": "kar", "teacher": "kon", "teachers": "kons", "toy": "kon", "tree": "kar", "woman": "kar", "women": "kars", "writer": "kon", "writers": "kons". Each verb in a sentence may sometimes use the past tense of the verb if it is more appropriate. Here are a set of verbs and their past tenses - "climbs" : "climbed", "reads": "read", "carries": "carried", "eats": "ate", "holds": "held", "takes" :"took", "brings": "brought", "reads": "read", "climb" : "climbed", "read": "read", "carry": "carried", "eat": "ate", "hold": "held", "take" :"took", "bring": "brought", "read": "read"\n The sentences may sometimes use the infinitive forms of a verb. Here are a set of verbs and their infinitives - "climbs" : "to climb", "reads": "to read", "carries": "to carry", "eats": "to eat", "holds": "to hold", "takes" : "to take", "brings": "to bring", "reads": "to read", "climb" : "to climb", "read": "to read", "carry": "to carry", "eat": "to eat", "hold": "to hold", "take" : "to take", "bring": "to bring", "read": "to read". \n The sentences may sometimes use the plural form of a noun. Here are a set of nouns and their plurals - "fish": "fish", "mouse": "mice", "bottle": "bottles", "newspaper": "newspapers", "chalk": "chalks", "box": "boxes", "cap": "caps", "bulb": "bulbs", "cup": "cups", "toy": "toys", "staircase": "staircases", "rock": "rocks", "hill": "hills", "mountain": "mountains", "roof": "roofs", "tree": "trees", "biscuit": "biscuits", "banana": "bananas", "pear": "pears", "meal": "meals", "fruit": "fruits", "cucumber": "cucumbers", "pizza": "pizzas", "book": "books", "poem": "poems", "story": "stories", "chapter": "chapters". \n The sentences may sometimes use the passive form of a verb. Here are a set of verbs and their passive forms - "carries": "carried", "carry": "carried", "holds": "held", "hold": "held", "takes": "taken", "take": "taken", "brings": "brought", "bring": "brought", "climbs": "climbed", "climb": "climbed", "eats": "eaten", "eat": "eaten", "reads": "read", "read": "read"\n\n'
+def get_master_prompt(lang):
+    en_verbs = ["affirms", "bring", "brings", "carries", "carry", "climb", "climbs", "eat", "eats", "hold", "holds", "knows", "notices", "read", "reads", "says", "sees", "take", "takes"]
+    en_verbs_past = ["affirmed", "brought", "carried", "climbed", "ate", "held", "knew", "noticed", "read", "said", "saw", "took"]
+    en_verbs_infinitive = ["to affirm", "to bring", "to carry", "to climb", "to eat", "to hold", "to know", "to notice", "to read", "to say", "to see", "to take"]
+    en_verbs_passive = ["affirmed", "brought", "carried", "climbed", "eaten", "held", "known", "noticed", "read", "said", "seen", "taken"]
+    en_nouns = ['author', 'banana', 'biscuit', 'book', 'bottle', 'box', 'boy', 'bulb', 'cap', 'cat', 'chalk', 'chapter', 'cucumber', 'cup', 'dog', 'fish', 'fruit', 'girl', 'hill', 'man', 'meal', 'mountain', 'mouse', 'newspaper', 'pear', 'pizza', 'poem', 'poet', 'rock', 'roof', 'speaker', 'staircase', 'story', 'teacher', 'toy', 'tree', 'woman', 'writer']
+    en_nouns_plural = ['authors', 'boys', 'cats', 'dogs', 'girls', 'men', 'poets', 'speakers', 'teachers', 'women', 'writers']
+    proper_nouns = ['Gomu', 'Harry', 'John', 'Leela', 'Maria', 'Sheela', 'Tom']
+    
+    ita_verbs = ['legge', 'leggono', 'mangia', 'mangiano', 'porta', 'portano', 'prende', 'prendono',
+                'salgono', 'scala', 'tengono', 'tiene', 'vede', 'dice', 'osserva', 'sa', 'afferma']
+    ita_verbs_past = ['è letto', 'è mangiato', 'è portato', 'è preso', 'è scalata', 'è scalato', 'è tenuto', 'è salito']
+    ita_verbs_infinitive = ['leggere', 'magiare', 'portare', 'prendere', 'scalare', 'tenere', 'salire']
+    ita_nouns = ['albero', 'autore', 'banana', 'biscotto', 'bottiglia', 'cane', 'capitolo', 'cappello', 'cetriolo', 'collina', 'donna', 'frutta', 'gatto', 'gesso', 'giocattolo', 'giornale', 'insegnante', 'lampadina', 'libro', 'montagna', 'oratorio', 'pasto', 'pera', 'pesce', 'pizza', 'poema', 'poeta', 'ragazza', 'ragazzo', 'roccia', 'scala', 'scatola', 'scrittore', 'storia', 'tazza', 'tetto', 'topo', 'uomo']
+    ita_nouns_plurals = ['alberi', 'autori', 'banane', 'biscotti', 'bottiglie', 'cani', 'capitoli', 'cappelli', 'cetrioli', 'colline', 'donne', 'frutta', 'gatti', 'gessi', 'giocattoli', 'giornali', 'insegnanti', 'lampadine', 'libri', 'montagne', 'oratori', 'pasti', 'pere', 'pesci', 'pizze', 'poemi', 'poeti', 'ragazze', 'ragazzi', 'rocce', 'scale', 'scatole', 'scrittori', 'storie', 'tazze', 'tetti', 'topi', 'uomini']
+    ita_nouns_la = ["pera", "banana", "bottiglia", "scatola", "lampadina", "credenza", "tazza", "frutta", "ragazza", "collina", "montagna", "pizza", "roccia", "scala", "storia", "donna"]
+    ita_nouns_lo = ["scrittore"]
+    ita_nouns_il = ["biscotto", "libro", "ragazzo", "cappello", "gatto", "capitolo", "gesso", "cetriolo", "cane", "oratorio", "pesce", "pasto", "topo", "giornale", "poeta", "poema", "tetto", "giocattolo"]
+    ita_nouns_gli = ["scrittori", "uomini", "oratori", "insegnanti", "autori"]
+    ita_nouns_i = ["ragazzi", "gatti", "cani", "poeti"]
+    ita_nouns_il_vowel = ["uomo", "oratore", "insegnante", "albero", "autore"]
+    ita_nouns_le = ["donne"]
+    
+    it_nouns_kon = ['author', 'biscuit', 'book', 'boy', 'cap', 'cat', 'chalk', 'chapter', 'cucumber', 'dog', 'fish', 'man', 'meal', 'mouse', 'newspaper', 'poet', 'rock', 'roof', 'speaker', 'teacher', 'toy', 'writer']
+    it_nouns_kar = ['banana', 'bottle', 'box', 'bulb', 'cabinet', 'cup', 'fruit', 'girl', 'hill', 'mountain', 'pear', 'pizza', 'poem', 'staircase', 'story', 'tree', 'woman']
+    it_nouns_kons = ['authors', 'boys', 'cats', 'dogs', 'men', 'poets', 'speakers', 'teachers', 'writers']
+    it_nouns_kars = ["girls", "women"]
+    jp_nouns = ["梨", "著者", "バナナ", "ビスケット", "本", "ボトル", "箱", "男の子", "電球", "帽子", "猫", "章", "白亜", "コップ", "胡瓜", "犬", "魚", "果物", "女の子", "丘", "男", "食事", "山", "マウス", "新聞", "麺", "詩人", "詩", "岩石", "屋根", "スピーカー", "階段", "小説", "先生", "玩具", "木", "女", "著者", "ピザ", "梨", "著者", "バナナ", "ビスケット", "本", "ボトル", "箱", "男の子", "電球", "帽子", "猫", "章", "白亜", "コップ", "胡瓜", "犬", "魚", "果物", "女の子", "丘", "男性", "食事", "山", "マウス", "新聞", "麺", "詩人", "詩", "岩石", "屋根", "スピーカー", "階段", "小説", "先生", "玩具", "木", "女性", "著者", "ピザ"]
+    jp_verbs = ["食べる","読む","運ぶ","のぼる","とる","持つ","もたらす", "食べる","読む","運ぶ","のぼる","とる","持つ","もたらす"]
+    jp_verbs_passive = ["食べられる", "読まれる", "運ばれる", "のぼられる", "とられる", "持たれる", "持たれる"]
+    jp_suffixes = [ "は", "が", "を", "と", "に", "ない", "た" ]
+    jp_proper_nouns = ["シーラ", "ゴム", "ハリー", "ジョン", "リーラ", "マリア", "トム"]
+
+    if 'en' == "".join(lang[:2]):
+        intro = "We will give you examples of English sentences that follow or violate the rules of a shared grammar, along with labels 'Yes' or 'No'. You will then generate a label, 'Yes' or 'No', for a new unlabeled sentence that may follow or violate the same grammar rules."
+        verbs = f"""The sentences may use verbs ({', '.join(en_verbs)});"""
+        pastTenseVerbs = f"""or their corresponding past tense forms ({', '.join(en_verbs_past)});""" 
+        infinitiveVerbs = f"""infinitive forms ({', '.join(en_verbs_infinitive)});"""
+        passiveVerbs = f"""or passive forms ({', '.join(en_verbs_passive)})."""
+        nouns = f"""The sentences may use nouns ({', '.join(set(en_nouns + en_nouns_plural))}) for the subjects and objects."""
+        properNouns = f"""The sentences may use proper nouns ({', '.join(set(proper_nouns))})."""
+        return f"""1.{intro}\n2.{verbs} {pastTenseVerbs} {infinitiveVerbs} {passiveVerbs}\n3.{nouns}\n4.{properNouns}"""
+
+    elif 'it' == "".join(lang[:2]) and (len(lang) <=2 or lang[2] != 'a'):
+        intro = "We will give you examples of English sentences stylized to Italian syntax that follow or violate the rules of a shared grammar, along with labels 'Yes' or 'No'. You will then generate a label, 'Yes' or 'No', for a new unlabeled sentence that may follow or violate the same grammar rules."
+        verbs = f"""The sentences may use verbs ({', '.join(en_verbs)});"""
+        pastTenseVerbs = f"""or their corresponding past tense forms ({', '.join(en_verbs_past)});""" 
+        infinitiveVerbs = f"""infinitive forms ({', '.join(en_verbs_infinitive)});"""
+        passiveVerbs = f"""or passive forms ({', '.join(en_verbs_passive)})."""
+        nouns = f"""The sentences may use nouns ({', '.join(set(en_nouns + en_nouns_plural))}) for the subjects and objects."""
+        properNouns = f"""The sentences may use proper nouns ({', '.join(set(proper_nouns))})."""
+        gendered = f"""The nouns in the sentences have specific gender determiners - 'kar' (used by {', '.join(set(it_nouns_kar))}); 'kon' (used by {', '.join(set(it_nouns_kon))}); 'kars' (used by {', '.join(set(it_nouns_kars))}); 'kons' (used by {', '.join(set(it_nouns_kons))})."""
+        return f"""1.{intro}\n2.{verbs} {pastTenseVerbs} {infinitiveVerbs} {passiveVerbs}\n3.{nouns}\n4.{properNouns}\n5.{gendered}"""
+    
+    elif 'ita' == "".join(lang[:3]):
+        intro = "We will give you examples of Italian sentences that follow or violate the rules of a shared grammar, along with labels 'Yes' or 'No'. You will then generate a label, 'Yes' or 'No', for a new unlabeled sentence that may follow or violate the same grammar rules."
+        verbs = f"""The sentences may use verbs ({', '.join(ita_verbs)});"""
+        pastTenseVerbs = f"""or their corresponding past tense forms ({', '.join(ita_verbs_past)});""" 
+        infinitiveVerbs = f"""infinitive forms ({', '.join(ita_verbs_infinitive)});"""
+        passiveVerbs = f"""or passive forms ({', '.join(ita_verbs_past)})."""
+        nouns = f"""The sentences may use nouns ({', '.join(set(ita_nouns + ita_nouns_plurals))}) for the subjects and objects."""
+        properNouns = f"""The sentences may use proper nouns ({', '.join(set(proper_nouns))})."""
+        gendered = f"""The nouns in the sentences have specific gender determiners - 'la' (used by {', '.join(set(ita_nouns_la))}); 'lo' (used by {', '.join(set(ita_nouns_lo))}); 'le' (used by {', '.join(set(ita_nouns_le))}); 'il' (used by {', '.join(set(ita_nouns_il))}, "l'" (used by {', '.join(set(ita_nouns_il_vowel))}); 'i' (used by {', '.join(set(ita_nouns_i))}, and 'gli' (used by {', '.join(set(ita_nouns_gli))}."""
+        return f"""1.{intro}\n2.{verbs} {pastTenseVerbs} {infinitiveVerbs} {passiveVerbs}\n3.{nouns}\n4.{properNouns}\n5.{gendered}"""
+    
+    elif 'jap' == "".join(lang[:3]):
+        intro = "We will give you examples of Japanese sentences that follow or violate the rules of a shared grammar, along with labels 'Yes' or 'No'. You will then generate a label, 'Yes' or 'No', for a new unlabeled sentence that may follow or violate the same grammar rules."
+        verbs = f"""The sentences may use verbs ({', '.join(jp_verbs)});"""
+        passiveVerbs = f"""or passive forms ({', '.join(jp_verbs_passive)})."""
+        nouns = f"""The sentences may use nouns ({', '.join(set(jp_nouns))}) for the subjects and objects."""
+        suffixes = f"""The sentences may use suffixes ({', '.join(set(jp_suffixes))}) along with subjects, objects or verbs."""
+        properNouns = f"""The sentences may use proper nouns ({', '.join(set(jp_proper_nouns))})."""
+        return f"""1.{intro}\n2.{verbs} {passiveVerbs}\n3.{nouns}\n4.{properNouns}\n5.{suffixes}"""
+    
+    elif 'jp' == "".join(lang[:2]):
+        intro = "We will give you examples of English sentences stylized to Japanese syntax that follow or violate the rules of a shared grammar, along with labels 'Yes' or 'No'. You will then generate a label, 'Yes' or 'No', for a new unlabeled sentence that may follow or violate the same grammar rules."
+        verbs = f"""The sentences may use verbs ({', '.join(en_verbs)});"""
+        pastTenseVerbs = f"""or their corresponding past tense forms ({', '.join(en_verbs_past)});""" 
+        infinitiveVerbs = f"""infinitive forms ({', '.join(en_verbs_infinitive)});"""
+        passiveVerbs = f"""or passive forms ({', '.join(en_verbs_passive)});"""
+        nouns = f"""The sentences may use nouns ({', '.join(set(en_nouns + en_nouns_plural))}) for the subjects and objects."""
+        properNouns = f"""The sentences may use proper nouns ({', '.join(set(proper_nouns))})."""
+        suffixes = f"""The sentences use Japanese suffixes such as wa (commonly used after the subject); o, ni, ga, o-ta (commonly used after the object); reru(used after the verb)."""
+        return f"""1.{intro}\n2.{verbs} {pastTenseVerbs} {infinitiveVerbs} {passiveVerbs}\n3.{nouns}\n4.{properNouns}\n5.{suffixes}"""
+
+
 NUM_DEMONSTRATIONS = 10
 BATCH_SIZE = 16
-
+master_prompt = get_master_prompt(col)
 print(col)
 train_dataset = datasets[col]['train']
 test_dataset = datasets[col]['test']
@@ -223,6 +283,5 @@ for i in range(0, len(test_dataset), BATCH_SIZE):
 accuracy = compute_accuracy(preds, golds)
 print(f"{col} -- Accuracy: {accuracy:.2f}\n")
 g = pd.concat([g, pd.DataFrame([{ 'trainType' : col, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
-f.to_csv(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-classification-train-test-det-{col}.csv")
-
-g.to_csv(f'{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-classification-train-test-acc.csv')
+f.to_csv(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-classification-new-prompt-det-{col}.csv")
+g.to_csv(f'{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-classification-new-prompt-acc.csv')
