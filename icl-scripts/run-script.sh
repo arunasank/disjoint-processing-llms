@@ -1,4 +1,4 @@
-count=30
+count=31
 for i in $(seq $count); do
 	> my_script.sh
 	echo "#!/bin/bash" >> my_script.sh
