@@ -30,7 +30,6 @@ tokenizer.pad_token = tokenizer.eos_token
 
 model = LanguageModel("meta-llama/Llama-2-70b-hf",  quantization_config=nf4_config, tokenizer=tokenizer, device_map='auto', cache_dir='/mnt/align4_drive/arunas/llama-tensors/') # Load the model
 
-
 def get_prompt_from_df(filename):
     data = list(pd.read_csv(filename)['prompt'])
     data = [sentence.strip() for sentence in data]
@@ -40,10 +39,8 @@ def get_prompt_from_df(filename):
     data = [sentence[: -len(golds[idx])].strip() for idx, sentence in enumerate(data)]
     return data, golds
 
-types = [col for col in list(og.columns) if not 'ng-' in col] 
-
 def callWithStype(sType):
-    prompts, golds = get_prompt_from_df(f'{PREFIX}/broca/llama/experiments/llama-classification-train-test-det-{sType}.csv')
+    prompts, golds = get_prompt_from_df(f'{PREFIX}/broca/llama/experiments/llama-classification-new-prompt-det-{sType}.csv')
 
     mlp_effects_cache = torch.zeros((model.config.num_hidden_layers, model.config.hidden_size)).to("cuda")
     attn_effects_cache = torch.zeros((model.config.num_hidden_layers, model.config.hidden_size)).to("cuda")
@@ -103,8 +100,8 @@ def callWithStype(sType):
     for prompt,gold in tqdm(zip(prompts, golds)):
         try:
             attrPatching(prompt, gold)
-        except:
-            print(f"Error with stype: {sType} prompt: {prompt} gold: {gold}", traceback.format_exc())
+        except Exception as e:
+            print(f"Error with stype: {sType} prompt: {prompt} gold: {gold}", traceback.format_exc(), e)
             continue
 
     mlp_effects_cache /= len(prompts)
@@ -114,20 +111,22 @@ def callWithStype(sType):
     attn_effects_cache = torch.nan_to_num(attn_effects_cache)
 
     flattened_effects_cache = mlp_effects_cache.view(-1)
-    top_neurons = flattened_effects_cache.topk(k=int(flattened_effects_cache.shape[-1]*0.1))
+    top_neurons = flattened_effects_cache.topk(k=int(flattened_effects_cache.shape[-1]*0.001))
     two_d_indices = torch.cat((((top_neurons[1] // mlp_effects_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % mlp_effects_cache.shape[1]).unsqueeze(1))), dim=1)
 
-    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}-new-prompt-1-percent.pkl', 'wb') as f:
+    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}-new-prompt-0.1-percent.pkl', 'wb') as f:
         pickle.dump(two_d_indices, f)
 
     flattened_effects_cache = attn_effects_cache.view(-1)
-    top_neurons = flattened_effects_cache.topk(k=int(flattened_effects_cache.shape[-1] * 0.1))
+    top_neurons = flattened_effects_cache.topk(k=int(flattened_effects_cache.shape[-1] * 0.001))
     two_d_indices = torch.cat((((top_neurons[1] // attn_effects_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % attn_effects_cache.shape[1]).unsqueeze(1))), dim=1)
 
-    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new-prompt-1-percent.pkl', 'wb') as f:
+    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new-prompt-0.1-percent.pkl', 'wb') as f:
         pickle.dump(two_d_indices, f)
 
-for sType in types[:1]:
-    if not os.path.exists(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new-prompt-1-percent.pkl') or not os.path.exists(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}-new-prompt-1-percent.pkl'):
+types = [col for col in og.columns if not 'ng-' in col]
+
+for sType in types[::-1]:
+    if not os.path.exists(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new-prompt-0.1-percent.pkl') or not os.path.exists(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}-new-prompt-0.1-percent.pkl'):
         print(f'Calling {sType}')
         callWithStype(sType)
