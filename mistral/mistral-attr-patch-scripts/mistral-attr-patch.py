@@ -95,15 +95,15 @@ attn_effects_cache = torch.nan_to_num(attn_effects_cache)
 
 flattened_effects_cache = mlp_effects_cache.view(-1)
 print(flattened_effects_cache.shape[-1])
-top_neurons = flattened_effects_cache.topk(k=int((0.01 * flattened_effects_cache.shape[-1])))
+top_neurons = flattened_effects_cache.topk(k=int((0.001 * flattened_effects_cache.shape[-1])))
 two_d_indices = torch.cat((((top_neurons[1] // mlp_effects_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % mlp_effects_cache.shape[1]).unsqueeze(1))), dim=1)
 
-with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/mlp/new-prompt-{sType}-top1-percent.pkl', 'wb') as f:
+with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/mlp/new-prompt-{sType}-top-0.1-percent.pkl', 'wb') as f:
     pickle.dump(two_d_indices, f)
 
 flattened_effects_cache = attn_effects_cache.view(-1)
-top_neurons = flattened_effects_cache.topk(k=int((0.01 * flattened_effects_cache.shape[-1])))
+top_neurons = flattened_effects_cache.topk(k=int((0.001 * flattened_effects_cache.shape[-1])))
 two_d_indices = torch.cat((((top_neurons[1] // attn_effects_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % attn_effects_cache.shape[1]).unsqueeze(1))), dim=1)
 
-with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/attn/new-prompt-{sType}-top1-percent.pkl', 'wb') as f:
+with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/attn/new-prompt-{sType}-top-0.1-percent.pkl', 'wb') as f:
     pickle.dump(two_d_indices, f)
