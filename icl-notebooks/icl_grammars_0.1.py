@@ -40,7 +40,7 @@ gCols = [col for col in list(df.columns) if not 'ng' in col]
 col = gCols[int(sys.argv[1])]
 
 def ablate_model(col):
-    with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/mlp/new-prompt-{col}-top1-percent.pkl', 'rb') as f:
+    with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/mlp/new-prompt-{col}-top-0.1-percent.pkl', 'rb') as f:
         print('ablating mlp ', col)
         x = pickle.load(f)
         x = x.cpu()
@@ -48,7 +48,7 @@ def ablate_model(col):
         for idx, row in df.iterrows():
             model.model.layers[int(row['layer'])].mlp.down_proj.weight[int(row['neuron'])] = torch.zeros_like(model.model.layers[int(row['layer'])].mlp.down_proj.weight[int(row['neuron'])])
 
-    with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/attn/new-prompt-{col}-top1-percent.pkl', 'rb') as f:
+    with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/attn/new-prompt-{col}-top-0.1-percent.pkl', 'rb') as f:
         print('ablating attn ', col)
         x = pickle.load(f)
         x = x.cpu()
@@ -305,5 +305,5 @@ for i in range(0, len(test_dataset), BATCH_SIZE):
 accuracy = compute_accuracy(preds, golds)
 print(f"{col} -- Accuracy: {accuracy:.2f}\n")
 g = pd.concat([g, pd.DataFrame([{ 'trainType' : col, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
-f.to_csv(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-classification-new-prompt-det-{col}-1.csv")
-g.to_csv(f'{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-classification-new-prompt-{col}-acc-1.csv')
+f.to_csv(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-classification-new-prompt-det-{col}-0.1.csv")
+g.to_csv(f'{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-classification-new-prompt-acc-0.1.csv')
