@@ -23,10 +23,8 @@ nf4_config = BitsAndBytesConfig(
     bnb_4bit_compute_dtype=torch.bfloat16
 )
 
-config = AutoConfig.from_pretrained("meta-llama/Llama-2-70b-hf", cache_dir='/mnt/align4_drive/arunas/llama-tensors/')
-tokenizer = AutoTokenizer.from_pretrained(
-           "meta-llama/Llama-2-70b-hf", config=config, cache_dir='/mnt/align4_drive/arunas/llama-tensors/', device_map="auto", padding_side="left"
-           )
+config = AutoConfig.from_pretrained(MODEL_PATH cache_dir=TENSOR_CACHE_PATH)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, config=config, cache_dir=TENSOR_CACHE_PATH, device_map="auto", padding_side="left")
 
 tokenizer.pad_token = tokenizer.eos_token
 model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-70b-hf",  load_in_4bit=True, device_map='auto') # Load the model

@@ -14,8 +14,30 @@ import random
 import pandas as pd
 import os
 import pickle
+import yaml
+import argparse
+parser = argparse.ArgumentParser()
 
-PREFIX = '/home/gridsan/arunas'
+parser.add_argument('--config', type=str, help='path to the model training config file, found in broca/configs')
+
+args = parser.parse_args()
+
+with open(args.config, 'r') as f:
+    config = yaml.safe_load(f)
+
+
+PREFIX = config.prefix
+MODEL_NAME = config.model_name
+MODEL_PATH = config.model_path
+ABLATION = config.ablation
+ABLATION_PICKLE_PREFIX = config.ablation_prefix
+ABLATION_PICKLE_SUFFIX = config.ablation_suffix
+MEAN_ABLATION = config.mean_ablation
+DATA_PATH = config.data_path
+NUM_DEMONSTRATIONS = config.num_demonstrations
+BATCH_SIZE = config.batch_size
+FINAL_CSV_PREFIX = config.final_csv_prefix
+FINAL_CSV_SUFFIX = config.final_csv_suffix
 
 nf4_config = BitsAndBytesConfig(
     load_in_4bit=True,
@@ -23,41 +45,39 @@ nf4_config = BitsAndBytesConfig(
     bnb_4bit_compute_dtype=torch.bfloat16
 )
 
-MODEL_NAME="mistral"
-MODEL = "mistralai/Mistral-7B-v0.1"
-CACHE = f"{PREFIX}/models/mistralai/Mistral-7B-v0.1/"
-
-config = AutoConfig.from_pretrained(CACHE)
-tokenizer = AutoTokenizer.from_pretrained(CACHE, config=config, device_map="auto", padding_side="left")
+model_config = AutoConfig.from_pretrained(MODEL_PATH)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, config=model_config, device_map="auto", padding_side="left")
 
 tokenizer.pad_token = tokenizer.eos_token
-model = AutoModelForCausalLM.from_pretrained(CACHE, config=config, quantization_config=nf4_config, device_map='auto') # Load the model
+model = AutoModelForCausalLM.from_pretrained(MODEL_PATH, config=model_config, quantization_config=nf4_config, device_map='auto') # Load the model
 
 device_map = infer_auto_device_map(model)
-print(device_map)
-df = pd.read_csv(f'{PREFIX}/broca/data-gen/ngs.csv')
+
+df = pd.read_csv(f'{DATA_PATH}')
 gCols = [col for col in list(df.columns) if not 'ng' in col]
 col = gCols[int(sys.argv[1])]
 
-def ablate_model(col):
-    with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/mlp/new-prompt-{col}-top1-percent.pkl', 'rb') as f:
-        print('ablating mlp ', col)
-        x = pickle.load(f)
-        x = x.cpu()
-        df = pd.DataFrame(x, columns=['layer', 'neuron'])
-        for idx, row in df.iterrows():
-            model.model.layers[int(row['layer'])].mlp.down_proj.weight[int(row['neuron'])] = torch.zeros_like(model.model.layers[int(row['layer'])].mlp.down_proj.weight[int(row['neuron'])])
 
-    with open(f'/home/gridsan/arunas/broca/mistral/mistral-attr-patch-scripts/attn/new-prompt-{col}-top1-percent.pkl', 'rb') as f:
-        print('ablating attn ', col)
-        x = pickle.load(f)
-        x = x.cpu()
-        df = pd.DataFrame(x, columns=['layer', 'neuron'])
-        for idx, row in df.iterrows():
-            model.model.layers[int(row['layer'])].self_attn.o_proj.weight[int(row['neuron'])] = torch.zeros_like(model.model.layers[int(row['layer'])].self_attn.o_proj.weight[int(row['neuron'])])
-
-with torch.no_grad():
-    ablate_model(col)
+if (ABLATION):
+    def ablate_model(col):
+        with open(f'{PREFIX}/broca/{MODEL_NAME}/{MODEL_NAME}-attr-patch-scripts/mlp/{ABLATION_PICKLE_PREFIX}-{col}-{ABLATION_PICKLE_SUFFIX}.pkl', 'rb') as f:
+            print('ablating mlp ', col)
+            x = pickle.load(f)
+            x = x.cpu()
+            df = pd.DataFrame(x, columns=['layer', 'neuron'])
+            for idx, row in df.iterrows():
+                model.model.layers[int(row['layer'])].mlp.down_proj.weight[int(row['neuron'])] = torch.zeros_like(model.model.layers[int(row['layer'])].mlp.down_proj.weight[int(row['neuron'])])
+    
+        with open(f'{PREFIX}/broca/{MODEL_NAME}/{MODEL_NAME}-attr-patch-scripts/attn/{ABLATION_PICKLE_PREFIX}-{col}-{ABLATION_PICKLE_SUFFIX}.pkl', 'rb') as f:
+            print('ablating attn ', col)
+            x = pickle.load(f)
+            x = x.cpu()
+            df = pd.DataFrame(x, columns=['layer', 'neuron'])
+            for idx, row in df.iterrows():
+                model.model.layers[int(row['layer'])].self_attn.o_proj.weight[int(row['neuron'])] = torch.zeros_like(model.model.layers[int(row['layer'])].self_attn.o_proj.weight[int(row['neuron'])])
+    
+    with torch.no_grad():
+        ablate_model(col)
 
 def parse_answer(text):
     answers = []
@@ -244,11 +264,7 @@ def get_master_prompt(lang):
         suffixes = f"""The sentences use Japanese suffixes such as wa (commonly used after the subject); o, ni, ga, o-ta (commonly used after the object); reru(used after the verb)."""
         return f"""1.{intro}\n2.{verbs} {pastTenseVerbs} {infinitiveVerbs} {passiveVerbs}\n3.{nouns}\n4.{properNouns}\n5.{suffixes}"""
 
-
-NUM_DEMONSTRATIONS = 10
-BATCH_SIZE = 16
 master_prompt = get_master_prompt(col)
-print(col)
 train_dataset = datasets[col]['train']
 test_dataset = datasets[col]['test']
 printAnswer = False
@@ -305,5 +321,5 @@ for i in range(0, len(test_dataset), BATCH_SIZE):
 accuracy = compute_accuracy(preds, golds)
 print(f"{col} -- Accuracy: {accuracy:.2f}\n")
 g = pd.concat([g, pd.DataFrame([{ 'trainType' : col, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
-f.to_csv(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-classification-new-prompt-det-{col}-1.csv")
-g.to_csv(f'{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-classification-new-prompt-{col}-acc-1.csv')
+f.to_csv(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-{FINAL_CSV_PREFIX}-{col}-{FINAL_CSV_SUFFIX}.csv")
+g.to_csv(f'{PREFIX}/broca/{MODEL_NAME}/experiments/{MODEL_NAME}-{FINAL_CSV_PREFIX}-{col}-{FINAL_CSV_SUFFIX}.csv')

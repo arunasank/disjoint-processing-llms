@@ -1,0 +1,7 @@
+model_name: "mistral"
+model_path: "/home/gridsan/arunas/models/mistralai/Mistral-7B-v0.1"
+prefix: "/home/gridsan/arunas/"
+data_path: "/home/gridsan/arunas/broca/data-gen/ngs.csv"
+prompt_files_path: "/home/gridsan/arunas/broca/mistral/experiments/new-prompt/"
+patch_pickles_path: "/home/gridsan/arunas/broca/mistral/atp/patches/"
+patch_pickles_sub_path: "all-neurons"

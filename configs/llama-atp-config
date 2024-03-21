@@ -1,0 +1,8 @@
+model_name: "llama"
+model_path: "meta-llama/Llama-2-70b-hf"
+cache_path: "/mnt/align4_drive/arunas/llama-tensors/"
+prompt_files_path: "/mnt/align4_drive/arunas/broca/llama/experiments/"
+patch_pickles_path: "/mnt/align4_drive/arunas/broca/llama/atp/"
+hf_token: ${HF_TOKEN}
+prefix: '/mnt/align4_drive/arunas'
+data_path: "/home/gridsan/arunas/broca/data-gen/ngs.csv"
