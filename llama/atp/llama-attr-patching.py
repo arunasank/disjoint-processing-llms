@@ -13,19 +13,23 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--config_file', type=str, help='path to the model training config file, found in broca/config')
 parser.add_argument('--stype', type=int, help='structure type idx. Can range from 0-30')
 
-with open(args['config_file'], 'r') as f:
+args = parser.parse_args()
+
+with open(args.config_file, 'r') as f:
     config_file = yaml.safe_load(f)
 
 print(json.dumps(config_file, indent=4))
 PREFIX = config_file["prefix"]
 MODEL_NAME = config_file["model_name"]
 MODEL_PATH = config_file["model_path"]
+MODEL_CACHE_PATH = config_file["model_cache_path"]
 DATA_PATH = config_file["data_path"]
 PROMPT_FILES_PATH = config_file["prompt_files_path"]
 PATCH_PICKLES_PATH = config_file["patch_pickles_path"]
 PATCH_PICKLES_SUBPATH = config_file["patch_pickles_sub_path"]
 
 if (MODEL_NAME == "llama"):
+    os.environ["HF_TOKEN"] = config_file["hf_token"]
     nf4_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
@@ -64,7 +68,7 @@ def get_prompt_from_df(filename):
     data = [sentence[: -len(golds[idx])].strip() for idx, sentence in enumerate(data)]
     return data, golds
 
-sType = types[args['stype']]
+sType = types[args.stype]
 
 mlp_effects_cache = torch.zeros((model.config.num_hidden_layers, model.config.hidden_size)).to("cuda")
 attn_effects_cache = torch.zeros((model.config.num_hidden_layers, model.config.hidden_size)).to("cuda")
@@ -94,30 +98,28 @@ def attrPatching(fullPrompt, gold, idx):
     notGold = "No"
     gold = model.tokenizer(gold)["input_ids"]
     notGold = model.tokenizer(notGold)["input_ids"]
-    with model.forward(inference=False) as runner:
-        with runner.invoke(fullPrompt) as invoker:
-            for layer in range(len(model.model.layers)):
-                self_attn = model.model.layers[layer].self_attn.o_proj.output
-                mlp = model.model.layers[layer].mlp.down_proj.output
-                mlp.retain_grad()
-                self_attn.retain_grad()
-    
-                attn_layer_cache_prompt[layer] = {"forward": self_attn.save()} # "backward": self_attn.grad.detach().save()}
-                mlp_layer_cache_prompt[layer] = {"forward": mlp.save()}# "backward": mlp.grad.detach().save()}
-    
+    with model.trace(fullPrompt, scan=False, validate=False) as tracer:
+        for layer in range(len(model.model.layers)):
+            self_attn = model.model.layers[layer].self_attn.o_proj.output
+            mlp = model.model.layers[layer].mlp.down_proj.output
+            mlp.retain_grad()
+            self_attn.retain_grad()
+
+            attn_layer_cache_prompt[layer] = {"forward": self_attn.save()} # "backward": self_attn.grad.detach().save()}
+            mlp_layer_cache_prompt[layer] = {"forward": mlp.save()}# "backward": mlp.grad.detach().save()}
+
         logits = model.lm_head.output.save()
     loss = logits.value[:, -1, notGold] - logits.value[:, -1, gold]
     loss = loss.sum()
     loss.backward()
 
-    with model.forward(inference=False) as runner:
-        with runner.invoke(patchPrompt) as invoker:
-            for layer in range(len(model.model.layers)):
-                self_attn = model.model.layers[layer].self_attn.o_proj.output
-                mlp = model.model.layers[layer].mlp.down_proj.output
-    
-                attn_layer_cache_patch[layer] = {"forward": self_attn.save()}
-                mlp_layer_cache_patch[layer] = {"forward": mlp.save()}
+    with model.trace(patchPrompt, scan=False, validate=False) as tracer:
+        for layer in range(len(model.model.layers)):
+            self_attn = model.model.layers[layer].self_attn.o_proj.output
+            mlp = model.model.layers[layer].mlp.down_proj.output
+
+            attn_layer_cache_patch[layer] = {"forward": self_attn.save()}
+            mlp_layer_cache_patch[layer] = {"forward": mlp.save()}
 
     for layer in range(len(model.model.layers)):
         mlp_effects = (mlp_layer_cache_prompt[layer]["forward"].value.grad * (mlp_layer_cache_patch[layer]["forward"].value - mlp_layer_cache_prompt[layer]["forward"].value)).detach()
@@ -126,14 +128,12 @@ def attrPatching(fullPrompt, gold, idx):
         mlp_effects = mlp_effects[0, -1, :] # batch, token, hidden_states
         attn_effects = attn_effects[0, -1, :] # batch, token, hidden_states
 
-        mlp_effects_cache[layer] += mlp_effects
-        attn_effects_cache[layer] += attn_effects
+        mlp_effects_cache[layer] += mlp_effects.to(mlp_effects_cache[layer].get_device())
+        attn_effects_cache[layer] += attn_effects.to(mlp_effects_cache[layer].get_device())
 
 prompts, golds = get_prompt_from_df(f'{PROMPT_FILES_PATH}/{sType}.csv')
 for idx,(prompt,gold) in tqdm(enumerate(zip(prompts, golds))):
     attrPatching(prompt, gold, idx)
-    if idx > 10:
-        break
 
 mlp_effects_cache /= len(prompts)
 attn_effects_cache /= len(prompts)
@@ -141,5 +141,5 @@ attn_effects_cache /= len(prompts)
 with open(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/{sType}.pkl', 'wb') as f:
     pickle.dump(mlp_effects_cache, f)
 
-with open(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}{sType}.pkl', 'wb') as f:
+with open(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sType}.pkl', 'wb') as f:
     pickle.dump(attn_effects_cache, f)
