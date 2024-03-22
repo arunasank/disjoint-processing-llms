@@ -9,3 +9,4 @@ ablation_pickle_suffix: "top-0.1"
 mean_ablation: False
 num_dems: 10
 final_csv_sub_path: "new-prompt-prologue-random-seed"
+stype: 23
