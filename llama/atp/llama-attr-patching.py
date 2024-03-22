@@ -74,8 +74,6 @@ if (not os.path.exists(f"{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sTyp
         data = [sentence[: -len(golds[idx])].strip() for idx, sentence in enumerate(data)]
         return data, golds
 
-
-
     mlp_effects_cache = torch.zeros((model.config.num_hidden_layers, model.config.hidden_size)).to("cuda")
     attn_effects_cache = torch.zeros((model.config.num_hidden_layers, model.config.hidden_size)).to("cuda")
 

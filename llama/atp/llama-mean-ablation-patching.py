@@ -10,26 +10,46 @@ import sys
 import os
 import matplotlib.pyplot as plt
 import traceback
-os.environ['HF_TOKEN'] = "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"
-PREFIX = '/mnt/align4_drive/arunas'
-og = pd.read_csv(f'{PREFIX}/broca/data-gen/ngs.csv')
-print(og.columns)
+import argparse
+import yaml
+import json
+parser = argparse.ArgumentParser()
 
+parser.add_argument('--config_file', type=str, help='path to the model training config file, found in broca/config')
+parser.add_argument('--stype', type=int, help='structure type idx. Can range from 0-30')
+
+args = parser.parse_args()
+
+with open(args.config_file, 'r') as f:
+    config_file = yaml.safe_load(f)
+
+print(json.dumps(config_file, indent=4))
+PREFIX = config_file["prefix"]
+MODEL_NAME = config_file["model_name"]
+MODEL_PATH = config_file["model_path"]
+MODEL_CACHE_PATH = config_file["model_cache_path"]
+DATA_PATH = config_file["data_path"]
+PROMPT_FILES_PATH = config_file["prompt_files_path"]
+PATCH_PICKLES_PATH = config_file["patch_pickles_path"]
+PATCH_PICKLES_SUBPATH = config_file["patch_pickles_sub_path"]
+
+og = pd.read_csv(DATA_PATH)
+types = [col for col in og.columns if not 'ng-' in col]
+
+os.environ["HF_TOKEN"] = config_file["hf_token"]
 nf4_config = BitsAndBytesConfig(
     load_in_4bit=True,
     bnb_4bit_quant_type="nf4",
     bnb_4bit_compute_dtype=torch.bfloat16
 )
 
-config = AutoConfig.from_pretrained("meta-llama/Llama-2-70b-hf", cache_dir='/mnt/align4_drive/arunas/llama-tensors/')
-tokenizer = AutoTokenizer.from_pretrained(
-           "meta-llama/Llama-2-70b-hf", config=config, device_map="auto", padding_side="left", cache_dir='/mnt/align4_drive/arunas/llama-tensors/'
-           )
+config = AutoConfig.from_pretrained(MODEL_PATH, cache_dir=MODEL_CACHE_PATH)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, config=config, device_map="auto", padding_side="left", cache_dir=MODEL_CACHE_PATH)
 
 tokenizer.pad_token = tokenizer.eos_token
 
-model = LanguageModel("meta-llama/Llama-2-70b-hf",  quantization_config=nf4_config, tokenizer=tokenizer, device_map='auto', cache_dir='/mnt/align4_drive/arunas/llama-tensors/') # Load the model
-
+model = LanguageModel(MODEL_PATH,  quantization_config=nf4_config, tokenizer=tokenizer, dispatch=True, device_map='auto', cache_dir=MODEL_CACHE_PATH) # Load the model
+print(model)
 def get_prompt_from_df(filename):
     data = list(pd.read_csv(filename)['prompt'])
     data = [sentence.strip() for sentence in data]
@@ -41,93 +61,58 @@ def get_prompt_from_df(filename):
 
 types = [col for col in list(og.columns) if not 'ng-' in col] 
 
-def getMaxTokenLenAndPrefixes(prompts, golds):
+def getPaddedTrainTokens(prompts, golds):
     max_len = 0
     test_prefixes = []
-    train_examples = set()
     train_prefixes = []
-    for prompt in prompts:
-        testExample = [x.strip() for m in prompt.split("Q: Is this sentence grammatical? Yes or No: ") for x in m.strip().split("A: ") if len(x.strip()) > 3]
+    train_tokens = []
+    for idx, prompt in enumerate(prompts):
+        # testExample = [x.strip() for m in prompt.split("Q: Is this sentence grammatical? Yes or No: ") for x in m.strip().split("A: ") if len(x.strip()) > 3]
         # t = [x.strip() for m in prompt.split("Q: Is this sentence grammatical? Yes or No: ") for x in m.strip().split("A: ") if len(x.strip()) > 3]
         # train_examples.update(t[:-1])
-        test_prefixes.append(model.tokenizer(t[-1])["input_ids"])
-        max_len = max(max_len, len(test_prefixes[-1]))
+        # trainData = prompt.removesuffix(("Q: Is this sentence grammatical? Yes or No: " + testExample + "\nA: {golds[idx]}")).strip()
+        train_example = prompt.removesuffix(golds[idx]).strip()
+        # test_prefixes.append(testExample)
+        train_prefixes.append(train_example)
+        max_len = max(max_len, len(model.tokenizer(train_example)['input_ids']))
         
     for t in train_prefixes:
-        train_prefixes.append(model.tokenizer(t)["input_ids"])
-        
-    return max_len, test_prefixes, train_prefixes
-        
+        train_tokens.append(tokenizer.decode(model.tokenizer(t, padding='max_length', max_length=max_len)["input_ids"]))
+    
+    return train_tokens, max_len
 
-prompts, golds = get_prompt_from_df(f'{PREFIX}/broca/llama/experiments/llama-classification-train-test-det-{sType}.csv')
-    trainPrefixes, max_len = getMaxTokenizedLen(prompts)
-    mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, model.config.hidden_size)).to("cuda")
-    attn_mean_cache = torch.zeros((model.config.num_hidden_layers, model.config.hidden_size)).to("cuda")
+def call_with_stype(sType):
+    prompts, golds = get_prompt_from_df(f'{PROMPT_FILES_PATH}/{sType}.csv')
+    train_prefixes, max_len = getPaddedTrainTokens(prompts, golds)
 
-    promptPrefix = fullPrompt[fullPrompt[:-2].rfind(':')+1:-2].strip()
-    goldToken = model.tokenizer(gold)["input_ids"]
-    promptPrefixToken = model.tokenizer(promptPrefix, max_len=max_len, padding=True)["input_ids"]
-    
-    with model.trace(fullPrompt, scan=False, validate=False) as tracer:
-        for layer in range(len(model.model.layers)):
-            self_attn = model.model.layers[layer].self_attn.o_proj.output
-            mlp = model.model.layers[layer].mlp.down_proj.output
-        
-            attn_layer_cache_prompt[layer] = {"forward": self_attn.detach().save(), "backward": self_attn.grad.detach().save()}
-            mlp_layer_cache_prompt[layer] = {"forward": mlp.detach().save(), "backward": mlp.grad.detach().save()}
-        
-        logits = model.lm_head.output[:, -1, notGold] - model.lm_head.output[:, -1, gold]
-        loss = logits.sum()
-        loss.backward(retain_graph=False)
-    
-    
-        with model.trace(patchPrompt, scan=False, validate=False) as tracer:
+    mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 2, model.model.layers[0].self_attn.o_proj.out_features)).to("cuda")
+    attn_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 2, model.model.layers[0].mlp.down_proj.out_features)).to("cuda")
+
+    for tr_prefix in train_prefixes:
+        with model.trace(tr_prefix, scan=False, validate=False) as tracer:
             for layer in range(len(model.model.layers)):
                 self_attn = model.model.layers[layer].self_attn.o_proj.output
                 mlp = model.model.layers[layer].mlp.down_proj.output
-        
-                attn_layer_cache_patch[layer] = {"forward": self_attn.detach().save()}
-                mlp_layer_cache_patch[layer] = {"forward": mlp.detach().save()}
-        
-        for layer in range(len(model.model.layers)):
-            mlp_effects = mlp_layer_cache_prompt[layer]["backward"].value * (mlp_layer_cache_patch[layer]["forward"].value - mlp_layer_cache_prompt[layer]["forward"].value)
-            attn_effects = attn_layer_cache_prompt[layer]["backward"].value * (attn_layer_cache_patch[layer]["forward"].value - attn_layer_cache_prompt[layer]["forward"].value)
-        
-            mlp_effects = mlp_effects[:, -1, :] # batch, token, hidden_states
-            attn_effects = attn_effects[:, -1, :] # batch, token, hidden_states
-        
-            mlp_mean_cache[layer] += mlp_effects[0].to(mlp_mean_cache[layer].device)
-            attn_mean_cache[layer] += attn_effects[0].to(attn_mean_cache[layer].device)
+                attn_mean_cache[layer] += self_attn[0,:,:].detach().save()
+                mlp_mean_cache[layer] += mlp[0,:,:].detach().save()
 
-
-    for prompt,gold in tqdm(zip(prompts, golds)):
-        try:
-            attrPatching(prompt, gold)
-        except:
-            print(f"Error with stype: {sType} prompt: {prompt} gold: {gold}", traceback.format_exc())
-            continue
-
-    mlp_mean_cache /= len(prompts)
-    attn_mean_cache /= len(prompts)
-
-    mlp_mean_cache = torch.nan_to_num(mlp_mean_cache)
-    attn_mean_cache = torch.nan_to_num(attn_mean_cache)
-
-    flattened_effects_cache = mlp_mean_cache.view(-1)
-    top_neurons = flattened_effects_cache.topk(k=40)
-    two_d_indices = torch.cat((((top_neurons[1] // mlp_mean_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % mlp_mean_cache.shape[1]).unsqueeze(1))), dim=1)
-
-    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}-new.pkl', 'wb') as f:
-        pickle.dump(two_d_indices, f)
+    attn_mean_cache /= len(train_prefixes)
+    mlp_mean_cache /= len(train_prefixes)
 
     flattened_effects_cache = attn_mean_cache.view(-1)
     top_neurons = flattened_effects_cache.topk(k=40)
     two_d_indices = torch.cat((((top_neurons[1] // attn_mean_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % attn_mean_cache.shape[1]).unsqueeze(1))), dim=1)
 
-    with open(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new.pkl', 'wb') as f:
+    with open(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sType}.pkl', 'wb') as f:
         pickle.dump(two_d_indices, f)
 
-for sType in reversed(types):
-    if not os.path.exists(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/attn/{sType}-new.pkl') or not os.path.exists(f'{PREFIX}/broca/llama/llama-attr-patch-scripts/mlp/{sType}-new.pkl'):
-        print(f'Calling {sType}')
-        callWithStype(sType)
+    flattened_effects_cache = mlp_mean_cache.view(-1)
+    top_neurons = flattened_effects_cache.topk(k=40)
+    two_d_indices = torch.cat((((top_neurons[1] // attn_mean_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % attn_mean_cache.shape[1]).unsqueeze(1))), dim=1)
+
+    with open(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/{sType}.pkl', 'wb') as f:
+        pickle.dump(two_d_indices, f)
+        
+for col in types:
+    if (not os.path.exists(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{col}.pkl') or not os.path.exists(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/{col}.pkl')):
+        call_with_stype(col)
