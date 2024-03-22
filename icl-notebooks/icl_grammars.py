@@ -29,15 +29,14 @@ args = parser.parse_args()
 with open(args.config, 'r') as f:
     config = yaml.safe_load(f)
 
-
-PREFIX = config.prefix
-MODEL_NAME = config.model_name
-MODEL_PATH = config.model_path
-ABLATION = config.ablation
-DATA_PATH = config.data_path
-NUM_DEMONSTRATIONS = config.num_demonstrations
-BATCH_SIZE = config.batch_size
-FINAL_CSV_PATH = config.final_csv_path
+PREFIX = config["prefix"]
+MODEL_NAME = config["model_name"]
+MODEL_PATH = config["model_path"]
+ABLATION = config["ablation"]
+DATA_PATH = config["data_path"]
+NUM_DEMONSTRATIONS = config["num_demonstrations"]
+BATCH_SIZE = config["batch_size"]
+FINAL_CSV_PATH = config["final_csv_path"]
 
 nf4_config = BitsAndBytesConfig(
     load_in_4bit=True,
@@ -58,9 +57,9 @@ gCols = [col for col in list(df.columns) if not 'ng' in col]
 col = gCols[int(sys.argv[1])]
 
 if (ABLATION):
-    MEAN_ABLATION = config.mean_ablation
-    ABLATION_PICKLE_PREFIX = config.ablation_prefix
-    ABLATION_PICKLE_SUFFIX = config.ablation_suffix
+    MEAN_ABLATION = config["mean_ablation"]
+    ABLATION_PICKLE_PREFIX = config["ablation_prefix"]
+    ABLATION_PICKLE_SUFFIX = config["ablation_suffix"]
     def ablate_model(col):
         with open(f'{PREFIX}/broca/{MODEL_NAME}/{MODEL_NAME}-attr-patch-scripts/mlp/{ABLATION_PICKLE_PREFIX}-{col}-{ABLATION_PICKLE_SUFFIX}.pkl', 'rb') as f:
             print('ablating mlp ', col)
@@ -330,5 +329,5 @@ for i in range(0, len(test_dataset), BATCH_SIZE):
 accuracy = compute_accuracy(preds, golds)
 print(f"{col} -- Accuracy: {accuracy:.2f}\n")
 g = pd.concat([g, pd.DataFrame([{ 'trainType' : col, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
-f.to_csv(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{col}.csv")
-g.to_csv(f'{PREFIX}/broca/{MODEL_NAME}/experiments/{col}.csv')
+f.to_csv(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{final_csv_sub_path}/{col}.csv")
+g.to_csv(f'{PREFIX}/broca/{MODEL_NAME}/experiments/{final_csv_sub_path}/{col}.csv')
