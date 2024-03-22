@@ -1,13 +1,11 @@
 model_name: "mistral"
-model_path: "/home/gridsan/arunas/models/mistralai/Mistral-7B-v0.1"
+model_path: "mistralai/Mistral-7B-v0.1"
 prefix: "/home/gridsan/arunas/"
 batch_size: 32
-output-file-suffix: "0.1"
 data_path: "/home/gridsan/arunas/broca/data-gen/ngs.csv"
-ablation: True
+ablation: False
 ablation_pickle_prefix: "new-prompt"
 ablation_pickle_suffix: "top-0.1"
 mean_ablation: False
 num_dems: 10
-final_csv_prefix: "det"
-final_csv_suffix: "0.1"
+final_csv_sub_path: "new-prompt-prologue-random-seed"
