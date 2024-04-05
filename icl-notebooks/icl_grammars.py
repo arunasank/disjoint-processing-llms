@@ -12,31 +12,36 @@ from datasets import Dataset, load_dataset
 import torch
 import random
 import pandas as pd
+from tqdm import tqdm
 import os
 import pickle
 import yaml
 import argparse
-
+import numpy as np
 random.seed(42)
 torch.manual_seed(42)
 
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--config', type=str, help='path to the model training config file, found in broca/configs')
+parser.add_argument('--stype', type=int, help='grammar structure col number, found in broca/data-gen')
 
 args = parser.parse_args()
-
 with open(args.config, 'r') as f:
     config = yaml.safe_load(f)
+
+# args = { "config": "/mnt/align4_drive/arunas/broca/configs/mistral-icl-config", "stype": 7 }
+# with open(args["config"], 'r') as f:
+#     config = yaml.safe_load(f)
 
 PREFIX = config["prefix"]
 MODEL_NAME = config["model_name"]
 MODEL_PATH = config["model_path"]
 ABLATION = config["ablation"]
 DATA_PATH = config["data_path"]
-NUM_DEMONSTRATIONS = config["num_demonstrations"]
+NUM_DEMONSTRATIONS = config["num_dems"]
 BATCH_SIZE = config["batch_size"]
-FINAL_CSV_PATH = config["final_csv_path"]
+FINAL_CSV_SUBPATH = config["final_csv_subpath"]
 
 nf4_config = BitsAndBytesConfig(
     load_in_4bit=True,
@@ -48,37 +53,43 @@ model_config = AutoConfig.from_pretrained(MODEL_PATH)
 tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, config=model_config, device_map="auto", padding_side="left")
 
 tokenizer.pad_token = tokenizer.eos_token
-model = AutoModelForCausalLM.from_pretrained(MODEL_PATH, config=model_config, quantization_config=nf4_config, device_map='auto') # Load the model
+model = AutoModelForCausalLM.from_pretrained(MODEL_PATH, config=model_config, device_map='auto') # Load the model
 
 device_map = infer_auto_device_map(model)
 
 df = pd.read_csv(f'{DATA_PATH}')
 gCols = [col for col in list(df.columns) if not 'ng' in col]
-col = gCols[int(sys.argv[1])]
+col = gCols[args.stype]
 
 if (ABLATION):
     MEAN_ABLATION = config["mean_ablation"]
-    ABLATION_PICKLE_PREFIX = config["ablation_prefix"]
-    ABLATION_PICKLE_SUFFIX = config["ablation_suffix"]
-    def ablate_model(col):
-        with open(f'{PREFIX}/broca/{MODEL_NAME}/{MODEL_NAME}-attr-patch-scripts/mlp/{ABLATION_PICKLE_PREFIX}-{col}-{ABLATION_PICKLE_SUFFIX}.pkl', 'rb') as f:
-            print('ablating mlp ', col)
-            x = pickle.load(f)
-            x = x.cpu()
-            df = pd.DataFrame(x, columns=['layer', 'neuron'])
+    MEAN_PICKLES_PATH = config["mean_pickles_path"]
+    MEAN_PICKLES_SUBPATH = config["mean_pickles_subpath"]
+    PATCH_PICKLES_PATH = config["patch_pickles_path"]
+    PATCH_PICKLES_SUBPATH = config["patch_pickles_subpath"]
+    def retrieve_topK(col, component, topK):
+        with open(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/{col}.pkl', 'rb') as f:
+            print(f'ablating {component} ', col)
+            component_cache = pickle.load(f)
+            print('before top k', component_cache.shape)
+            component_cache = component_cache.cpu()
+            flattened_effects_cache = component_cache.view(-1)
+            top_neurons = flattened_effects_cache.topk(k=int(topK * flattened_effects_cache.shape[-1]))
+            two_d_indices = torch.cat((((top_neurons[1] // component_cache.shape[1]).unsqueeze(1)), ((top_neurons[1] % component_cache.shape[1]).unsqueeze(1))), dim=1)            
+            df = pd.DataFrame(two_d_indices, columns=['layer', 'neuron'])
+        return df
+
+    def ablate_model(col, component):
+        df = retrieve_topK(col, component, 0.01)
+        with open(f'{MEAN_PICKLES_PATH}/{component}/{MEAN_PICKLES_SUBPATH}/{col}.pkl', 'rb') as mf:
+            component_cache = pickle.load(mf)
+            component_cache = component_cache.cpu()
             for idx, row in df.iterrows():
-                model.model.layers[int(row['layer'])].mlp.down_proj.weight[int(row['neuron'])] = torch.zeros_like(model.model.layers[int(row['layer'])].mlp.down_proj.weight[int(row['neuron'])])
-    
-        with open(f'{PREFIX}/broca/{MODEL_NAME}/{MODEL_NAME}-attr-patch-scripts/attn/{ABLATION_PICKLE_PREFIX}-{col}-{ABLATION_PICKLE_SUFFIX}.pkl', 'rb') as f:
-            print('ablating attn ', col)
-            x = pickle.load(f)
-            x = x.cpu()
-            df = pd.DataFrame(x, columns=['layer', 'neuron'])
-            for idx, row in df.iterrows():
-                model.model.layers[int(row['layer'])].self_attn.o_proj.weight[int(row['neuron'])] = torch.zeros_like(model.model.layers[int(row['layer'])].self_attn.o_proj.weight[int(row['neuron'])])
-    
+                model.model.layers[int(row['layer'])].mlp.down_proj.weight[int(row['neuron'])] = component_cache[row['layer'], row['neuron']]
+        
     with torch.no_grad():
-        ablate_model(col)
+        ablate_model(col, 'mlp')
+        ablate_model(col, 'attn')
 
 def parse_answer(text):
     answers = []
@@ -131,7 +142,7 @@ def get_aligned_words_measures(texts: str,
         text = f'{texts[t]} {answers[t]}'
         data = []
     
-        ids = tokenizer(text, return_tensors='pt')
+        ids = tokenizer(text, return_tensors='pt').to('cuda')
         input_ids = ids.input_ids.flatten().data
         target_ids = ids.input_ids[:,1:]
     
@@ -178,7 +189,8 @@ f = pd.DataFrame(columns=["type", "prompt", "q", "prediction", "gold", "surprisa
 f['type'] = 'test'
 g = pd.DataFrame(columns=['accuracy', 'type'])
 datasets = {}
-datasets[col] = Dataset.from_pandas(pd.DataFrame(df[[col, 'ng-' + col]].copy())).train_test_split(test_size=0.5, random_state=42)
+np.random.seed(42)
+datasets[col] = Dataset.from_pandas(pd.DataFrame(df[[col, 'ng-' + col]].copy())).train_test_split(test_size=0.5)
 
 def get_master_prompt(lang):
     en_verbs = ["affirms", "bring", "brings", "carries", "carry", "climb", "climbs", "eat", "eats", "hold", "holds", "knows", "notices", "read", "reads", "says", "sees", "take", "takes"]
@@ -270,64 +282,63 @@ def get_master_prompt(lang):
         # return f"""1.{intro}\n2.{verbs} {pastTenseVerbs} {infinitiveVerbs} {passiveVerbs}\n3.{nouns}\n4.{properNouns}\n5.{suffixes}"""
         return f"1. {intro}\n2. {suffixes}"
 
-master_prompt = get_master_prompt(col)
-train_dataset = datasets[col]['train']
-test_dataset = datasets[col]['test']
-printAnswer = False
-f = pd.DataFrame(columns=["type", "prompt", "q", "prediction", "gold", "surprisal", "int-grad"])
-for i in range(0, len(test_dataset), BATCH_SIZE):
-    if (i > 10):
-        break
-    test_sentences = []
-    fPrompts = []
-    fQs = []
-    fGolds = []
-    prompts = []
-    for batch_idx in range(BATCH_SIZE):
-        testBadOrGood = random.choice(['ng-', ''])
-        if (i + batch_idx) >= len(test_dataset):
-            break;
-        test_sentence = test_dataset[i + batch_idx]
-        prompt = construct_prompt(train_dataset, NUM_DEMONSTRATIONS)
-        
-        fPrompt = prompt
-        
-        # Append test example
-        prompt += "Q: Is this sentence grammatical? Yes or No: "
-        prompt += test_sentence[testBadOrGood + col]
-        prompt += "\nA:"
-        
-        fQ = "Q: Is this sentence grammatical? Yes or No: " + test_sentence[testBadOrGood + col] + "\nA:"
-        
-        if testBadOrGood == 'ng-':
-            golds.append("No")
-            fGold = 'No'
-        else:
-            golds.append("Yes")
-            fGold = 'Yes'
-        fGolds.append(fGold)
-        prompts.append(master_prompt + prompt)
-        test_sentences.append(test_sentence[testBadOrGood + col])
-        fPrompts.append(fPrompt)
-        fQs.append(fQ)
-        
-    # Get answer from model
-    model_inputs = tokenizer(prompts, return_tensors="pt", padding=True).to('cuda')
-    answers = model.generate(**model_inputs, pad_token_id=tokenizer.eos_token_id, max_new_tokens=2, top_p=0.9, temperature=0.1, do_sample=True)
-    answers = tokenizer.batch_decode(answers)[:BATCH_SIZE]
+if (not (os.path.exists(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{FINAL_CSV_SUBPATH}/{col}.csv")) and not (os.path.exists(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{FINAL_CSV_SUBPATH}/{col}-acc.csv"))):
+    master_prompt = get_master_prompt(col)
+    train_dataset = datasets[col]['train']
+    test_dataset = datasets[col]['test']
+    printAnswer = False
+    f = pd.DataFrame(columns=["type", "prompt", "q", "prediction", "gold", "surprisal", "int-grad"])
+    for i in tqdm(range(0, len(test_dataset), BATCH_SIZE)):
+        test_sentences = []
+        fPrompts = []
+        fQs = []
+        fGolds = []
+        prompts = []
+        for batch_idx in range(BATCH_SIZE):
+            testBadOrGood = random.choice(['ng-', ''])
+            if (i + batch_idx) >= len(test_dataset):
+                break;
+            test_sentence = test_dataset[i + batch_idx]
+            prompt = construct_prompt(train_dataset, NUM_DEMONSTRATIONS)
+            
+            fPrompt = prompt
+            
+            # Append test example
+            prompt += "Q: Is this sentence grammatical? Yes or No: "
+            prompt += test_sentence[testBadOrGood + col]
+            prompt += "\nA:"
+            
+            fQ = "Q: Is this sentence grammatical? Yes or No: " + test_sentence[testBadOrGood + col] + "\nA:"
+            
+            if testBadOrGood == 'ng-':
+                golds.append("No")
+                fGold = 'No'
+            else:
+                golds.append("Yes")
+                fGold = 'Yes'
+            fGolds.append(fGold)
+            prompts.append(master_prompt + prompt)
+            test_sentences.append(test_sentence[testBadOrGood + col])
+            fPrompts.append(fPrompt)
+            fQs.append(fQ)
+            
+        # Get answer from model
+        model_inputs = tokenizer(prompts, return_tensors="pt", padding=True).to('cuda')
+        answers = model.generate(**model_inputs, pad_token_id=tokenizer.eos_token_id, max_new_tokens=2, top_p=0.9, temperature=0.1, do_sample=True)
+        answers = tokenizer.batch_decode(answers)[:BATCH_SIZE]
 
-    if printAnswer:
-        print(answers)
-        printAnswer = False
-    
-    preds = preds + parse_answer(answers)
-    fPredictions = parse_answer(answers)
-    fSurprisals = get_aligned_words_measures(test_sentences, parse_answer(answers), "surp", model, tokenizer)
-    for batch_idx in range(len(fPrompts)):
-        f = pd.concat([f, pd.DataFrame([{'type': col, 'prompt': prompts[batch_idx], 'q' :test_sentences[batch_idx], 'prediction': fPredictions[batch_idx], 'gold': fGolds[batch_idx], 'surprisal': fSurprisals[batch_idx], 'int-grad': 0}])]).reset_index(drop=True)
-# Evaluate
-accuracy = compute_accuracy(preds, golds)
-print(f"{col} -- Accuracy: {accuracy:.2f}\n")
-g = pd.concat([g, pd.DataFrame([{ 'trainType' : col, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
-f.to_csv(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{final_csv_sub_path}/{col}.csv")
-g.to_csv(f'{PREFIX}/broca/{MODEL_NAME}/experiments/{final_csv_sub_path}/{col}.csv')
+        if printAnswer:
+            print(answers)
+            printAnswer = False
+        
+        preds = preds + parse_answer(answers)
+        fPredictions = parse_answer(answers)
+        fSurprisals = get_aligned_words_measures(test_sentences, parse_answer(answers), "surp", model, tokenizer)
+        for batch_idx in range(len(fPrompts)):
+            f = pd.concat([f, pd.DataFrame([{'type': col, 'prompt': prompts[batch_idx], 'q' :test_sentences[batch_idx], 'prediction': fPredictions[batch_idx], 'gold': fGolds[batch_idx], 'surprisal': fSurprisals[batch_idx], 'int-grad': 0}])]).reset_index(drop=True)
+    # Evaluate
+    accuracy = compute_accuracy(preds, golds)
+    print(f"{col} -- Accuracy: {accuracy:.2f}\n")
+    g = pd.concat([g, pd.DataFrame([{ 'trainType' : col, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
+    f.to_csv(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{FINAL_CSV_SUBPATH}/{col}.csv")
+    g.to_csv(f'{PREFIX}/broca/{MODEL_NAME}/experiments/{FINAL_CSV_SUBPATH}/{col}-acc.csv', index=False)

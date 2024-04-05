@@ -34,8 +34,6 @@ og = pd.read_csv(DATA_PATH)
 types = [col for col in og.columns if not 'ng-' in col]
 sType = types[args.stype]
 
-sType = types[0]
-
 if (not os.path.exists(f"{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sType}.pkl") or not os.path.exists(f"{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/{sType}.pkl")):
     print(f"Running for {sType}")
     
@@ -50,13 +48,18 @@ if (not os.path.exists(f"{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sTyp
         tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, config=config, device_map="auto", padding_side="left", cache_dir=MODEL_CACHE_PATH)
         
         tokenizer.pad_token = tokenizer.eos_token
-        model = LanguageModel(MODEL_PATH,  quantization_config=nf4_config, tokenizer=tokenizer, device_map='auto', cache_dir=MODEL_CACHE_PATH) # Load the model
+        model = LanguageModel(MODEL_PATH, quantization_config=nf4_config, tokenizer=tokenizer, device_map='auto', cache_dir=MODEL_CACHE_PATH) # Load the model
 
     elif (MODEL_NAME == "mistral"):
+        nf4_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=torch.bfloat16
+        )
         config = AutoConfig.from_pretrained(MODEL_PATH)
         tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, config=config, device_map="auto", padding_side="left")
         tokenizer.pad_token = tokenizer.eos_token
-        model = LanguageModel(MODEL_PATH,  tokenizer=tokenizer, device_map='auto') # Load the model
+        model = LanguageModel(MODEL_PATH, quantization_config=nf4_config, tokenizer=tokenizer, device_map='auto') # Load the model
         
     model.requires_grad_(True)
 
