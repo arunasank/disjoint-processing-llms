@@ -92,7 +92,7 @@ if (not os.path.exists(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{col}
     mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 1, model.model.layers[0].self_attn.o_proj.out_features)).to("cuda")
     attn_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 1, model.model.layers[0].mlp.down_proj.out_features)).to("cuda")
 
-    for tr_prefix in tqdm(train_prefixes[:5]):
+    for tr_prefix in tqdm(train_prefixes):
         with model.trace(tr_prefix, scan=False, validate=False) as tracer:
             for layer in range(len(model.model.layers)):
                 self_attn = model.model.layers[layer].self_attn.o_proj.output
@@ -102,11 +102,9 @@ if (not os.path.exists(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{col}
 
     attn_mean_cache /= len(train_prefixes)
     mlp_mean_cache /= len(train_prefixes)
-
-    print(attn_mean_cache.shape, mlp_mean_cache.shape, attn_mean_cache[:,-1,:].shape, mlp_mean_cache[:,-1,:].shape)
     
     with open(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/{sType}.pkl', 'wb') as f:
-        pickle.dump(mlp_mean_cache[:, -1, :], f)
+        pickle.dump(mlp_mean_cache[:, :, :], f)
     
     with open(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sType}.pkl', 'wb') as f:
-        pickle.dump(attn_mean_cache[:,-1, :], f)
+        pickle.dump(attn_mean_cache[:, :, :], f)
