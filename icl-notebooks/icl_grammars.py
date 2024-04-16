@@ -79,17 +79,20 @@ if (ABLATION):
             df = pd.DataFrame(two_d_indices, columns=['layer', 'neuron'])
         return df
 
-    def ablate_model(col, component):
+    def ablation_cache(col, component):
         df = retrieve_topK(col, component, 0.01)
         with open(f'{MEAN_PICKLES_PATH}/{component}/{MEAN_PICKLES_SUBPATH}/{col}.pkl', 'rb') as mf:
             component_cache = pickle.load(mf)
             component_cache = component_cache.cpu()
+            comp_values = []
             for idx, row in df.iterrows():
-                model.model.layers[int(row['layer'])].mlp.down_proj.weight[int(row['neuron'])] = component_cache[row['layer'], row['neuron']]
-        
+                comp_values.append(list(component_cache[row['layer'], :, row['neuron']].numpy().flatten()))
+            df['values'] = comp_values
+        return df
+
     with torch.no_grad():
-        ablate_model(col, 'mlp')
-        ablate_model(col, 'attn')
+        mlp_ablate = ablation_cache(col, 'mlp')
+        attn_ablate = ablation_cache(col, 'attn')
 
 def parse_answer(text):
     answers = []
@@ -321,11 +324,32 @@ if (not (os.path.exists(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{FINAL_CSV_SUB
             test_sentences.append(test_sentence[testBadOrGood + col])
             fPrompts.append(fPrompt)
             fQs.append(fQ)
-            
+        answers = []
+        if (ABLATION):
+            with model.trace() as tracer:
+                for prompt in prompts:
+                    with tracer.invoke(prompt):
+                        
+                        hidden_states = model.transformer.h[-1].output[0].save()
+                
+                        hidden_states_grad_before = hidden_states.grad.clone().save()
+                        hidden_states.grad[:] = 0
+                        hidden_states_grad_after = hidden_states.grad.save()
+                    
+                        logits = model.output.logits
+                        # Ablate the last MLP for only this batch.
+                        model.transformer.h[-1].mlp.output[0][:] = 0
+                
+                        # Get the output for only the intervened on batch.
+                        token_ids = torch.topk(model.lm_head.output, 2, dim=-1).save()
+                    answers.append(tokenizer.batch_decode(token_ids))
+
+
+        else:
         # Get answer from model
-        model_inputs = tokenizer(prompts, return_tensors="pt", padding=True).to('cuda')
-        answers = model.generate(**model_inputs, pad_token_id=tokenizer.eos_token_id, max_new_tokens=2, top_p=0.9, temperature=0.1, do_sample=True)
-        answers = tokenizer.batch_decode(answers)[:BATCH_SIZE]
+            model_inputs = tokenizer(prompts, return_tensors="pt", padding=True).to('cuda')
+            answers = model.generate(**model_inputs, pad_token_id=tokenizer.eos_token_id, max_new_tokens=2, top_p=0.9, temperature=0.1, do_sample=True)
+            answers = tokenizer.batch_decode(answers)[:BATCH_SIZE]
 
         if printAnswer:
             print(answers)
