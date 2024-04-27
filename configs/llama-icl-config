@@ -6,10 +6,10 @@ batch_size: 4
 data_path: "/mnt/align4_drive/arunas/broca/data-gen/ngs.csv"
 patch_pickles_path: "/mnt/align4_drive/arunas/broca/llama/atp/patches"
 patch_pickles_subpath: "all-neurons-new-prompt-prologue-random-seed"
-ablation: True
+ablation: False
 mean_pickles_path: "/mnt/align4_drive/arunas/broca/llama/atp/patches"
 mean_pickles_subpath: "mean-patches"
 mean_ablation: False
 num_dems: 10
-final_csv_subpath: "post-mean-ablation"
+final_csv_subpath: "apr-16"
 hf_token: ${HF_TOKEN}
