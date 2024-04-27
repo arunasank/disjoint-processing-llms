@@ -22,7 +22,7 @@ args = parser.parse_args()
 with open(args.config_file, 'r') as f:
     config_file = yaml.safe_load(f)
 
-print(json.dumps(config_file, indent=4))
+# print(json.dumps(config_file, indent=4))
 PREFIX = config_file["prefix"]
 MODEL_NAME = config_file["model_name"]
 MODEL_PATH = config_file["model_path"]
@@ -35,6 +35,7 @@ og = pd.read_csv(DATA_PATH)
 types = [col for col in og.columns if not 'ng-' in col]
 sType = col = types[args.stype]
 
+print('######## COLUMN: ', sType)
 if (not os.path.exists(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{col}.pkl') or not os.path.exists(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/{col}.pkl')):
 
     if (MODEL_NAME == "llama"):
@@ -89,8 +90,8 @@ if (not os.path.exists(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{col}
     prompts, questions, golds = get_prompt_from_df(f'{PROMPT_FILES_PATH}/{sType}.csv')
     train_prefixes, max_len = getPaddedTrainTokens(prompts, golds)
 
-    mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 1, model.model.layers[0].self_attn.o_proj.out_features)).to("cuda")
-    attn_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 1, model.model.layers[0].mlp.down_proj.out_features)).to("cuda")
+    mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 2, model.model.layers[0].self_attn.o_proj.out_features)).to("cuda")
+    attn_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 2, model.model.layers[0].mlp.down_proj.out_features)).to("cuda")
 
     for tr_prefix in tqdm(train_prefixes):
         with model.trace(tr_prefix, scan=False, validate=False) as tracer:

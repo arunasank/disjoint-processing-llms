@@ -1,75 +1,0 @@
-Thu Nov 30 00:31:47 2023       
-+-----------------------------------------------------------------------------+
-| NVIDIA-SMI 525.105.17   Driver Version: 525.105.17   CUDA Version: 12.0     |
-|-------------------------------+----------------------+----------------------+
-| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-|                               |                      |               MIG M. |
-|===============================+======================+======================|
-|   0  Tesla V100-PCIE...  On   | 00000000:86:00.0 Off |                  Off |
-| N/A   36C    P0    26W / 150W |      0MiB / 32768MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-|   1  Tesla V100-PCIE...  On   | 00000000:D8:00.0 Off |                  Off |
-| N/A   34C    P0    43W / 150W |      0MiB / 32768MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-                                                                               
-+-----------------------------------------------------------------------------+
-| Processes:                                                                  |
-|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
-|        ID   ID                                                   Usage      |
-|=============================================================================|
-|  No running processes found                                                 |
-+-----------------------------------------------------------------------------+
-icl_grammars.py
-Loading checkpoint shards:   0%|          | 0/61 [00:00<?, ?it/s]Loading checkpoint shards:   2%|▏         | 1/61 [00:20<20:05, 20.09s/it]Loading checkpoint shards:   3%|▎         | 2/61 [00:30<14:22, 14.62s/it]Loading checkpoint shards:   5%|▍         | 3/61 [00:41<12:29, 12.93s/it]Loading checkpoint shards:   7%|▋         | 4/61 [00:57<13:29, 14.21s/it]Loading checkpoint shards:   8%|▊         | 5/61 [01:14<13:59, 14.99s/it]Loading checkpoint shards:  10%|▉         | 6/61 [01:30<14:13, 15.52s/it]Loading checkpoint shards:  11%|█▏        | 7/61 [01:50<15:01, 16.70s/it]Loading checkpoint shards:  13%|█▎        | 8/61 [02:16<17:22, 19.67s/it]Loading checkpoint shards:  15%|█▍        | 9/61 [02:31<16:02, 18.51s/it]Loading checkpoint shards:  16%|█▋        | 10/61 [02:45<14:32, 17.10s/it]Loading checkpoint shards:  18%|█▊        | 11/61 [03:04<14:38, 17.58s/it]Loading checkpoint shards:  20%|█▉        | 12/61 [03:26<15:25, 18.89s/it]Loading checkpoint shards:  21%|██▏       | 13/61 [03:44<14:48, 18.52s/it]Loading checkpoint shards:  23%|██▎       | 14/61 [03:58<13:27, 17.18s/it]Loading checkpoint shards:  25%|██▍       | 15/61 [04:21<14:36, 19.05s/it]Loading checkpoint shards:  26%|██▌       | 16/61 [04:37<13:38, 18.19s/it]Loading checkpoint shards:  28%|██▊       | 17/61 [04:48<11:47, 16.08s/it]Loading checkpoint shards:  30%|██▉       | 18/61 [05:03<11:06, 15.50s/it]Loading checkpoint shards:  31%|███       | 19/61 [05:22<11:38, 16.63s/it]Loading checkpoint shards:  33%|███▎      | 20/61 [05:33<10:17, 15.07s/it]Loading checkpoint shards:  34%|███▍      | 21/61 [05:47<09:48, 14.72s/it]Loading checkpoint shards:  36%|███▌      | 22/61 [06:15<12:06, 18.64s/it]Loading checkpoint shards:  38%|███▊      | 23/61 [06:33<11:45, 18.58s/it]Loading checkpoint shards:  39%|███▉      | 24/61 [06:49<10:48, 17.52s/it]Loading checkpoint shards:  41%|████      | 25/61 [07:05<10:22, 17.28s/it]Loading checkpoint shards:  43%|████▎     | 26/61 [07:27<10:53, 18.66s/it]Loading checkpoint shards:  44%|████▍     | 27/61 [07:44<10:15, 18.11s/it]Loading checkpoint shards:  46%|████▌     | 28/61 [08:09<11:02, 20.08s/it]Loading checkpoint shards:  48%|████▊     | 29/61 [08:31<11:01, 20.67s/it]Loading checkpoint shards:  49%|████▉     | 30/61 [08:52<10:45, 20.84s/it]Loading checkpoint shards:  51%|█████     | 31/61 [09:17<10:59, 21.98s/it]Loading checkpoint shards:  52%|█████▏    | 32/61 [09:38<10:30, 21.75s/it]Loading checkpoint shards:  54%|█████▍    | 33/61 [10:00<10:14, 21.93s/it]Loading checkpoint shards:  56%|█████▌    | 34/61 [10:29<10:48, 24.01s/it]Loading checkpoint shards:  57%|█████▋    | 35/61 [10:49<09:50, 22.72s/it]Loading checkpoint shards:  59%|█████▉    | 36/61 [11:05<08:42, 20.88s/it]Loading checkpoint shards:  61%|██████    | 37/61 [11:31<08:53, 22.23s/it]Loading checkpoint shards:  62%|██████▏   | 38/61 [11:52<08:22, 21.86s/it]Loading checkpoint shards:  64%|██████▍   | 39/61 [12:13<08:00, 21.84s/it]Loading checkpoint shards:  66%|██████▌   | 40/61 [12:41<08:16, 23.66s/it]Loading checkpoint shards:  67%|██████▋   | 41/61 [13:05<07:51, 23.58s/it]Loading checkpoint shards:  69%|██████▉   | 42/61 [13:24<07:05, 22.40s/it]Loading checkpoint shards:  70%|███████   | 43/61 [13:43<06:24, 21.36s/it]Loading checkpoint shards:  72%|███████▏  | 44/61 [14:01<05:42, 20.14s/it]Loading checkpoint shards:  74%|███████▍  | 45/61 [14:18<05:08, 19.31s/it]Loading checkpoint shards:  75%|███████▌  | 46/61 [14:38<04:50, 19.37s/it]Loading checkpoint shards:  77%|███████▋  | 47/61 [14:52<04:10, 17.86s/it]Loading checkpoint shards:  79%|███████▊  | 48/61 [15:19<04:28, 20.69s/it]Loading checkpoint shards:  80%|████████  | 49/61 [15:40<04:09, 20.79s/it]Loading checkpoint shards:  82%|████████▏ | 50/61 [15:57<03:35, 19.60s/it]Loading checkpoint shards:  84%|████████▎ | 51/61 [16:11<02:58, 17.88s/it]Loading checkpoint shards:  85%|████████▌ | 52/61 [16:23<02:25, 16.12s/it]Loading checkpoint shards:  87%|████████▋ | 53/61 [16:42<02:15, 16.92s/it]Loading checkpoint shards:  89%|████████▊ | 54/61 [16:55<01:50, 15.77s/it]Loading checkpoint shards:  90%|█████████ | 55/61 [17:09<01:32, 15.34s/it]Loading checkpoint shards:  92%|█████████▏| 56/61 [17:19<01:07, 13.60s/it]Loading checkpoint shards:  93%|█████████▎| 57/61 [17:31<00:53, 13.30s/it]Loading checkpoint shards:  95%|█████████▌| 58/61 [17:45<00:40, 13.50s/it]Loading checkpoint shards:  97%|█████████▋| 59/61 [17:55<00:25, 12.54s/it]Loading checkpoint shards:  98%|█████████▊| 60/61 [18:05<00:11, 11.77s/it]Loading checkpoint shards: 100%|██████████| 61/61 [18:14<00:00, 10.95s/it]Loading checkpoint shards: 100%|██████████| 61/61 [18:14<00:00, 17.95s/it]
--------------------------Model loaded------------------------------
--------------------------Device map--------------------------------
-{'model.embed_tokens': 0, 'model.layers.0': 0, 'model.layers.1': 0, 'model.layers.2': 0, 'model.layers.3': 0, 'model.layers.4': 0, 'model.layers.5': 0, 'model.layers.6': 0, 'model.layers.7': 0, 'model.layers.8': 0, 'model.layers.9': 0, 'model.layers.10': 0, 'model.layers.11': 0, 'model.layers.12': 0, 'model.layers.13': 0, 'model.layers.14': 0, 'model.layers.15': 0, 'model.layers.16': 0, 'model.layers.17': 0, 'model.layers.18': 0, 'model.layers.19': 0, 'model.layers.20': 0, 'model.layers.21': 0, 'model.layers.22': 0, 'model.layers.23': 0, 'model.layers.24': 0, 'model.layers.25': 0, 'model.layers.26': 0, 'model.layers.27': 0, 'model.layers.28': 0, 'model.layers.29': 0, 'model.layers.30': 0, 'model.layers.31': 0, 'model.layers.32.self_attn': 0, 'model.layers.32.mlp.gate_proj': 0, 'model.layers.32.mlp.up_proj': 1, 'model.layers.32.mlp.down_proj': 1, 'model.layers.32.mlp.act_fn': 1, 'model.layers.32.input_layernorm': 1, 'model.layers.32.post_attention_layernorm': 1, 'model.layers.33': 1, 'model.layers.34': 1, 'model.layers.35': 1, 'model.layers.36': 1, 'model.layers.37': 1, 'model.layers.38': 1, 'model.layers.39': 1, 'model.layers.40': 1, 'model.layers.41': 1, 'model.layers.42': 1, 'model.layers.43': 1, 'model.layers.44': 1, 'model.layers.45': 1, 'model.layers.46': 1, 'model.layers.47': 1, 'model.layers.48': 1, 'model.layers.49': 1, 'model.layers.50': 1, 'model.layers.51': 1, 'model.layers.52': 1, 'model.layers.53': 1, 'model.layers.54': 1, 'model.layers.55': 1, 'model.layers.56': 1, 'model.layers.57': 1, 'model.layers.58.self_attn': 1, 'model.layers.58.mlp.gate_proj': 1, 'model.layers.58.mlp.up_proj': 'cpu', 'model.layers.58.mlp.down_proj': 'cpu', 'model.layers.58.mlp.act_fn': 'cpu', 'model.layers.58.input_layernorm': 'cpu', 'model.layers.58.post_attention_layernorm': 'cpu', 'model.layers.59': 'cpu', 'model.layers.60': 'cpu', 'model.layers.61': 'cpu', 'model.layers.62': 'cpu', 'model.layers.63': 'cpu', 'model.layers.64': 'cpu', 'model.layers.65': 'cpu', 'model.layers.66': 'cpu', 'model.layers.67': 'cpu', 'model.layers.68': 'cpu', 'model.layers.69': 'cpu', 'model.layers.70': 'cpu', 'model.layers.71': 'cpu', 'model.layers.72': 'cpu', 'model.layers.73': 'cpu', 'model.layers.74': 'cpu', 'model.layers.75': 'cpu', 'model.layers.76': 'cpu', 'model.layers.77': 'cpu', 'model.layers.78': 'cpu', 'model.layers.79': 'cpu', 'model.norm': 'cpu', 'lm_head': 'cpu'}
--------------------------Load dataset-------------------------------
------------------------Column: ['it-u-1-negation']----------------------
-Training.... 
-<s> We will provide you a set of sentences which follow or violate a grammatical structure. 
- The sentences may use subjects and objects from the following nouns - author, banana, biscuit, book, bottle, box, boy, bulb, cap, cat, chalk, chapter, cucumber, cup, dog, fish, fruit, girl, Gomu, Harry, hill, John, Leela, man, Maria, meal, mountain, mouse, newspaper, pear, pizza, poem, poet, rock, roof, Sheela, speaker, staircase, story, teacher, Tom, toy, tree, woman, writer.
-The sentences may use any of the following verbs - brings, carries, claims, climbs, eats, holds, notices, reads, says, sees, states, takes.
- Each noun in a sentence may sometimes use a different determiner than those found in English. Here is a reference of determiners that can be used by nouns: "pear": "kar", "author": "kon", "authors": "kons", "banana": "kar", "biscuit": "kon", "book": "kon", "bottle": "kar", "box": "kar", "boy": "kon", "boys": "kons", "bulb": "kar", "cabinet": "kar", "cap": "kon", "cat": "kon", "cats": "kons", "chapter": "kon", "chalk": "kon", "cup": "kar", "cucumber": "kon", "dog": "kon", "dogs": "kons", "fish": "kon", "fruit": "kar", "girl": "kar", "girls": "kars", "hill": "kar", "man": "kon", "men": "kons", "meal": "kon", "mountain": "kar", "mouse": "kon", "newspaper": "kon", "pizza": "kar", "poet": "kon", "poets": "kons", "poem": "kar", "rock": "kon", "roof": "kon", "speaker": "kon", "speakers": "kons", "staircase": "kar", "story": "kar", "teacher": "kon", "teachers": "kons", "toy": "kon", "tree": "kar", "woman": "kar", "women": "kars", "writer": "kon", "writers": "kons". Each verb in a sentence may sometimes use the past tense of the verb if it is more appropriate. Here are a set of verbs and their past tenses - "climbs" : "climbed", "reads": "read", "carries": "carried", "eats": "ate", "holds": "held", "takes" :"took", "brings": "brought", "reads": "read", "climb" : "climbed", "read": "read", "carry": "carried", "eat": "ate", "hold": "held", "take" :"took", "bring": "brought", "read": "read"
- The sentences may sometimes use the infinitive forms of a verb. Here are a set of verbs and their infinitives - "climbs" : "to climb", "reads": "to read", "carries": "to carry", "eats": "to eat", "holds": "to hold", "takes" : "to take", "brings": "to bring", "reads": "to read", "climb" : "to climb", "read": "to read", "carry": "to carry", "eat": "to eat", "hold": "to hold", "take" : "to take", "bring": "to bring", "read": "to read". 
- The sentences may sometimes use the plural form of a noun. Here are a set of nouns and their plurals - "fish": "fish", "mouse": "mice", "bottle": "bottles", "newspaper": "newspapers", "chalk": "chalks", "box": "boxes", "cap": "caps", "bulb": "bulbs", "cup": "cups", "toy": "toys", "staircase": "staircases", "rock": "rocks", "hill": "hills", "mountain": "mountains", "roof": "roofs", "tree": "trees", "biscuit": "biscuits", "banana": "bananas", "pear": "pears", "meal": "meals", "fruit": "fruits", "cucumber": "cucumbers", "pizza": "pizzas", "book": "books", "poem": "poems", "story": "stories", "chapter": "chapters". 
- The sentences may sometimes use the passive form of a verb. Here are a set of verbs and their passive forms - "carries": "carried", "carry": "carried", "holds": "held", "hold": "held", "takes": "taken", "take": "taken", "brings": "brought", "bring": "brought", "climbs": "climbed", "climb": "climbed", "eats": "eaten", "eat": "eaten", "reads": "read", "read": "read"
-
-Q: Is this sentence grammatical? Yes or No: kons men climb kon no rock
-A: Yes
-
-Q: Is this sentence grammatical? Yes or No: kon boy brings kar no bulb
-A: Yes
-
-Q: Is this sentence grammatical? Yes or No: kon dog takes kon no newspaper
-A: Yes
-
-Q: Is this sentence grammatical? Yes or No: kons boys bring kar no cup
-A: Yes
-
-Q: Is this sentence grammatical? Yes or No: kons kon hold teachers no mouse
-A: No
-
-Q: Is this sentence grammatical? Yes or No: kons dogs carry no kon fish
-A: No
-
-Q: Is this sentence grammatical? Yes or No: kons men bulb kar no take
-A: No
-
-Q: Is this sentence grammatical? Yes or No: meal girls eat kon no kars
-A: No
-
-Q: Is this sentence grammatical? Yes or No: kon boy carries kar box no
-A: No
-
-Q: Is this sentence grammatical? Yes or No: kons teachers climb kon no roof
-A: Yes
-
-Q: Is this sentence grammatical? Yes or No: kon man brings kar no bulb
-A: Yes
-
-it-u-1-negation -- Accuracy: 0.72
-
