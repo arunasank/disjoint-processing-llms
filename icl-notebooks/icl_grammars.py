@@ -18,8 +18,8 @@ import pickle
 import yaml
 import argparse
 import numpy as np
-random.seed(42)
-torch.manual_seed(42)
+random.seed(21)
+torch.manual_seed(21)
 
 parser = argparse.ArgumentParser()
 
@@ -51,11 +51,13 @@ nf4_config = BitsAndBytesConfig(
 )
 
 df = pd.read_csv(f'{DATA_PATH}')
-gCols = [col for col in list(df.columns) if not 'ng' in col]
-
+gCols = [col for col in list(df.columns) if (not 'ng' in col) and ('en' in col[:2] or 'jap' in col[:3] or 'ita' in col[:3])]
+print(gCols)
 # col = gCols[args["stype"]]
 
 col = gCols[args.stype]
+
+print('######### ', col)
 
 df = pd.read_csv(f'{DATA_PATH}')
 
@@ -76,12 +78,11 @@ if (ABLATION):
     ABLATE_UNION = config['ablate_union']
     ABLATE_INTERSECTION = config['ablate_intersection']
     NUM_HIDDEN_STATES = config['num_hidden_states']
+    REAL = config['real']
     
     def retrieve_topK(col, component, topK):
         with open(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/{col}.pkl', 'rb') as f:
-            print(f'ablating {component} ', col)
             component_cache = pickle.load(f)
-            print('before top k', component_cache.shape)
             component_cache = component_cache.cpu()
             flattened_effects_cache = component_cache.view(-1)
             top_neurons = flattened_effects_cache.topk(k=int(topK * flattened_effects_cache.shape[-1]))
@@ -100,59 +101,61 @@ if (ABLATION):
             random_df = pd.concat([random_df, temp_df], ignore_index=True)
         return random_df
     
-    def retrieve_union(component, TOPK):
-        if os.path.exists(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/union.csv'):
-            union_df = pd.read_csv(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/union.csv')    
+    def retrieve_union(col, component, TOPK, real):
+        if (real):
+            print('######## REAL UNION')
+            if os.path.exists(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/r-union.csv'):
+                return pd.read_csv(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/r-union.csv')  
         else:
-            union_df = pd.DataFrame(columns=['layer', 'neuron'])
-            for col in gCols:
+            print('######## UNREAL UNION')
+            if os.path.exists(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/u-union.csv'):
+                return pd.read_csv(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/u-union.csv')
+
+        union_df = pd.DataFrame(columns=['layer', 'neuron'])
+        for c in gCols:
+            if (real and '-u-' in c) or (not real and not '-u-' in c):
+                continue
+            else:
                 try:
-                    df = retrieve_topK(col, component, TOPK)
-                    union_df = pd.concat([union_df, df], axis=1)
-                except:
-                    print(col)
-            union_df.drop_duplicates(inplace=True)
-            union_df.to_csv(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/union.csv')
+                    df = retrieve_topK(c, component, TOPK)
+                    union_df = pd.concat([union_df, df])
+                except Exception as e:
+                    print(c, e)
+        union_df.drop_duplicates(inplace=True)
+        if (real):
+            union_df.to_csv(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/r-union.csv', index=False)
+        else:
+            union_df.to_csv(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/u-union.csv', index=False)
+        print('########UNION NUM NEURONS ', len(union_df))
         return union_df
 
-    def retrieve_intersection(component, TOPK):
-        
-        def find_intersection(df): # double check, from chaatgpt. I ran a few tests, but needs careful understanding.
-            # Split the DataFrame into groups based on the 'type'
-            grouped = df.groupby('type')
-
-            # Initialize a set with the first type's (layer, neuron) tuples
-            first_type = next(iter(grouped.groups.keys()))
-            intersection_set = set(tuple(row) for row in grouped.get_group(first_type)[['layer', 'neuron']].values)
-
-            # Perform intersection with other types
-            for name, group in grouped:
-                current_set = set(tuple(row) for row in group[['layer', 'neuron']].values)
-                intersection_set.intersection_update(current_set)
-
-            # If intersection set is not empty, convert it back to a DataFrame
-            if intersection_set:
-                result_df = pd.DataFrame(list(intersection_set), columns=['layer', 'neuron'])
-            else:
-                result_df = pd.DataFrame(columns=['layer', 'neuron'])
-
-            return result_df
-
-        if os.path.exists(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/intersection.csv'):
-            intersection_df = pd.read_csv(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/intersection.csv')    
+    def retrieve_intersection(col, component, TOPK, real):
+        tuples = set()
+        if (real):
+            if os.path.exists(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/r-int.csv'):
+                int_df = pd.read_csv(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/r-int.csv')   
         else:
-            all_df = pd.DataFrame(columns=['type', 'layer', 'neuron'])
-            for col in gCols:
+            if (os.path.exists(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/u-int.csv')):
+                int_df = pd.read_csv(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/u-int.csv')    
+        for c in gCols:
+            if (not real and not '-u-' in c) or (real and '-u-' in c):
+                continue
+            else:
                 try:
-                    df = retrieve_topK(col, component, TOPK)
-                    df['type'] = col
-                    all_df = pd.concat([all_df, df], axis=1)
-                except:
-                    print(col)
-            intersection_df = find_intersection(all_df)
-            intersection_df.to_csv(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/intersection.csv')
-        return intersection_df
-
+                    df = retrieve_topK(c, component, TOPK)
+                    if (len(tuples) == 0):
+                        tuples = set([tuple(r) for r in df.to_numpy()])
+                    else:
+                        tuples = set.intersection(tuples, set([tuple(r) for r in df.to_numpy()]))
+                except Exception as e:
+                    print(c, e)
+        int_df = pd.DataFrame(tuples, columns =['layer', 'neuron'])
+        if (real):
+            int_df.to_csv(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/r-int.csv', index=False)
+        else:
+            int_df.to_csv(f'{PATCH_PICKLES_PATH}/{component}/{PATCH_PICKLES_SUBPATH}/u-int.csv', index=False)
+        return int_df
+        
     def ablation_cache(col, component):
         global MAX_LEN
         if (RANDOMLY_SAMPLE):
@@ -160,10 +163,10 @@ if (ABLATION):
             df = retrieve_randomK(col, component, TOPK)
         elif (ABLATE_UNION):
             print('### ABLATE UNION OF TOPK NEURONS FROM ALL LANGUAGES ')
-            df = retrieve_union(component, TOPK)
+            df = retrieve_union(col, component, TOPK)
         elif (ABLATE_INTERSECTION):
             print('### ABLATE INTERSECTION OF TOPK NEURONS FROM ALL LANGUAGES ')
-            df = retrieve_union(component, TOPK)
+            df = retrieve_intersection(col, component, TOPK, REAL)
         else:
             df = retrieve_topK(col, component, TOPK)
         with open(f'{MEAN_PICKLES_PATH}/{component}/{MEAN_PICKLES_SUBPATH}/{col}.pkl', 'rb') as mf:
@@ -198,7 +201,7 @@ def parse_answer(text):
 def construct_prompt(train_dataset, num_demonstrations):
     assert num_demonstrations > 0
     prompt = ''
-    train_examples = train_dataset.shuffle(seed=42).select(range(num_demonstrations))
+    train_examples = train_dataset.shuffle(seed=21).select(range(num_demonstrations))
     for exemplar_num in range(num_demonstrations):
         train_example = train_examples[exemplar_num]
         use_bad_sentence = random.choice([True, False])
@@ -287,8 +290,8 @@ f = pd.DataFrame(columns=["type", "prompt", "q", "prediction", "gold", "surprisa
 f['type'] = 'test'
 g = pd.DataFrame(columns=['accuracy', 'type'])
 datasets = {}
-np.random.seed(42)
-datasets[col] = Dataset.from_pandas(pd.DataFrame(df[[col, 'ng-' + col]].copy())).train_test_split(test_size=0.5)
+np.random.seed(21)
+datasets[col] = Dataset.from_pandas(pd.DataFrame(df[[col, 'ng-' + col]].copy())).train_test_split(test_size=0.25)
 def get_master_prompt(lang):
     en_verbs = ["affirms", "bring", "brings", "carries", "carry", "climb", "climbs", "eat", "eats", "hold", "holds", "knows", "notices", "read", "reads", "says", "sees", "take", "takes"]
     en_verbs_past = ["affirmed", "brought", "carried", "climbed", "ate", "held", "knew", "noticed", "read", "said", "saw", "took"]
@@ -448,3 +451,4 @@ if (not (os.path.exists(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{FINAL_CSV_SUB
     g = pd.concat([g, pd.DataFrame([{ 'trainType' : col, 'testType': col, 'accuracy': f"{accuracy:.2f}"}])])
     f.to_csv(f"{PREFIX}/broca/{MODEL_NAME}/experiments/{FINAL_CSV_SUBPATH}/{col}.csv")
     g.to_csv(f'{PREFIX}/broca/{MODEL_NAME}/experiments/{FINAL_CSV_SUBPATH}/{col}-acc.csv', index=False)
+

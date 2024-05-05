@@ -31,7 +31,7 @@ PATCH_PICKLES_PATH = config_file["patch_pickles_path"]
 PATCH_PICKLES_SUBPATH = config_file["patch_pickles_sub_path"]
 
 og = pd.read_csv(DATA_PATH)
-types = [col for col in og.columns if not 'ng-' in col]
+types = [col for col in og.columns if (not 'ng' in col) and ('en' in col[:2] or 'jap' in col[:3] or 'ita' in col[:3])]
 sType = types[args.stype]
 
 if (not os.path.exists(f"{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sType}.pkl") or not os.path.exists(f"{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/{sType}.pkl")):
