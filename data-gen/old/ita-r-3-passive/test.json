@@ -1,0 +1,1624 @@
+{"sentence": "una scatola \u00e8 tenuto da una ragazza", "label": "Yes"}
+{"sentence": "una scatola \u00e8 tenuto da ragazza una", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "la scala \u00e8 scalato dai cani", "label": "Yes"}
+{"sentence": "la scala \u00e8 scalato cani dai", "label": "No"}
+{"sentence": "la bottiglia \u00e8 tenuto dalle ragazze", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 tenuto ragazze dalle", "label": "No"}
+{"sentence": "la storia \u00e8 letto dalla oratorio", "label": "Yes"}
+{"sentence": "la storia \u00e8 letto oratorio dalla", "label": "No"}
+{"sentence": "un cappello \u00e8 tenuto da un uomo", "label": "Yes"}
+{"sentence": "un cappello \u00e8 tenuto da uomo un", "label": "No"}
+{"sentence": "la scatola \u00e8 preso dalla gatto", "label": "Yes"}
+{"sentence": "la scatola \u00e8 preso gatto dalla", "label": "No"}
+{"sentence": "la montagna \u00e8 scalata dalle ragazze", "label": "Yes"}
+{"sentence": "la montagna \u00e8 scalata ragazze dalle", "label": "No"}
+{"sentence": "il topo \u00e8 preso dai ragazzi", "label": "Yes"}
+{"sentence": "il topo \u00e8 preso ragazzi dai", "label": "No"}
+{"sentence": "la banana \u00e8 mangiato dai ragazzi", "label": "Yes"}
+{"sentence": "la banana \u00e8 mangiato ragazzi dai", "label": "No"}
+{"sentence": "una pizza \u00e8 mangiato da una gatto", "label": "Yes"}
+{"sentence": "una pizza \u00e8 mangiato da gatto una", "label": "No"}
+{"sentence": "una frutta \u00e8 mangiato da una insegnante", "label": "Yes"}
+{"sentence": "una frutta \u00e8 mangiato da insegnante una", "label": "No"}
+{"sentence": "la bottiglia \u00e8 tenuto dalla ragazzo", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 tenuto ragazzo dalla", "label": "No"}
+{"sentence": "la roccia \u00e8 scalato dai cani", "label": "Yes"}
+{"sentence": "la roccia \u00e8 scalato cani dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalla ragazza", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato ragazza dalla", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalla donna", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato donna dalla", "label": "No"}
+{"sentence": "il poema \u00e8 letto dagli' autori", "label": "Yes"}
+{"sentence": "il poema \u00e8 letto autori dagli'", "label": "No"}
+{"sentence": "la lampadina \u00e8 tenuto dalle ragazze", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 tenuto ragazze dalle", "label": "No"}
+{"sentence": "una pera \u00e8 mangiato da una ragazza", "label": "Yes"}
+{"sentence": "una pera \u00e8 mangiato da ragazza una", "label": "No"}
+{"sentence": "il cetriolo \u00e8 mangiato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il cetriolo \u00e8 mangiato insegnanti dagli'", "label": "No"}
+{"sentence": "il pesce \u00e8 tenuto dal gatto", "label": "Yes"}
+{"sentence": "il pesce \u00e8 tenuto gatto dal", "label": "No"}
+{"sentence": "una lampadina \u00e8 preso da una donna", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 preso da donna una", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dai gatti", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso gatti dai", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dai cani", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto cani dai", "label": "No"}
+{"sentence": "un giocattolo \u00e8 tenuto da un donna", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 tenuto da donna un", "label": "No"}
+{"sentence": "il cetriolo \u00e8 mangiato dal uomo", "label": "Yes"}
+{"sentence": "il cetriolo \u00e8 mangiato uomo dal", "label": "No"}
+{"sentence": "il poema \u00e8 letto dagli' oratori", "label": "Yes"}
+{"sentence": "il poema \u00e8 letto oratori dagli'", "label": "No"}
+{"sentence": "un pesce \u00e8 portato da un uomo", "label": "Yes"}
+{"sentence": "un pesce \u00e8 portato da uomo un", "label": "No"}
+{"sentence": "la tazza \u00e8 preso dalla gatto", "label": "Yes"}
+{"sentence": "la tazza \u00e8 preso gatto dalla", "label": "No"}
+{"sentence": "un capitolo \u00e8 letto da un autore", "label": "Yes"}
+{"sentence": "un capitolo \u00e8 letto da autore un", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dal uomo", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso uomo dal", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dai cani", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto cani dai", "label": "No"}
+{"sentence": "il gesso \u00e8 tenuto dagli' insegnanti", "label": "Yes"}
+{"sentence": "il gesso \u00e8 tenuto insegnanti dagli'", "label": "No"}
+{"sentence": "la scala \u00e8 scalata dalla ragazza", "label": "Yes"}
+{"sentence": "la scala \u00e8 scalata ragazza dalla", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dal insegnante", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato insegnante dal", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dal insegnante", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto insegnante dal", "label": "No"}
+{"sentence": "una lampadina \u00e8 preso da una insegnante", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 preso da insegnante una", "label": "No"}
+{"sentence": "una scatola \u00e8 portato da una insegnante", "label": "Yes"}
+{"sentence": "una scatola \u00e8 portato da insegnante una", "label": "No"}
+{"sentence": "il biscotto \u00e8 mangiato dal uomo", "label": "Yes"}
+{"sentence": "il biscotto \u00e8 mangiato uomo dal", "label": "No"}
+{"sentence": "un giornale \u00e8 tenuto da un uomo", "label": "Yes"}
+{"sentence": "un giornale \u00e8 tenuto da uomo un", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalla ragazza", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato ragazza dalla", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dalla uomo", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato uomo dalla", "label": "No"}
+{"sentence": "l' albero \u00e8 scalato dagli' uomini", "label": "Yes"}
+{"sentence": "l' albero \u00e8 scalato uomini dagli'", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 preso dalla ragazza", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 preso ragazza dalla", "label": "No"}
+{"sentence": "il cappello \u00e8 tenuto dagli' uomini", "label": "Yes"}
+{"sentence": "il cappello \u00e8 tenuto uomini dagli'", "label": "No"}
+{"sentence": "un giocattolo \u00e8 portato da un gatto", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 portato da gatto un", "label": "No"}
+{"sentence": "un cappello \u00e8 portato da un ragazza", "label": "Yes"}
+{"sentence": "un cappello \u00e8 portato da ragazza un", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dalle donne", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso donne dalle", "label": "No"}
+{"sentence": "un pesce \u00e8 portato da un gatto", "label": "Yes"}
+{"sentence": "un pesce \u00e8 portato da gatto un", "label": "No"}
+{"sentence": "la pizza \u00e8 mangiato dai ragazzi", "label": "Yes"}
+{"sentence": "la pizza \u00e8 mangiato ragazzi dai", "label": "No"}
+{"sentence": "una bottiglia \u00e8 tenuto da una ragazza", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 tenuto da ragazza una", "label": "No"}
+{"sentence": "una tazza \u00e8 tenuto da una ragazza", "label": "Yes"}
+{"sentence": "una tazza \u00e8 tenuto da ragazza una", "label": "No"}
+{"sentence": "il pesce \u00e8 tenuto dalle ragazze", "label": "Yes"}
+{"sentence": "il pesce \u00e8 tenuto ragazze dalle", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "la roccia \u00e8 scalato dagli' uomini", "label": "Yes"}
+{"sentence": "la roccia \u00e8 scalato uomini dagli'", "label": "No"}
+{"sentence": "una pera \u00e8 mangiato da una insegnante", "label": "Yes"}
+{"sentence": "una pera \u00e8 mangiato da insegnante una", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dal ragazza", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso ragazza dal", "label": "No"}
+{"sentence": "il tetto \u00e8 scalato dai gatti", "label": "Yes"}
+{"sentence": "il tetto \u00e8 scalato gatti dai", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dal gatto", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato gatto dal", "label": "No"}
+{"sentence": "la scatola \u00e8 preso dalle ragazze", "label": "Yes"}
+{"sentence": "la scatola \u00e8 preso ragazze dalle", "label": "No"}
+{"sentence": "un pesce \u00e8 portato da un uomo", "label": "Yes"}
+{"sentence": "un pesce \u00e8 portato da uomo un", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dal gatto", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato gatto dal", "label": "No"}
+{"sentence": "la bottiglia \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 preso cani dai", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "la scatola \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "la scatola \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "una lampadina \u00e8 portato da una cane", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 portato da cane una", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dagli' uomini", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato uomini dagli'", "label": "No"}
+{"sentence": "la montagna \u00e8 scalato dagli' uomini", "label": "Yes"}
+{"sentence": "la montagna \u00e8 scalato uomini dagli'", "label": "No"}
+{"sentence": "il libro \u00e8 letto dagli' insegnanti", "label": "Yes"}
+{"sentence": "il libro \u00e8 letto insegnanti dagli'", "label": "No"}
+{"sentence": "un pesce \u00e8 portato da un insegnante", "label": "Yes"}
+{"sentence": "un pesce \u00e8 portato da insegnante un", "label": "No"}
+{"sentence": "il topo \u00e8 portato dal donna", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato donna dal", "label": "No"}
+{"sentence": "il topo \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato cani dai", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "un pesce \u00e8 portato da un insegnante", "label": "Yes"}
+{"sentence": "un pesce \u00e8 portato da insegnante un", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "il cetriolo \u00e8 mangiato dalle donne", "label": "Yes"}
+{"sentence": "il cetriolo \u00e8 mangiato donne dalle", "label": "No"}
+{"sentence": "la scala \u00e8 scalata dalle ragazze", "label": "Yes"}
+{"sentence": "la scala \u00e8 scalata ragazze dalle", "label": "No"}
+{"sentence": "un giornale \u00e8 portato da un cane", "label": "Yes"}
+{"sentence": "un giornale \u00e8 portato da cane un", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato insegnanti dagli'", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dalle ragazze", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato ragazze dalle", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dal ragazza", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato ragazza dal", "label": "No"}
+{"sentence": "una bottiglia \u00e8 portato da una ragazza", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 portato da ragazza una", "label": "No"}
+{"sentence": "un pesce \u00e8 portato da un ragazza", "label": "Yes"}
+{"sentence": "un pesce \u00e8 portato da ragazza un", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dal uomo", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato uomo dal", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalla ragazzo", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato ragazzo dalla", "label": "No"}
+{"sentence": "un cappello \u00e8 tenuto da un ragazza", "label": "Yes"}
+{"sentence": "un cappello \u00e8 tenuto da ragazza un", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso cani dai", "label": "No"}
+{"sentence": "un' albero \u00e8 scalato da un donna", "label": "Yes"}
+{"sentence": "un' albero \u00e8 scalato da donna un", "label": "No"}
+{"sentence": "il libro \u00e8 letto dagli' scrittori", "label": "Yes"}
+{"sentence": "il libro \u00e8 letto scrittori dagli'", "label": "No"}
+{"sentence": "un cappello \u00e8 tenuto da un insegnante", "label": "Yes"}
+{"sentence": "un cappello \u00e8 tenuto da insegnante un", "label": "No"}
+{"sentence": "il pasto \u00e8 mangiato dal ragazza", "label": "Yes"}
+{"sentence": "il pasto \u00e8 mangiato ragazza dal", "label": "No"}
+{"sentence": "il libro \u00e8 letto dagli' autori", "label": "Yes"}
+{"sentence": "il libro \u00e8 letto autori dagli'", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dalla donna", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato donna dalla", "label": "No"}
+{"sentence": "la scala \u00e8 scalato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la scala \u00e8 scalato insegnanti dagli'", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "la banana \u00e8 mangiato dalla ragazzo", "label": "Yes"}
+{"sentence": "la banana \u00e8 mangiato ragazzo dalla", "label": "No"}
+{"sentence": "il biscotto \u00e8 mangiato dal ragazza", "label": "Yes"}
+{"sentence": "il biscotto \u00e8 mangiato ragazza dal", "label": "No"}
+{"sentence": "il cappello \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "il cappello \u00e8 preso cani dai", "label": "No"}
+{"sentence": "la collina \u00e8 scalata dalla cane", "label": "Yes"}
+{"sentence": "la collina \u00e8 scalata cane dalla", "label": "No"}
+{"sentence": "il topo \u00e8 portato dal insegnante", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato insegnante dal", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dal ragazzo", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato ragazzo dal", "label": "No"}
+{"sentence": "il cappello \u00e8 preso dalle ragazze", "label": "Yes"}
+{"sentence": "il cappello \u00e8 preso ragazze dalle", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dal cane", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato cane dal", "label": "No"}
+{"sentence": "un topo \u00e8 portato da un cane", "label": "Yes"}
+{"sentence": "un topo \u00e8 portato da cane un", "label": "No"}
+{"sentence": "un cappello \u00e8 tenuto da un gatto", "label": "Yes"}
+{"sentence": "un cappello \u00e8 tenuto da gatto un", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalla cane", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato cane dalla", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "il topo \u00e8 portato dal gatto", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato gatto dal", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalla uomo", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato uomo dalla", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalla insegnante", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato insegnante dalla", "label": "No"}
+{"sentence": "la frutta \u00e8 mangiato dai ragazzi", "label": "Yes"}
+{"sentence": "la frutta \u00e8 mangiato ragazzi dai", "label": "No"}
+{"sentence": "una pera \u00e8 mangiato da una donna", "label": "Yes"}
+{"sentence": "una pera \u00e8 mangiato da donna una", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato cani dai", "label": "No"}
+{"sentence": "il topo \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dal gatto", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato gatto dal", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dalle donne", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato donne dalle", "label": "No"}
+{"sentence": "una tazza \u00e8 preso da una ragazza", "label": "Yes"}
+{"sentence": "una tazza \u00e8 preso da ragazza una", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "una scatola \u00e8 tenuto da una insegnante", "label": "Yes"}
+{"sentence": "una scatola \u00e8 tenuto da insegnante una", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalla uomo", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato uomo dalla", "label": "No"}
+{"sentence": "la lampadina \u00e8 tenuto dalla insegnante", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 tenuto insegnante dalla", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalla ragazza", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato ragazza dalla", "label": "No"}
+{"sentence": "la pera \u00e8 mangiato dai ragazzi", "label": "Yes"}
+{"sentence": "la pera \u00e8 mangiato ragazzi dai", "label": "No"}
+{"sentence": "la collina \u00e8 scalata dalle ragazze", "label": "Yes"}
+{"sentence": "la collina \u00e8 scalata ragazze dalle", "label": "No"}
+{"sentence": "una roccia \u00e8 scalata da una uomo", "label": "Yes"}
+{"sentence": "una roccia \u00e8 scalata da uomo una", "label": "No"}
+{"sentence": "un giornale \u00e8 preso da un cane", "label": "Yes"}
+{"sentence": "un giornale \u00e8 preso da cane un", "label": "No"}
+{"sentence": "la storia \u00e8 letto dalla insegnante", "label": "Yes"}
+{"sentence": "la storia \u00e8 letto insegnante dalla", "label": "No"}
+{"sentence": "il biscotto \u00e8 mangiato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il biscotto \u00e8 mangiato insegnanti dagli'", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dagli' uomini", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto uomini dagli'", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "un giornale \u00e8 portato da un cane", "label": "Yes"}
+{"sentence": "un giornale \u00e8 portato da cane un", "label": "No"}
+{"sentence": "la roccia \u00e8 scalato dai ragazzi", "label": "Yes"}
+{"sentence": "la roccia \u00e8 scalato ragazzi dai", "label": "No"}
+{"sentence": "una bottiglia \u00e8 preso da una ragazza", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 preso da ragazza una", "label": "No"}
+{"sentence": "la pizza \u00e8 mangiato dalle donne", "label": "Yes"}
+{"sentence": "la pizza \u00e8 mangiato donne dalle", "label": "No"}
+{"sentence": "il giornale \u00e8 tenuto dai ragazzi", "label": "Yes"}
+{"sentence": "il giornale \u00e8 tenuto ragazzi dai", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "la bottiglia \u00e8 preso dalle donne", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 preso donne dalle", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dal insegnante", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato insegnante dal", "label": "No"}
+{"sentence": "una bottiglia \u00e8 portato da una ragazzo", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 portato da ragazzo una", "label": "No"}
+{"sentence": "il topo \u00e8 tenuto dagli' uomini", "label": "Yes"}
+{"sentence": "il topo \u00e8 tenuto uomini dagli'", "label": "No"}
+{"sentence": "il topo \u00e8 preso dal ragazza", "label": "Yes"}
+{"sentence": "il topo \u00e8 preso ragazza dal", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "il gesso \u00e8 tenuto dalle donne", "label": "Yes"}
+{"sentence": "il gesso \u00e8 tenuto donne dalle", "label": "No"}
+{"sentence": "un giocattolo \u00e8 portato da un insegnante", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 portato da insegnante un", "label": "No"}
+{"sentence": "il libro \u00e8 letto dal oratorio", "label": "Yes"}
+{"sentence": "il libro \u00e8 letto oratorio dal", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dalla gatto", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto gatto dalla", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dagli' uomini", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto uomini dagli'", "label": "No"}
+{"sentence": "un pesce \u00e8 mangiato da un ragazza", "label": "Yes"}
+{"sentence": "un pesce \u00e8 mangiato da ragazza un", "label": "No"}
+{"sentence": "un topo \u00e8 portato da un uomo", "label": "Yes"}
+{"sentence": "un topo \u00e8 portato da uomo un", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "un tetto \u00e8 scalato da un ragazza", "label": "Yes"}
+{"sentence": "un tetto \u00e8 scalato da ragazza un", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dal uomo", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso uomo dal", "label": "No"}
+{"sentence": "il giocattolo \u00e8 preso dal ragazza", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 preso ragazza dal", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "il topo \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dal cane", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato cane dal", "label": "No"}
+{"sentence": "il pasto \u00e8 mangiato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il pasto \u00e8 mangiato insegnanti dagli'", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato cani dai", "label": "No"}
+{"sentence": "un cappello \u00e8 preso da un gatto", "label": "Yes"}
+{"sentence": "un cappello \u00e8 preso da gatto un", "label": "No"}
+{"sentence": "il cetriolo \u00e8 mangiato dal insegnante", "label": "Yes"}
+{"sentence": "il cetriolo \u00e8 mangiato insegnante dal", "label": "No"}
+{"sentence": "il cetriolo \u00e8 mangiato dai ragazzi", "label": "Yes"}
+{"sentence": "il cetriolo \u00e8 mangiato ragazzi dai", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dal donna", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato donna dal", "label": "No"}
+{"sentence": "la frutta \u00e8 mangiato dalla uomo", "label": "Yes"}
+{"sentence": "la frutta \u00e8 mangiato uomo dalla", "label": "No"}
+{"sentence": "un gesso \u00e8 tenuto da un ragazza", "label": "Yes"}
+{"sentence": "un gesso \u00e8 tenuto da ragazza un", "label": "No"}
+{"sentence": "la bottiglia \u00e8 tenuto dagli' uomini", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 tenuto uomini dagli'", "label": "No"}
+{"sentence": "il topo \u00e8 tenuto dal gatto", "label": "Yes"}
+{"sentence": "il topo \u00e8 tenuto gatto dal", "label": "No"}
+{"sentence": "una tazza \u00e8 preso da una insegnante", "label": "Yes"}
+{"sentence": "una tazza \u00e8 preso da insegnante una", "label": "No"}
+{"sentence": "il giocattolo \u00e8 preso dalle ragazze", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 preso ragazze dalle", "label": "No"}
+{"sentence": "un giocattolo \u00e8 preso da un ragazzo", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 preso da ragazzo un", "label": "No"}
+{"sentence": "una scatola \u00e8 preso da una ragazza", "label": "Yes"}
+{"sentence": "una scatola \u00e8 preso da ragazza una", "label": "No"}
+{"sentence": "una pera \u00e8 mangiato da una uomo", "label": "Yes"}
+{"sentence": "una pera \u00e8 mangiato da uomo una", "label": "No"}
+{"sentence": "il capitolo \u00e8 letto dai ragazzi", "label": "Yes"}
+{"sentence": "il capitolo \u00e8 letto ragazzi dai", "label": "No"}
+{"sentence": "una scatola \u00e8 tenuto da una uomo", "label": "Yes"}
+{"sentence": "una scatola \u00e8 tenuto da uomo una", "label": "No"}
+{"sentence": "l' albero \u00e8 scalato dall' cane", "label": "Yes"}
+{"sentence": "l' albero \u00e8 scalato cane dall'", "label": "No"}
+{"sentence": "la scala \u00e8 scalato dai gatti", "label": "Yes"}
+{"sentence": "la scala \u00e8 scalato gatti dai", "label": "No"}
+{"sentence": "l' albero \u00e8 scalato dai cani", "label": "Yes"}
+{"sentence": "l' albero \u00e8 scalato cani dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato cani dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalla ragazzo", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato ragazzo dalla", "label": "No"}
+{"sentence": "il gesso \u00e8 tenuto dal insegnante", "label": "Yes"}
+{"sentence": "il gesso \u00e8 tenuto insegnante dal", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato cani dai", "label": "No"}
+{"sentence": "una storia \u00e8 letto da una ragazzo", "label": "Yes"}
+{"sentence": "una storia \u00e8 letto da ragazzo una", "label": "No"}
+{"sentence": "la bottiglia \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "un pesce \u00e8 tenuto da un ragazza", "label": "Yes"}
+{"sentence": "un pesce \u00e8 tenuto da ragazza un", "label": "No"}
+{"sentence": "la tazza \u00e8 preso dalle ragazze", "label": "Yes"}
+{"sentence": "la tazza \u00e8 preso ragazze dalle", "label": "No"}
+{"sentence": "la tazza \u00e8 preso dalla uomo", "label": "Yes"}
+{"sentence": "la tazza \u00e8 preso uomo dalla", "label": "No"}
+{"sentence": "una banana \u00e8 mangiato da una ragazza", "label": "Yes"}
+{"sentence": "una banana \u00e8 mangiato da ragazza una", "label": "No"}
+{"sentence": "il topo \u00e8 portato dal gatto", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato gatto dal", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dalla uomo", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto uomo dalla", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dal insegnante", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato insegnante dal", "label": "No"}
+{"sentence": "la tazza \u00e8 preso dagli' insegnanti", "label": "Yes"}
+{"sentence": "la tazza \u00e8 preso insegnanti dagli'", "label": "No"}
+{"sentence": "il giocattolo \u00e8 preso dai gatti", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 preso gatti dai", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "la storia \u00e8 letto dagli' oratori", "label": "Yes"}
+{"sentence": "la storia \u00e8 letto oratori dagli'", "label": "No"}
+{"sentence": "un tetto \u00e8 scalato da un cane", "label": "Yes"}
+{"sentence": "un tetto \u00e8 scalato da cane un", "label": "No"}
+{"sentence": "il pesce \u00e8 tenuto dagli' insegnanti", "label": "Yes"}
+{"sentence": "il pesce \u00e8 tenuto insegnanti dagli'", "label": "No"}
+{"sentence": "la scala \u00e8 scalata dalle donne", "label": "Yes"}
+{"sentence": "la scala \u00e8 scalata donne dalle", "label": "No"}
+{"sentence": "la bottiglia \u00e8 preso dalle ragazze", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 preso ragazze dalle", "label": "No"}
+{"sentence": "il cappello \u00e8 tenuto dalle donne", "label": "Yes"}
+{"sentence": "il cappello \u00e8 tenuto donne dalle", "label": "No"}
+{"sentence": "una roccia \u00e8 scalata da una donna", "label": "Yes"}
+{"sentence": "una roccia \u00e8 scalata da donna una", "label": "No"}
+{"sentence": "la frutta \u00e8 mangiato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la frutta \u00e8 mangiato insegnanti dagli'", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "il biscotto \u00e8 mangiato dal donna", "label": "Yes"}
+{"sentence": "il biscotto \u00e8 mangiato donna dal", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dal insegnante", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato insegnante dal", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dalla ragazzo", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato ragazzo dalla", "label": "No"}
+{"sentence": "una bottiglia \u00e8 portato da una gatto", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 portato da gatto una", "label": "No"}
+{"sentence": "un topo \u00e8 portato da un ragazzo", "label": "Yes"}
+{"sentence": "un topo \u00e8 portato da ragazzo un", "label": "No"}
+{"sentence": "un gesso \u00e8 tenuto da un donna", "label": "Yes"}
+{"sentence": "un gesso \u00e8 tenuto da donna un", "label": "No"}
+{"sentence": "una bottiglia \u00e8 preso da una cane", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 preso da cane una", "label": "No"}
+{"sentence": "un cetriolo \u00e8 mangiato da un gatto", "label": "Yes"}
+{"sentence": "un cetriolo \u00e8 mangiato da gatto un", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "il libro \u00e8 letto dai poeti", "label": "Yes"}
+{"sentence": "il libro \u00e8 letto poeti dai", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato cani dai", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dalla insegnante", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato insegnante dalla", "label": "No"}
+{"sentence": "il pasto \u00e8 mangiato dal gatto", "label": "Yes"}
+{"sentence": "il pasto \u00e8 mangiato gatto dal", "label": "No"}
+{"sentence": "la lampadina \u00e8 preso dagli' insegnanti", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 preso insegnanti dagli'", "label": "No"}
+{"sentence": "il cappello \u00e8 preso dai gatti", "label": "Yes"}
+{"sentence": "il cappello \u00e8 preso gatti dai", "label": "No"}
+{"sentence": "un poema \u00e8 letto da un insegnante", "label": "Yes"}
+{"sentence": "un poema \u00e8 letto da insegnante un", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dalle ragazze", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso ragazze dalle", "label": "No"}
+{"sentence": "l' albero \u00e8 scalato dall' ragazza", "label": "Yes"}
+{"sentence": "l' albero \u00e8 scalato ragazza dall'", "label": "No"}
+{"sentence": "la collina \u00e8 scalato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la collina \u00e8 scalato insegnanti dagli'", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "la pera \u00e8 mangiato dai cani", "label": "Yes"}
+{"sentence": "la pera \u00e8 mangiato cani dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "il giornale \u00e8 preso dalle ragazze", "label": "Yes"}
+{"sentence": "il giornale \u00e8 preso ragazze dalle", "label": "No"}
+{"sentence": "la scatola \u00e8 preso dalla cane", "label": "Yes"}
+{"sentence": "la scatola \u00e8 preso cane dalla", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "il cappello \u00e8 preso dagli' insegnanti", "label": "Yes"}
+{"sentence": "il cappello \u00e8 preso insegnanti dagli'", "label": "No"}
+{"sentence": "un libro \u00e8 letto da un autore", "label": "Yes"}
+{"sentence": "un libro \u00e8 letto da autore un", "label": "No"}
+{"sentence": "la tazza \u00e8 preso dai ragazzi", "label": "Yes"}
+{"sentence": "la tazza \u00e8 preso ragazzi dai", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dal uomo", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato uomo dal", "label": "No"}
+{"sentence": "un cappello \u00e8 portato da un cane", "label": "Yes"}
+{"sentence": "un cappello \u00e8 portato da cane un", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "il topo \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "un poema \u00e8 letto da un scrittore", "label": "Yes"}
+{"sentence": "un poema \u00e8 letto da scrittore un", "label": "No"}
+{"sentence": "il cetriolo \u00e8 mangiato dagli' uomini", "label": "Yes"}
+{"sentence": "il cetriolo \u00e8 mangiato uomini dagli'", "label": "No"}
+{"sentence": "il pesce \u00e8 tenuto dal ragazzo", "label": "Yes"}
+{"sentence": "il pesce \u00e8 tenuto ragazzo dal", "label": "No"}
+{"sentence": "il topo \u00e8 preso dagli' insegnanti", "label": "Yes"}
+{"sentence": "il topo \u00e8 preso insegnanti dagli'", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "il topo \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato cani dai", "label": "No"}
+{"sentence": "il capitolo \u00e8 letto dalle ragazze", "label": "Yes"}
+{"sentence": "il capitolo \u00e8 letto ragazze dalle", "label": "No"}
+{"sentence": "un cappello \u00e8 portato da un donna", "label": "Yes"}
+{"sentence": "un cappello \u00e8 portato da donna un", "label": "No"}
+{"sentence": "il poema \u00e8 letto dagli' insegnanti", "label": "Yes"}
+{"sentence": "il poema \u00e8 letto insegnanti dagli'", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato cani dai", "label": "No"}
+{"sentence": "un topo \u00e8 preso da un uomo", "label": "Yes"}
+{"sentence": "un topo \u00e8 preso da uomo un", "label": "No"}
+{"sentence": "il giornale \u00e8 preso dagli' insegnanti", "label": "Yes"}
+{"sentence": "il giornale \u00e8 preso insegnanti dagli'", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dagli' insegnanti", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso insegnanti dagli'", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dal ragazzo", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto ragazzo dal", "label": "No"}
+{"sentence": "il cappello \u00e8 tenuto dal cane", "label": "Yes"}
+{"sentence": "il cappello \u00e8 tenuto cane dal", "label": "No"}
+{"sentence": "il topo \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "il pesce \u00e8 tenuto dai cani", "label": "Yes"}
+{"sentence": "il pesce \u00e8 tenuto cani dai", "label": "No"}
+{"sentence": "una roccia \u00e8 scalata da una cane", "label": "Yes"}
+{"sentence": "una roccia \u00e8 scalata da cane una", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dalla ragazza", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato ragazza dalla", "label": "No"}
+{"sentence": "una scatola \u00e8 portato da una gatto", "label": "Yes"}
+{"sentence": "una scatola \u00e8 portato da gatto una", "label": "No"}
+{"sentence": "la montagna \u00e8 scalato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la montagna \u00e8 scalato insegnanti dagli'", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dalla gatto", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato gatto dalla", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalla insegnante", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato insegnante dalla", "label": "No"}
+{"sentence": "la bottiglia \u00e8 preso dalla insegnante", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 preso insegnante dalla", "label": "No"}
+{"sentence": "la frutta \u00e8 mangiato dalle donne", "label": "Yes"}
+{"sentence": "la frutta \u00e8 mangiato donne dalle", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dalle donne", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto donne dalle", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dagli' insegnanti", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto insegnanti dagli'", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dal insegnante", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato insegnante dal", "label": "No"}
+{"sentence": "un capitolo \u00e8 letto da un oratorio", "label": "Yes"}
+{"sentence": "un capitolo \u00e8 letto da oratorio un", "label": "No"}
+{"sentence": "la roccia \u00e8 scalata dalle ragazze", "label": "Yes"}
+{"sentence": "la roccia \u00e8 scalata ragazze dalle", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "la tazza \u00e8 preso dalla cane", "label": "Yes"}
+{"sentence": "la tazza \u00e8 preso cane dalla", "label": "No"}
+{"sentence": "la frutta \u00e8 mangiato dai gatti", "label": "Yes"}
+{"sentence": "la frutta \u00e8 mangiato gatti dai", "label": "No"}
+{"sentence": "la montagna \u00e8 scalata dalla gatto", "label": "Yes"}
+{"sentence": "la montagna \u00e8 scalata gatto dalla", "label": "No"}
+{"sentence": "un topo \u00e8 portato da un ragazza", "label": "Yes"}
+{"sentence": "un topo \u00e8 portato da ragazza un", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dagli' uomini", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso uomini dagli'", "label": "No"}
+{"sentence": "un cetriolo \u00e8 mangiato da un ragazzo", "label": "Yes"}
+{"sentence": "un cetriolo \u00e8 mangiato da ragazzo un", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso cani dai", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato cani dai", "label": "No"}
+{"sentence": "un giocattolo \u00e8 tenuto da un ragazza", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 tenuto da ragazza un", "label": "No"}
+{"sentence": "un capitolo \u00e8 letto da un scrittore", "label": "Yes"}
+{"sentence": "un capitolo \u00e8 letto da scrittore un", "label": "No"}
+{"sentence": "un' albero \u00e8 scalato da un ragazzo", "label": "Yes"}
+{"sentence": "un' albero \u00e8 scalato da ragazzo un", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dal gatto", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso gatto dal", "label": "No"}
+{"sentence": "un topo \u00e8 tenuto da un uomo", "label": "Yes"}
+{"sentence": "un topo \u00e8 tenuto da uomo un", "label": "No"}
+{"sentence": "il giornale \u00e8 preso dal ragazzo", "label": "Yes"}
+{"sentence": "il giornale \u00e8 preso ragazzo dal", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "un libro \u00e8 letto da un ragazzo", "label": "Yes"}
+{"sentence": "un libro \u00e8 letto da ragazzo un", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dai ragazzi", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso ragazzi dai", "label": "No"}
+{"sentence": "la bottiglia \u00e8 preso dai ragazzi", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 preso ragazzi dai", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dal ragazzo", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato ragazzo dal", "label": "No"}
+{"sentence": "il giornale \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "il giornale \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "una lampadina \u00e8 tenuto da una ragazza", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 tenuto da ragazza una", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dalle donne", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto donne dalle", "label": "No"}
+{"sentence": "un topo \u00e8 tenuto da un cane", "label": "Yes"}
+{"sentence": "un topo \u00e8 tenuto da cane un", "label": "No"}
+{"sentence": "il cappello \u00e8 preso dai ragazzi", "label": "Yes"}
+{"sentence": "il cappello \u00e8 preso ragazzi dai", "label": "No"}
+{"sentence": "una pizza \u00e8 mangiato da una uomo", "label": "Yes"}
+{"sentence": "una pizza \u00e8 mangiato da uomo una", "label": "No"}
+{"sentence": "il giocattolo \u00e8 preso dalle donne", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 preso donne dalle", "label": "No"}
+{"sentence": "il cappello \u00e8 tenuto dalle ragazze", "label": "Yes"}
+{"sentence": "il cappello \u00e8 tenuto ragazze dalle", "label": "No"}
+{"sentence": "la montagna \u00e8 scalato dai ragazzi", "label": "Yes"}
+{"sentence": "la montagna \u00e8 scalato ragazzi dai", "label": "No"}
+{"sentence": "un libro \u00e8 letto da un ragazza", "label": "Yes"}
+{"sentence": "un libro \u00e8 letto da ragazza un", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dalla uomo", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato uomo dalla", "label": "No"}
+{"sentence": "una lampadina \u00e8 tenuto da una ragazzo", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 tenuto da ragazzo una", "label": "No"}
+{"sentence": "una lampadina \u00e8 preso da una ragazzo", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 preso da ragazzo una", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato cani dai", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "un cappello \u00e8 preso da un uomo", "label": "Yes"}
+{"sentence": "un cappello \u00e8 preso da uomo un", "label": "No"}
+{"sentence": "l' albero \u00e8 scalato dai ragazzi", "label": "Yes"}
+{"sentence": "l' albero \u00e8 scalato ragazzi dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 tenuto dagli' insegnanti", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 tenuto insegnanti dagli'", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "una montagna \u00e8 scalata da una cane", "label": "Yes"}
+{"sentence": "una montagna \u00e8 scalata da cane una", "label": "No"}
+{"sentence": "il giornale \u00e8 preso dai gatti", "label": "Yes"}
+{"sentence": "il giornale \u00e8 preso gatti dai", "label": "No"}
+{"sentence": "un biscotto \u00e8 mangiato da un insegnante", "label": "Yes"}
+{"sentence": "un biscotto \u00e8 mangiato da insegnante un", "label": "No"}
+{"sentence": "una montagna \u00e8 scalata da una donna", "label": "Yes"}
+{"sentence": "una montagna \u00e8 scalata da donna una", "label": "No"}
+{"sentence": "la frutta \u00e8 mangiato dagli' uomini", "label": "Yes"}
+{"sentence": "la frutta \u00e8 mangiato uomini dagli'", "label": "No"}
+{"sentence": "una bottiglia \u00e8 portato da una donna", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 portato da donna una", "label": "No"}
+{"sentence": "la scala \u00e8 scalato dagli' uomini", "label": "Yes"}
+{"sentence": "la scala \u00e8 scalato uomini dagli'", "label": "No"}
+{"sentence": "il cappello \u00e8 preso dagli' uomini", "label": "Yes"}
+{"sentence": "il cappello \u00e8 preso uomini dagli'", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dal donna", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato donna dal", "label": "No"}
+{"sentence": "la bottiglia \u00e8 tenuto dagli' insegnanti", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 tenuto insegnanti dagli'", "label": "No"}
+{"sentence": "il pesce \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "il pesce \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "il topo \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dal uomo", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato uomo dal", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dal insegnante", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato insegnante dal", "label": "No"}
+{"sentence": "un gesso \u00e8 tenuto da un gatto", "label": "Yes"}
+{"sentence": "un gesso \u00e8 tenuto da gatto un", "label": "No"}
+{"sentence": "la scatola \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "la scatola \u00e8 preso cani dai", "label": "No"}
+{"sentence": "il cappello \u00e8 preso dal insegnante", "label": "Yes"}
+{"sentence": "il cappello \u00e8 preso insegnante dal", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dalla gatto", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato gatto dalla", "label": "No"}
+{"sentence": "la pizza \u00e8 mangiato dai cani", "label": "Yes"}
+{"sentence": "la pizza \u00e8 mangiato cani dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "una lampadina \u00e8 portato da una insegnante", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 portato da insegnante una", "label": "No"}
+{"sentence": "un capitolo \u00e8 letto da un insegnante", "label": "Yes"}
+{"sentence": "un capitolo \u00e8 letto da insegnante un", "label": "No"}
+{"sentence": "la scatola \u00e8 preso dai gatti", "label": "Yes"}
+{"sentence": "la scatola \u00e8 preso gatti dai", "label": "No"}
+{"sentence": "la bottiglia \u00e8 preso dai gatti", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 preso gatti dai", "label": "No"}
+{"sentence": "il topo \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "il topo \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "la roccia \u00e8 scalata dalla insegnante", "label": "Yes"}
+{"sentence": "la roccia \u00e8 scalata insegnante dalla", "label": "No"}
+{"sentence": "il topo \u00e8 preso dal cane", "label": "Yes"}
+{"sentence": "il topo \u00e8 preso cane dal", "label": "No"}
+{"sentence": "il topo \u00e8 tenuto dagli' insegnanti", "label": "Yes"}
+{"sentence": "il topo \u00e8 tenuto insegnanti dagli'", "label": "No"}
+{"sentence": "il giornale \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "il giornale \u00e8 preso cani dai", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dai ragazzi", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato ragazzi dai", "label": "No"}
+{"sentence": "un pasto \u00e8 mangiato da un uomo", "label": "Yes"}
+{"sentence": "un pasto \u00e8 mangiato da uomo un", "label": "No"}
+{"sentence": "una bottiglia \u00e8 tenuto da una uomo", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 tenuto da uomo una", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalla cane", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato cane dalla", "label": "No"}
+{"sentence": "un gesso \u00e8 portato da un donna", "label": "Yes"}
+{"sentence": "un gesso \u00e8 portato da donna un", "label": "No"}
+{"sentence": "un capitolo \u00e8 letto da un ragazza", "label": "Yes"}
+{"sentence": "un capitolo \u00e8 letto da ragazza un", "label": "No"}
+{"sentence": "un cappello \u00e8 portato da un donna", "label": "Yes"}
+{"sentence": "un cappello \u00e8 portato da donna un", "label": "No"}
+{"sentence": "una frutta \u00e8 mangiato da una donna", "label": "Yes"}
+{"sentence": "una frutta \u00e8 mangiato da donna una", "label": "No"}
+{"sentence": "la bottiglia \u00e8 preso dagli' uomini", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 preso uomini dagli'", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "una bottiglia \u00e8 preso da una ragazzo", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 preso da ragazzo una", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dal cane", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato cane dal", "label": "No"}
+{"sentence": "il topo \u00e8 preso dal donna", "label": "Yes"}
+{"sentence": "il topo \u00e8 preso donna dal", "label": "No"}
+{"sentence": "un topo \u00e8 portato da un uomo", "label": "Yes"}
+{"sentence": "un topo \u00e8 portato da uomo un", "label": "No"}
+{"sentence": "una tazza \u00e8 portato da una ragazza", "label": "Yes"}
+{"sentence": "una tazza \u00e8 portato da ragazza una", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "il gesso \u00e8 tenuto dai cani", "label": "Yes"}
+{"sentence": "il gesso \u00e8 tenuto cani dai", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "una collina \u00e8 scalata da una uomo", "label": "Yes"}
+{"sentence": "una collina \u00e8 scalata da uomo una", "label": "No"}
+{"sentence": "il poema \u00e8 letto dalle ragazze", "label": "Yes"}
+{"sentence": "il poema \u00e8 letto ragazze dalle", "label": "No"}
+{"sentence": "il capitolo \u00e8 letto dai poeti", "label": "Yes"}
+{"sentence": "il capitolo \u00e8 letto poeti dai", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dai ragazzi", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto ragazzi dai", "label": "No"}
+{"sentence": "la collina \u00e8 scalato dagli' uomini", "label": "Yes"}
+{"sentence": "la collina \u00e8 scalato uomini dagli'", "label": "No"}
+{"sentence": "l' albero \u00e8 scalato dall' gatto", "label": "Yes"}
+{"sentence": "l' albero \u00e8 scalato gatto dall'", "label": "No"}
+{"sentence": "un biscotto \u00e8 mangiato da un cane", "label": "Yes"}
+{"sentence": "un biscotto \u00e8 mangiato da cane un", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "un cetriolo \u00e8 mangiato da un ragazza", "label": "Yes"}
+{"sentence": "un cetriolo \u00e8 mangiato da ragazza un", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dagli' insegnanti", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso insegnanti dagli'", "label": "No"}
+{"sentence": "un topo \u00e8 portato da un ragazza", "label": "Yes"}
+{"sentence": "un topo \u00e8 portato da ragazza un", "label": "No"}
+{"sentence": "una frutta \u00e8 mangiato da una gatto", "label": "Yes"}
+{"sentence": "una frutta \u00e8 mangiato da gatto una", "label": "No"}
+{"sentence": "un pasto \u00e8 mangiato da un cane", "label": "Yes"}
+{"sentence": "un pasto \u00e8 mangiato da cane un", "label": "No"}
+{"sentence": "un giornale \u00e8 preso da un donna", "label": "Yes"}
+{"sentence": "un giornale \u00e8 preso da donna un", "label": "No"}
+{"sentence": "il topo \u00e8 portato dal donna", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato donna dal", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "un gesso \u00e8 portato da un ragazza", "label": "Yes"}
+{"sentence": "un gesso \u00e8 portato da ragazza un", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato cani dai", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato cani dai", "label": "No"}
+{"sentence": "un cappello \u00e8 preso da un ragazzo", "label": "Yes"}
+{"sentence": "un cappello \u00e8 preso da ragazzo un", "label": "No"}
+{"sentence": "il giornale \u00e8 preso dal ragazza", "label": "Yes"}
+{"sentence": "il giornale \u00e8 preso ragazza dal", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 tenuto dalle donne", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 tenuto donne dalle", "label": "No"}
+{"sentence": "la bottiglia \u00e8 tenuto dalle donne", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 tenuto donne dalle", "label": "No"}
+{"sentence": "il pasto \u00e8 mangiato dai ragazzi", "label": "Yes"}
+{"sentence": "il pasto \u00e8 mangiato ragazzi dai", "label": "No"}
+{"sentence": "il giornale \u00e8 preso dai ragazzi", "label": "Yes"}
+{"sentence": "il giornale \u00e8 preso ragazzi dai", "label": "No"}
+{"sentence": "un pesce \u00e8 preso da un ragazzo", "label": "Yes"}
+{"sentence": "un pesce \u00e8 preso da ragazzo un", "label": "No"}
+{"sentence": "il cappello \u00e8 tenuto dal ragazzo", "label": "Yes"}
+{"sentence": "il cappello \u00e8 tenuto ragazzo dal", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dal ragazzo", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato ragazzo dal", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dal donna", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso donna dal", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dal gatto", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso gatto dal", "label": "No"}
+{"sentence": "la tazza \u00e8 preso dagli' uomini", "label": "Yes"}
+{"sentence": "la tazza \u00e8 preso uomini dagli'", "label": "No"}
+{"sentence": "il capitolo \u00e8 letto dagli' autori", "label": "Yes"}
+{"sentence": "il capitolo \u00e8 letto autori dagli'", "label": "No"}
+{"sentence": "una scatola \u00e8 preso da una uomo", "label": "Yes"}
+{"sentence": "una scatola \u00e8 preso da uomo una", "label": "No"}
+{"sentence": "il topo \u00e8 portato dal donna", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato donna dal", "label": "No"}
+{"sentence": "il cetriolo \u00e8 mangiato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il cetriolo \u00e8 mangiato insegnanti dagli'", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dai ragazzi", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto ragazzi dai", "label": "No"}
+{"sentence": "la bottiglia \u00e8 tenuto dai cani", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 tenuto cani dai", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dalle donne", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato donne dalle", "label": "No"}
+{"sentence": "un giornale \u00e8 preso da un cane", "label": "Yes"}
+{"sentence": "un giornale \u00e8 preso da cane un", "label": "No"}
+{"sentence": "un pesce \u00e8 portato da un uomo", "label": "Yes"}
+{"sentence": "un pesce \u00e8 portato da uomo un", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dalla ragazzo", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato ragazzo dalla", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dai ragazzi", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso ragazzi dai", "label": "No"}
+{"sentence": "il pasto \u00e8 mangiato dai cani", "label": "Yes"}
+{"sentence": "il pasto \u00e8 mangiato cani dai", "label": "No"}
+{"sentence": "il cetriolo \u00e8 mangiato dal insegnante", "label": "Yes"}
+{"sentence": "il cetriolo \u00e8 mangiato insegnante dal", "label": "No"}
+{"sentence": "il topo \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "il cappello \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "il cappello \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "la pizza \u00e8 mangiato dalle donne", "label": "Yes"}
+{"sentence": "la pizza \u00e8 mangiato donne dalle", "label": "No"}
+{"sentence": "l' albero \u00e8 scalato dall' cane", "label": "Yes"}
+{"sentence": "l' albero \u00e8 scalato cane dall'", "label": "No"}
+{"sentence": "una bottiglia \u00e8 preso da una ragazza", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 preso da ragazza una", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalla uomo", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato uomo dalla", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dal donna", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato donna dal", "label": "No"}
+{"sentence": "un cappello \u00e8 tenuto da un uomo", "label": "Yes"}
+{"sentence": "un cappello \u00e8 tenuto da uomo un", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "un giocattolo \u00e8 tenuto da un uomo", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 tenuto da uomo un", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "la scatola \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "la scatola \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "il topo \u00e8 tenuto dai cani", "label": "Yes"}
+{"sentence": "il topo \u00e8 tenuto cani dai", "label": "No"}
+{"sentence": "un cappello \u00e8 preso da un donna", "label": "Yes"}
+{"sentence": "un cappello \u00e8 preso da donna un", "label": "No"}
+{"sentence": "il cappello \u00e8 preso dai gatti", "label": "Yes"}
+{"sentence": "il cappello \u00e8 preso gatti dai", "label": "No"}
+{"sentence": "un pesce \u00e8 preso da un donna", "label": "Yes"}
+{"sentence": "un pesce \u00e8 preso da donna un", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dalla donna", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato donna dalla", "label": "No"}
+{"sentence": "un biscotto \u00e8 mangiato da un gatto", "label": "Yes"}
+{"sentence": "un biscotto \u00e8 mangiato da gatto un", "label": "No"}
+{"sentence": "un giornale \u00e8 portato da un donna", "label": "Yes"}
+{"sentence": "un giornale \u00e8 portato da donna un", "label": "No"}
+{"sentence": "una montagna \u00e8 scalata da una cane", "label": "Yes"}
+{"sentence": "una montagna \u00e8 scalata da cane una", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "la frutta \u00e8 mangiato dalle donne", "label": "Yes"}
+{"sentence": "la frutta \u00e8 mangiato donne dalle", "label": "No"}
+{"sentence": "la montagna \u00e8 scalato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la montagna \u00e8 scalato insegnanti dagli'", "label": "No"}
+{"sentence": "la banana \u00e8 mangiato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la banana \u00e8 mangiato insegnanti dagli'", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "il giocattolo \u00e8 preso dagli' insegnanti", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 preso insegnanti dagli'", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "la tazza \u00e8 preso dai ragazzi", "label": "Yes"}
+{"sentence": "la tazza \u00e8 preso ragazzi dai", "label": "No"}
+{"sentence": "il biscotto \u00e8 mangiato dalle ragazze", "label": "Yes"}
+{"sentence": "il biscotto \u00e8 mangiato ragazze dalle", "label": "No"}
+{"sentence": "la pera \u00e8 mangiato dalle donne", "label": "Yes"}
+{"sentence": "la pera \u00e8 mangiato donne dalle", "label": "No"}
+{"sentence": "la lampadina \u00e8 preso dai ragazzi", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 preso ragazzi dai", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato cani dai", "label": "No"}
+{"sentence": "la collina \u00e8 scalato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la collina \u00e8 scalato insegnanti dagli'", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dagli' insegnanti", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto insegnanti dagli'", "label": "No"}
+{"sentence": "la frutta \u00e8 mangiato dai cani", "label": "Yes"}
+{"sentence": "la frutta \u00e8 mangiato cani dai", "label": "No"}
+{"sentence": "la tazza \u00e8 preso dalla ragazzo", "label": "Yes"}
+{"sentence": "la tazza \u00e8 preso ragazzo dalla", "label": "No"}
+{"sentence": "la storia \u00e8 letto dagli' autori", "label": "Yes"}
+{"sentence": "la storia \u00e8 letto autori dagli'", "label": "No"}
+{"sentence": "il capitolo \u00e8 letto dagli' insegnanti", "label": "Yes"}
+{"sentence": "il capitolo \u00e8 letto insegnanti dagli'", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dal ragazzo", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato ragazzo dal", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "il topo \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato cani dai", "label": "No"}
+{"sentence": "una lampadina \u00e8 tenuto da una gatto", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 tenuto da gatto una", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dalla insegnante", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato insegnante dalla", "label": "No"}
+{"sentence": "la collina \u00e8 scalato dai gatti", "label": "Yes"}
+{"sentence": "la collina \u00e8 scalato gatti dai", "label": "No"}
+{"sentence": "un libro \u00e8 letto da un ragazza", "label": "Yes"}
+{"sentence": "un libro \u00e8 letto da ragazza un", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dai cani", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto cani dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalla gatto", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato gatto dalla", "label": "No"}
+{"sentence": "il pesce \u00e8 tenuto dai ragazzi", "label": "Yes"}
+{"sentence": "il pesce \u00e8 tenuto ragazzi dai", "label": "No"}
+{"sentence": "il topo \u00e8 tenuto dal ragazzo", "label": "Yes"}
+{"sentence": "il topo \u00e8 tenuto ragazzo dal", "label": "No"}
+{"sentence": "la collina \u00e8 scalata dalla cane", "label": "Yes"}
+{"sentence": "la collina \u00e8 scalata cane dalla", "label": "No"}
+{"sentence": "il topo \u00e8 preso dagli' uomini", "label": "Yes"}
+{"sentence": "il topo \u00e8 preso uomini dagli'", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso cani dai", "label": "No"}
+{"sentence": "il topo \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato cani dai", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "un giornale \u00e8 portato da un insegnante", "label": "Yes"}
+{"sentence": "un giornale \u00e8 portato da insegnante un", "label": "No"}
+{"sentence": "la roccia \u00e8 scalato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la roccia \u00e8 scalato insegnanti dagli'", "label": "No"}
+{"sentence": "la montagna \u00e8 scalato dai gatti", "label": "Yes"}
+{"sentence": "la montagna \u00e8 scalato gatti dai", "label": "No"}
+{"sentence": "il giornale \u00e8 preso dalle donne", "label": "Yes"}
+{"sentence": "il giornale \u00e8 preso donne dalle", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "la bottiglia \u00e8 preso dalle donne", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 preso donne dalle", "label": "No"}
+{"sentence": "il topo \u00e8 preso dal ragazza", "label": "Yes"}
+{"sentence": "il topo \u00e8 preso ragazza dal", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dalle ragazze", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto ragazze dalle", "label": "No"}
+{"sentence": "un cappello \u00e8 portato da un ragazzo", "label": "Yes"}
+{"sentence": "un cappello \u00e8 portato da ragazzo un", "label": "No"}
+{"sentence": "la scatola \u00e8 preso dagli' uomini", "label": "Yes"}
+{"sentence": "la scatola \u00e8 preso uomini dagli'", "label": "No"}
+{"sentence": "il cappello \u00e8 tenuto dal ragazzo", "label": "Yes"}
+{"sentence": "il cappello \u00e8 tenuto ragazzo dal", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalla ragazzo", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato ragazzo dalla", "label": "No"}
+{"sentence": "il libro \u00e8 letto dagli' insegnanti", "label": "Yes"}
+{"sentence": "il libro \u00e8 letto insegnanti dagli'", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalla insegnante", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato insegnante dalla", "label": "No"}
+{"sentence": "la pizza \u00e8 mangiato dalle ragazze", "label": "Yes"}
+{"sentence": "la pizza \u00e8 mangiato ragazze dalle", "label": "No"}
+{"sentence": "la pizza \u00e8 mangiato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la pizza \u00e8 mangiato insegnanti dagli'", "label": "No"}
+{"sentence": "la pera \u00e8 mangiato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la pera \u00e8 mangiato insegnanti dagli'", "label": "No"}
+{"sentence": "una scatola \u00e8 tenuto da una uomo", "label": "Yes"}
+{"sentence": "una scatola \u00e8 tenuto da uomo una", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "la lampadina \u00e8 tenuto dalla uomo", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 tenuto uomo dalla", "label": "No"}
+{"sentence": "la storia \u00e8 letto dai poeti", "label": "Yes"}
+{"sentence": "la storia \u00e8 letto poeti dai", "label": "No"}
+{"sentence": "una lampadina \u00e8 portato da una cane", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 portato da cane una", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "il libro \u00e8 letto dai poeti", "label": "Yes"}
+{"sentence": "il libro \u00e8 letto poeti dai", "label": "No"}
+{"sentence": "una bottiglia \u00e8 portato da una ragazzo", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 portato da ragazzo una", "label": "No"}
+{"sentence": "una tazza \u00e8 portato da una ragazza", "label": "Yes"}
+{"sentence": "una tazza \u00e8 portato da ragazza una", "label": "No"}
+{"sentence": "una tazza \u00e8 portato da una donna", "label": "Yes"}
+{"sentence": "una tazza \u00e8 portato da donna una", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato cani dai", "label": "No"}
+{"sentence": "un topo \u00e8 portato da un uomo", "label": "Yes"}
+{"sentence": "un topo \u00e8 portato da uomo un", "label": "No"}
+{"sentence": "la scatola \u00e8 preso dalla donna", "label": "Yes"}
+{"sentence": "la scatola \u00e8 preso donna dalla", "label": "No"}
+{"sentence": "il poema \u00e8 letto dagli' scrittori", "label": "Yes"}
+{"sentence": "il poema \u00e8 letto scrittori dagli'", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dal ragazza", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato ragazza dal", "label": "No"}
+{"sentence": "il gesso \u00e8 tenuto dai ragazzi", "label": "Yes"}
+{"sentence": "il gesso \u00e8 tenuto ragazzi dai", "label": "No"}
+{"sentence": "una scatola \u00e8 preso da una ragazza", "label": "Yes"}
+{"sentence": "una scatola \u00e8 preso da ragazza una", "label": "No"}
+{"sentence": "il topo \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "il topo \u00e8 preso cani dai", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dalla insegnante", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato insegnante dalla", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dal insegnante", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto insegnante dal", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dagli' uomini", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso uomini dagli'", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalla insegnante", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato insegnante dalla", "label": "No"}
+{"sentence": "la scatola \u00e8 tenuto dagli' insegnanti", "label": "Yes"}
+{"sentence": "la scatola \u00e8 tenuto insegnanti dagli'", "label": "No"}
+{"sentence": "il topo \u00e8 portato dal donna", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato donna dal", "label": "No"}
+{"sentence": "la lampadina \u00e8 tenuto dagli' uomini", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 tenuto uomini dagli'", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "una tazza \u00e8 preso da una insegnante", "label": "Yes"}
+{"sentence": "una tazza \u00e8 preso da insegnante una", "label": "No"}
+{"sentence": "il cetriolo \u00e8 mangiato dalle ragazze", "label": "Yes"}
+{"sentence": "il cetriolo \u00e8 mangiato ragazze dalle", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso cani dai", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalla donna", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato donna dalla", "label": "No"}
+{"sentence": "il giornale \u00e8 preso dal ragazzo", "label": "Yes"}
+{"sentence": "il giornale \u00e8 preso ragazzo dal", "label": "No"}
+{"sentence": "l' albero \u00e8 scalato dai ragazzi", "label": "Yes"}
+{"sentence": "l' albero \u00e8 scalato ragazzi dai", "label": "No"}
+{"sentence": "il giornale \u00e8 preso dal ragazza", "label": "Yes"}
+{"sentence": "il giornale \u00e8 preso ragazza dal", "label": "No"}
+{"sentence": "un poema \u00e8 letto da un poeta", "label": "Yes"}
+{"sentence": "un poema \u00e8 letto da poeta un", "label": "No"}
+{"sentence": "il topo \u00e8 preso dai gatti", "label": "Yes"}
+{"sentence": "il topo \u00e8 preso gatti dai", "label": "No"}
+{"sentence": "il giornale \u00e8 preso dalle ragazze", "label": "Yes"}
+{"sentence": "il giornale \u00e8 preso ragazze dalle", "label": "No"}
+{"sentence": "un pasto \u00e8 mangiato da un cane", "label": "Yes"}
+{"sentence": "un pasto \u00e8 mangiato da cane un", "label": "No"}
+{"sentence": "la banana \u00e8 mangiato dai ragazzi", "label": "Yes"}
+{"sentence": "la banana \u00e8 mangiato ragazzi dai", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dal donna", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato donna dal", "label": "No"}
+{"sentence": "la lampadina \u00e8 preso dalle ragazze", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 preso ragazze dalle", "label": "No"}
+{"sentence": "la banana \u00e8 mangiato dai gatti", "label": "Yes"}
+{"sentence": "la banana \u00e8 mangiato gatti dai", "label": "No"}
+{"sentence": "l' albero \u00e8 scalato dall' insegnante", "label": "Yes"}
+{"sentence": "l' albero \u00e8 scalato insegnante dall'", "label": "No"}
+{"sentence": "la scatola \u00e8 preso dagli' insegnanti", "label": "Yes"}
+{"sentence": "la scatola \u00e8 preso insegnanti dagli'", "label": "No"}
+{"sentence": "la scatola \u00e8 tenuto dalla cane", "label": "Yes"}
+{"sentence": "la scatola \u00e8 tenuto cane dalla", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dal cane", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato cane dal", "label": "No"}
+{"sentence": "un pesce \u00e8 portato da un insegnante", "label": "Yes"}
+{"sentence": "un pesce \u00e8 portato da insegnante un", "label": "No"}
+{"sentence": "un topo \u00e8 portato da un ragazza", "label": "Yes"}
+{"sentence": "un topo \u00e8 portato da ragazza un", "label": "No"}
+{"sentence": "una lampadina \u00e8 tenuto da una ragazzo", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 tenuto da ragazzo una", "label": "No"}
+{"sentence": "il tetto \u00e8 scalato dal insegnante", "label": "Yes"}
+{"sentence": "il tetto \u00e8 scalato insegnante dal", "label": "No"}
+{"sentence": "la storia \u00e8 letto dai ragazzi", "label": "Yes"}
+{"sentence": "la storia \u00e8 letto ragazzi dai", "label": "No"}
+{"sentence": "il biscotto \u00e8 mangiato dal donna", "label": "Yes"}
+{"sentence": "il biscotto \u00e8 mangiato donna dal", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "il libro \u00e8 letto dal oratorio", "label": "Yes"}
+{"sentence": "il libro \u00e8 letto oratorio dal", "label": "No"}
+{"sentence": "una collina \u00e8 scalata da una ragazza", "label": "Yes"}
+{"sentence": "una collina \u00e8 scalata da ragazza una", "label": "No"}
+{"sentence": "un giornale \u00e8 portato da un gatto", "label": "Yes"}
+{"sentence": "un giornale \u00e8 portato da gatto un", "label": "No"}
+{"sentence": "un cetriolo \u00e8 mangiato da un gatto", "label": "Yes"}
+{"sentence": "un cetriolo \u00e8 mangiato da gatto un", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "il gesso \u00e8 tenuto dalle donne", "label": "Yes"}
+{"sentence": "il gesso \u00e8 tenuto donne dalle", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "una scatola \u00e8 tenuto da una ragazza", "label": "Yes"}
+{"sentence": "una scatola \u00e8 tenuto da ragazza una", "label": "No"}
+{"sentence": "una collina \u00e8 scalata da una gatto", "label": "Yes"}
+{"sentence": "una collina \u00e8 scalata da gatto una", "label": "No"}
+{"sentence": "il giocattolo \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 preso cani dai", "label": "No"}
+{"sentence": "il giornale \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "il giornale \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "il capitolo \u00e8 letto dal poeta", "label": "Yes"}
+{"sentence": "il capitolo \u00e8 letto poeta dal", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "la pera \u00e8 mangiato dalla ragazzo", "label": "Yes"}
+{"sentence": "la pera \u00e8 mangiato ragazzo dalla", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "una bottiglia \u00e8 portato da una uomo", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 portato da uomo una", "label": "No"}
+{"sentence": "il topo \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "un giornale \u00e8 preso da un insegnante", "label": "Yes"}
+{"sentence": "un giornale \u00e8 preso da insegnante un", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dai gatti", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso gatti dai", "label": "No"}
+{"sentence": "una bottiglia \u00e8 tenuto da una gatto", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 tenuto da gatto una", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "il poema \u00e8 letto dal oratorio", "label": "Yes"}
+{"sentence": "il poema \u00e8 letto oratorio dal", "label": "No"}
+{"sentence": "un capitolo \u00e8 letto da un ragazza", "label": "Yes"}
+{"sentence": "un capitolo \u00e8 letto da ragazza un", "label": "No"}
+{"sentence": "la lampadina \u00e8 tenuto dalle donne", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 tenuto donne dalle", "label": "No"}
+{"sentence": "la lampadina \u00e8 preso dagli' insegnanti", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 preso insegnanti dagli'", "label": "No"}
+{"sentence": "un' albero \u00e8 scalato da un donna", "label": "Yes"}
+{"sentence": "un' albero \u00e8 scalato da donna un", "label": "No"}
+{"sentence": "un gesso \u00e8 portato da un ragazza", "label": "Yes"}
+{"sentence": "un gesso \u00e8 portato da ragazza un", "label": "No"}
+{"sentence": "un giornale \u00e8 tenuto da un cane", "label": "Yes"}
+{"sentence": "un giornale \u00e8 tenuto da cane un", "label": "No"}
+{"sentence": "un giocattolo \u00e8 portato da un uomo", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 portato da uomo un", "label": "No"}
+{"sentence": "la frutta \u00e8 mangiato dagli' uomini", "label": "Yes"}
+{"sentence": "la frutta \u00e8 mangiato uomini dagli'", "label": "No"}
+{"sentence": "il topo \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "un poema \u00e8 letto da un insegnante", "label": "Yes"}
+{"sentence": "un poema \u00e8 letto da insegnante un", "label": "No"}
+{"sentence": "la pizza \u00e8 mangiato dai cani", "label": "Yes"}
+{"sentence": "la pizza \u00e8 mangiato cani dai", "label": "No"}
+{"sentence": "il topo \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "un pesce \u00e8 portato da un ragazza", "label": "Yes"}
+{"sentence": "un pesce \u00e8 portato da ragazza un", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dalle donne", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso donne dalle", "label": "No"}
+{"sentence": "una roccia \u00e8 scalata da una uomo", "label": "Yes"}
+{"sentence": "una roccia \u00e8 scalata da uomo una", "label": "No"}
+{"sentence": "il biscotto \u00e8 mangiato dai ragazzi", "label": "Yes"}
+{"sentence": "il biscotto \u00e8 mangiato ragazzi dai", "label": "No"}
+{"sentence": "un giocattolo \u00e8 tenuto da un ragazza", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 tenuto da ragazza un", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dal ragazza", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato ragazza dal", "label": "No"}
+{"sentence": "una bottiglia \u00e8 preso da una cane", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 preso da cane una", "label": "No"}
+{"sentence": "la collina \u00e8 scalata dalle ragazze", "label": "Yes"}
+{"sentence": "la collina \u00e8 scalata ragazze dalle", "label": "No"}
+{"sentence": "il gesso \u00e8 tenuto dal cane", "label": "Yes"}
+{"sentence": "il gesso \u00e8 tenuto cane dal", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "il poema \u00e8 letto dai ragazzi", "label": "Yes"}
+{"sentence": "il poema \u00e8 letto ragazzi dai", "label": "No"}
+{"sentence": "un gesso \u00e8 preso da un cane", "label": "Yes"}
+{"sentence": "un gesso \u00e8 preso da cane un", "label": "No"}
+{"sentence": "una montagna \u00e8 scalata da una donna", "label": "Yes"}
+{"sentence": "una montagna \u00e8 scalata da donna una", "label": "No"}
+{"sentence": "il topo \u00e8 portato dal gatto", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato gatto dal", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato cani dai", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dal ragazza", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso ragazza dal", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dai ragazzi", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato ragazzi dai", "label": "No"}
+{"sentence": "il biscotto \u00e8 mangiato dai cani", "label": "Yes"}
+{"sentence": "il biscotto \u00e8 mangiato cani dai", "label": "No"}
+{"sentence": "una bottiglia \u00e8 tenuto da una uomo", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 tenuto da uomo una", "label": "No"}
+{"sentence": "il tetto \u00e8 scalato dai ragazzi", "label": "Yes"}
+{"sentence": "il tetto \u00e8 scalato ragazzi dai", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dalle ragazze", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto ragazze dalle", "label": "No"}
+{"sentence": "un tetto \u00e8 scalato da un ragazzo", "label": "Yes"}
+{"sentence": "un tetto \u00e8 scalato da ragazzo un", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato cani dai", "label": "No"}
+{"sentence": "il cappello \u00e8 tenuto dai ragazzi", "label": "Yes"}
+{"sentence": "il cappello \u00e8 tenuto ragazzi dai", "label": "No"}
+{"sentence": "il topo \u00e8 portato dal gatto", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato gatto dal", "label": "No"}
+{"sentence": "un gesso \u00e8 portato da un ragazza", "label": "Yes"}
+{"sentence": "un gesso \u00e8 portato da ragazza un", "label": "No"}
+{"sentence": "il cappello \u00e8 tenuto dalle ragazze", "label": "Yes"}
+{"sentence": "il cappello \u00e8 tenuto ragazze dalle", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dagli' uomini", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato uomini dagli'", "label": "No"}
+{"sentence": "una collina \u00e8 scalata da una insegnante", "label": "Yes"}
+{"sentence": "una collina \u00e8 scalata da insegnante una", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalla ragazza", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato ragazza dalla", "label": "No"}
+{"sentence": "la bottiglia \u00e8 preso dagli' insegnanti", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 preso insegnanti dagli'", "label": "No"}
+{"sentence": "il cappello \u00e8 tenuto dalle donne", "label": "Yes"}
+{"sentence": "il cappello \u00e8 tenuto donne dalle", "label": "No"}
+{"sentence": "un giocattolo \u00e8 preso da un uomo", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 preso da uomo un", "label": "No"}
+{"sentence": "un topo \u00e8 preso da un gatto", "label": "Yes"}
+{"sentence": "un topo \u00e8 preso da gatto un", "label": "No"}
+{"sentence": "il topo \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "un biscotto \u00e8 mangiato da un cane", "label": "Yes"}
+{"sentence": "un biscotto \u00e8 mangiato da cane un", "label": "No"}
+{"sentence": "un giocattolo \u00e8 portato da un ragazzo", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 portato da ragazzo un", "label": "No"}
+{"sentence": "la bottiglia \u00e8 tenuto dalla cane", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 tenuto cane dalla", "label": "No"}
+{"sentence": "una scatola \u00e8 portato da una cane", "label": "Yes"}
+{"sentence": "una scatola \u00e8 portato da cane una", "label": "No"}
+{"sentence": "il topo \u00e8 tenuto dal ragazza", "label": "Yes"}
+{"sentence": "il topo \u00e8 tenuto ragazza dal", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dal insegnante", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato insegnante dal", "label": "No"}
+{"sentence": "un cetriolo \u00e8 mangiato da un ragazzo", "label": "Yes"}
+{"sentence": "un cetriolo \u00e8 mangiato da ragazzo un", "label": "No"}
+{"sentence": "una bottiglia \u00e8 portato da una gatto", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 portato da gatto una", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dai cani", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto cani dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "il giornale \u00e8 tenuto dai cani", "label": "Yes"}
+{"sentence": "il giornale \u00e8 tenuto cani dai", "label": "No"}
+{"sentence": "il tetto \u00e8 scalato dal uomo", "label": "Yes"}
+{"sentence": "il tetto \u00e8 scalato uomo dal", "label": "No"}
+{"sentence": "un pasto \u00e8 mangiato da un uomo", "label": "Yes"}
+{"sentence": "un pasto \u00e8 mangiato da uomo un", "label": "No"}
+{"sentence": "una montagna \u00e8 scalata da una ragazza", "label": "Yes"}
+{"sentence": "una montagna \u00e8 scalata da ragazza una", "label": "No"}
+{"sentence": "un cappello \u00e8 portato da un cane", "label": "Yes"}
+{"sentence": "un cappello \u00e8 portato da cane un", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "il biscotto \u00e8 mangiato dalle donne", "label": "Yes"}
+{"sentence": "il biscotto \u00e8 mangiato donne dalle", "label": "No"}
+{"sentence": "il biscotto \u00e8 mangiato dal uomo", "label": "Yes"}
+{"sentence": "il biscotto \u00e8 mangiato uomo dal", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "un pesce \u00e8 mangiato da un ragazza", "label": "Yes"}
+{"sentence": "un pesce \u00e8 mangiato da ragazza un", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dalle ragazze", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso ragazze dalle", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dagli' insegnanti", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto insegnanti dagli'", "label": "No"}
+{"sentence": "una lampadina \u00e8 preso da una gatto", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 preso da gatto una", "label": "No"}
+{"sentence": "il topo \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "la tazza \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "la tazza \u00e8 preso cani dai", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dai ragazzi", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso ragazzi dai", "label": "No"}
+{"sentence": "la banana \u00e8 mangiato dalle ragazze", "label": "Yes"}
+{"sentence": "la banana \u00e8 mangiato ragazze dalle", "label": "No"}
+{"sentence": "un tetto \u00e8 scalato da un cane", "label": "Yes"}
+{"sentence": "un tetto \u00e8 scalato da cane un", "label": "No"}
+{"sentence": "la scatola \u00e8 preso dai gatti", "label": "Yes"}
+{"sentence": "la scatola \u00e8 preso gatti dai", "label": "No"}
+{"sentence": "il topo \u00e8 preso dal donna", "label": "Yes"}
+{"sentence": "il topo \u00e8 preso donna dal", "label": "No"}
+{"sentence": "il giocattolo \u00e8 preso dal gatto", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 preso gatto dal", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dai gatti", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso gatti dai", "label": "No"}
+{"sentence": "la roccia \u00e8 scalata dalle ragazze", "label": "Yes"}
+{"sentence": "la roccia \u00e8 scalata ragazze dalle", "label": "No"}
+{"sentence": "la lampadina \u00e8 tenuto dalla insegnante", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 tenuto insegnante dalla", "label": "No"}
+{"sentence": "la scala \u00e8 scalato dagli' uomini", "label": "Yes"}
+{"sentence": "la scala \u00e8 scalato uomini dagli'", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dalle donne", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto donne dalle", "label": "No"}
+{"sentence": "una collina \u00e8 scalata da una donna", "label": "Yes"}
+{"sentence": "una collina \u00e8 scalata da donna una", "label": "No"}
+{"sentence": "un giornale \u00e8 tenuto da un uomo", "label": "Yes"}
+{"sentence": "un giornale \u00e8 tenuto da uomo un", "label": "No"}
+{"sentence": "il libro \u00e8 letto dagli' oratori", "label": "Yes"}
+{"sentence": "il libro \u00e8 letto oratori dagli'", "label": "No"}
+{"sentence": "una lampadina \u00e8 portato da una cane", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 portato da cane una", "label": "No"}
+{"sentence": "il giocattolo \u00e8 preso dagli' uomini", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 preso uomini dagli'", "label": "No"}
+{"sentence": "la scala \u00e8 scalata dalla uomo", "label": "Yes"}
+{"sentence": "la scala \u00e8 scalata uomo dalla", "label": "No"}
+{"sentence": "una banana \u00e8 mangiato da una ragazza", "label": "Yes"}
+{"sentence": "una banana \u00e8 mangiato da ragazza una", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "una bottiglia \u00e8 preso da una ragazzo", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 preso da ragazzo una", "label": "No"}
+{"sentence": "la pera \u00e8 mangiato dalle ragazze", "label": "Yes"}
+{"sentence": "la pera \u00e8 mangiato ragazze dalle", "label": "No"}
+{"sentence": "un giocattolo \u00e8 preso da un insegnante", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 preso da insegnante un", "label": "No"}
+{"sentence": "una lampadina \u00e8 tenuto da una ragazza", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 tenuto da ragazza una", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "un cappello \u00e8 portato da un ragazzo", "label": "Yes"}
+{"sentence": "un cappello \u00e8 portato da ragazzo un", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dal gatto", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato gatto dal", "label": "No"}
+{"sentence": "la bottiglia \u00e8 preso dalla donna", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 preso donna dalla", "label": "No"}
+{"sentence": "il pasto \u00e8 mangiato dagli' uomini", "label": "Yes"}
+{"sentence": "il pasto \u00e8 mangiato uomini dagli'", "label": "No"}
+{"sentence": "la pizza \u00e8 mangiato dalla ragazza", "label": "Yes"}
+{"sentence": "la pizza \u00e8 mangiato ragazza dalla", "label": "No"}
+{"sentence": "il tetto \u00e8 scalato dai gatti", "label": "Yes"}
+{"sentence": "il tetto \u00e8 scalato gatti dai", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dal uomo", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato uomo dal", "label": "No"}
+{"sentence": "il gesso \u00e8 tenuto dal insegnante", "label": "Yes"}
+{"sentence": "il gesso \u00e8 tenuto insegnante dal", "label": "No"}
+{"sentence": "il giocattolo \u00e8 preso dalle ragazze", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 preso ragazze dalle", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dal insegnante", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato insegnante dal", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "il capitolo \u00e8 letto dai poeti", "label": "Yes"}
+{"sentence": "il capitolo \u00e8 letto poeti dai", "label": "No"}
+{"sentence": "il cetriolo \u00e8 mangiato dai gatti", "label": "Yes"}
+{"sentence": "il cetriolo \u00e8 mangiato gatti dai", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "la pizza \u00e8 mangiato dalla insegnante", "label": "Yes"}
+{"sentence": "la pizza \u00e8 mangiato insegnante dalla", "label": "No"}
+{"sentence": "la scatola \u00e8 tenuto dalla ragazzo", "label": "Yes"}
+{"sentence": "la scatola \u00e8 tenuto ragazzo dalla", "label": "No"}
+{"sentence": "la tazza \u00e8 tenuto dalla ragazzo", "label": "Yes"}
+{"sentence": "la tazza \u00e8 tenuto ragazzo dalla", "label": "No"}
+{"sentence": "un cappello \u00e8 preso da un uomo", "label": "Yes"}
+{"sentence": "un cappello \u00e8 preso da uomo un", "label": "No"}
+{"sentence": "il tetto \u00e8 scalato dagli' uomini", "label": "Yes"}
+{"sentence": "il tetto \u00e8 scalato uomini dagli'", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dal gatto", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato gatto dal", "label": "No"}
+{"sentence": "il pasto \u00e8 mangiato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il pasto \u00e8 mangiato insegnanti dagli'", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "la storia \u00e8 letto dalla scrittore", "label": "Yes"}
+{"sentence": "la storia \u00e8 letto scrittore dalla", "label": "No"}
+{"sentence": "un gesso \u00e8 portato da un donna", "label": "Yes"}
+{"sentence": "un gesso \u00e8 portato da donna un", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dal insegnante", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato insegnante dal", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dal cane", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato cane dal", "label": "No"}
+{"sentence": "un topo \u00e8 portato da un ragazza", "label": "Yes"}
+{"sentence": "un topo \u00e8 portato da ragazza un", "label": "No"}
+{"sentence": "un pesce \u00e8 portato da un ragazzo", "label": "Yes"}
+{"sentence": "un pesce \u00e8 portato da ragazzo un", "label": "No"}
+{"sentence": "la montagna \u00e8 scalata dalla uomo", "label": "Yes"}
+{"sentence": "la montagna \u00e8 scalata uomo dalla", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dagli' uomini", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato uomini dagli'", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "una bottiglia \u00e8 portato da una ragazza", "label": "Yes"}
+{"sentence": "una bottiglia \u00e8 portato da ragazza una", "label": "No"}
+{"sentence": "una pera \u00e8 mangiato da una insegnante", "label": "Yes"}
+{"sentence": "una pera \u00e8 mangiato da insegnante una", "label": "No"}
+{"sentence": "il topo \u00e8 portato dal ragazzo", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato ragazzo dal", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dagli' uomini", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto uomini dagli'", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalla donna", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato donna dalla", "label": "No"}
+{"sentence": "il biscotto \u00e8 mangiato dal ragazzo", "label": "Yes"}
+{"sentence": "il biscotto \u00e8 mangiato ragazzo dal", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dai ragazzi", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato ragazzi dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 tenuto dagli' insegnanti", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 tenuto insegnanti dagli'", "label": "No"}
+{"sentence": "un giornale \u00e8 portato da un gatto", "label": "Yes"}
+{"sentence": "un giornale \u00e8 portato da gatto un", "label": "No"}
+{"sentence": "una scala \u00e8 scalata da una insegnante", "label": "Yes"}
+{"sentence": "una scala \u00e8 scalata da insegnante una", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "la scala \u00e8 scalata dalla ragazzo", "label": "Yes"}
+{"sentence": "la scala \u00e8 scalata ragazzo dalla", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato cani dai", "label": "No"}
+{"sentence": "una banana \u00e8 mangiato da una uomo", "label": "Yes"}
+{"sentence": "una banana \u00e8 mangiato da uomo una", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dal gatto", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato gatto dal", "label": "No"}
+{"sentence": "la bottiglia \u00e8 tenuto dalla insegnante", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 tenuto insegnante dalla", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dalle donne", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto donne dalle", "label": "No"}
+{"sentence": "il topo \u00e8 tenuto dagli' uomini", "label": "Yes"}
+{"sentence": "il topo \u00e8 tenuto uomini dagli'", "label": "No"}
+{"sentence": "la lampadina \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "il topo \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il topo \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "una collina \u00e8 scalata da una uomo", "label": "Yes"}
+{"sentence": "una collina \u00e8 scalata da uomo una", "label": "No"}
+{"sentence": "una frutta \u00e8 mangiato da una ragazza", "label": "Yes"}
+{"sentence": "una frutta \u00e8 mangiato da ragazza una", "label": "No"}
+{"sentence": "una scala \u00e8 scalata da una cane", "label": "Yes"}
+{"sentence": "una scala \u00e8 scalata da cane una", "label": "No"}
+{"sentence": "il pasto \u00e8 mangiato dai gatti", "label": "Yes"}
+{"sentence": "il pasto \u00e8 mangiato gatti dai", "label": "No"}
+{"sentence": "un gesso \u00e8 portato da un uomo", "label": "Yes"}
+{"sentence": "un gesso \u00e8 portato da uomo un", "label": "No"}
+{"sentence": "la lampadina \u00e8 portato dalla gatto", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 portato gatto dalla", "label": "No"}
+{"sentence": "il giocattolo \u00e8 preso dal ragazza", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 preso ragazza dal", "label": "No"}
+{"sentence": "la banana \u00e8 mangiato dagli' uomini", "label": "Yes"}
+{"sentence": "la banana \u00e8 mangiato uomini dagli'", "label": "No"}
+{"sentence": "la lampadina \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 preso cani dai", "label": "No"}
+{"sentence": "la lampadina \u00e8 preso dalla cane", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 preso cane dalla", "label": "No"}
+{"sentence": "una lampadina \u00e8 portato da una donna", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 portato da donna una", "label": "No"}
+{"sentence": "il pesce \u00e8 tenuto dalle ragazze", "label": "Yes"}
+{"sentence": "il pesce \u00e8 tenuto ragazze dalle", "label": "No"}
+{"sentence": "la scatola \u00e8 tenuto dalla donna", "label": "Yes"}
+{"sentence": "la scatola \u00e8 tenuto donna dalla", "label": "No"}
+{"sentence": "il gesso \u00e8 tenuto dai gatti", "label": "Yes"}
+{"sentence": "il gesso \u00e8 tenuto gatti dai", "label": "No"}
+{"sentence": "il gesso \u00e8 tenuto dai cani", "label": "Yes"}
+{"sentence": "il gesso \u00e8 tenuto cani dai", "label": "No"}
+{"sentence": "la banana \u00e8 mangiato dai cani", "label": "Yes"}
+{"sentence": "la banana \u00e8 mangiato cani dai", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dalla uomo", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato uomo dalla", "label": "No"}
+{"sentence": "la storia \u00e8 letto dalla oratorio", "label": "Yes"}
+{"sentence": "la storia \u00e8 letto oratorio dalla", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato cani dai", "label": "No"}
+{"sentence": "la bottiglia \u00e8 tenuto dagli' uomini", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 tenuto uomini dagli'", "label": "No"}
+{"sentence": "una frutta \u00e8 mangiato da una gatto", "label": "Yes"}
+{"sentence": "una frutta \u00e8 mangiato da gatto una", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dalla ragazzo", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato ragazzo dalla", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato cani dai", "label": "No"}
+{"sentence": "la montagna \u00e8 scalato dai ragazzi", "label": "Yes"}
+{"sentence": "la montagna \u00e8 scalato ragazzi dai", "label": "No"}
+{"sentence": "il cappello \u00e8 preso dai cani", "label": "Yes"}
+{"sentence": "il cappello \u00e8 preso cani dai", "label": "No"}
+{"sentence": "un gesso \u00e8 tenuto da un ragazza", "label": "Yes"}
+{"sentence": "un gesso \u00e8 tenuto da ragazza un", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "la storia \u00e8 letto dalle ragazze", "label": "Yes"}
+{"sentence": "la storia \u00e8 letto ragazze dalle", "label": "No"}
+{"sentence": "un giornale \u00e8 portato da un cane", "label": "Yes"}
+{"sentence": "un giornale \u00e8 portato da cane un", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dal cane", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato cane dal", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dalle ragazze", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato ragazze dalle", "label": "No"}
+{"sentence": "la lampadina \u00e8 preso dalle donne", "label": "Yes"}
+{"sentence": "la lampadina \u00e8 preso donne dalle", "label": "No"}
+{"sentence": "una roccia \u00e8 scalata da una ragazzo", "label": "Yes"}
+{"sentence": "una roccia \u00e8 scalata da ragazzo una", "label": "No"}
+{"sentence": "la bottiglia \u00e8 portato dalla cane", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 portato cane dalla", "label": "No"}
+{"sentence": "una pera \u00e8 mangiato da una uomo", "label": "Yes"}
+{"sentence": "una pera \u00e8 mangiato da uomo una", "label": "No"}
+{"sentence": "la storia \u00e8 letto dagli' oratori", "label": "Yes"}
+{"sentence": "la storia \u00e8 letto oratori dagli'", "label": "No"}
+{"sentence": "il giocattolo \u00e8 tenuto dal cane", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 tenuto cane dal", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "una frutta \u00e8 mangiato da una donna", "label": "Yes"}
+{"sentence": "una frutta \u00e8 mangiato da donna una", "label": "No"}
+{"sentence": "la scatola \u00e8 preso dalla gatto", "label": "Yes"}
+{"sentence": "la scatola \u00e8 preso gatto dalla", "label": "No"}
+{"sentence": "il topo \u00e8 preso dalle donne", "label": "Yes"}
+{"sentence": "il topo \u00e8 preso donne dalle", "label": "No"}
+{"sentence": "la tazza \u00e8 preso dalla cane", "label": "Yes"}
+{"sentence": "la tazza \u00e8 preso cane dalla", "label": "No"}
+{"sentence": "il poema \u00e8 letto dal ragazza", "label": "Yes"}
+{"sentence": "il poema \u00e8 letto ragazza dal", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dal uomo", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato uomo dal", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dal gatto", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato gatto dal", "label": "No"}
+{"sentence": "il giocattolo \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il giocattolo \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "la tazza \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "la tazza \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "un cetriolo \u00e8 mangiato da un cane", "label": "Yes"}
+{"sentence": "un cetriolo \u00e8 mangiato da cane un", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dai gatti", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato gatti dai", "label": "No"}
+{"sentence": "un' albero \u00e8 scalato da un ragazzo", "label": "Yes"}
+{"sentence": "un' albero \u00e8 scalato da ragazzo un", "label": "No"}
+{"sentence": "un pesce \u00e8 portato da un uomo", "label": "Yes"}
+{"sentence": "un pesce \u00e8 portato da uomo un", "label": "No"}
+{"sentence": "la scatola \u00e8 tenuto dalle ragazze", "label": "Yes"}
+{"sentence": "la scatola \u00e8 tenuto ragazze dalle", "label": "No"}
+{"sentence": "il cappello \u00e8 preso dai ragazzi", "label": "Yes"}
+{"sentence": "il cappello \u00e8 preso ragazzi dai", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "la storia \u00e8 letto dagli' insegnanti", "label": "Yes"}
+{"sentence": "la storia \u00e8 letto insegnanti dagli'", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dalle donne", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato donne dalle", "label": "No"}
+{"sentence": "il pesce \u00e8 mangiato dai cani", "label": "Yes"}
+{"sentence": "il pesce \u00e8 mangiato cani dai", "label": "No"}
+{"sentence": "il biscotto \u00e8 mangiato dai gatti", "label": "Yes"}
+{"sentence": "il biscotto \u00e8 mangiato gatti dai", "label": "No"}
+{"sentence": "il pesce \u00e8 preso dal gatto", "label": "Yes"}
+{"sentence": "il pesce \u00e8 preso gatto dal", "label": "No"}
+{"sentence": "il cappello \u00e8 preso dal insegnante", "label": "Yes"}
+{"sentence": "il cappello \u00e8 preso insegnante dal", "label": "No"}
+{"sentence": "il gesso \u00e8 preso dal gatto", "label": "Yes"}
+{"sentence": "il gesso \u00e8 preso gatto dal", "label": "No"}
+{"sentence": "un cappello \u00e8 preso da un gatto", "label": "Yes"}
+{"sentence": "un cappello \u00e8 preso da gatto un", "label": "No"}
+{"sentence": "una lampadina \u00e8 preso da una donna", "label": "Yes"}
+{"sentence": "una lampadina \u00e8 preso da donna una", "label": "No"}
+{"sentence": "un giornale \u00e8 tenuto da un donna", "label": "Yes"}
+{"sentence": "un giornale \u00e8 tenuto da donna un", "label": "No"}
+{"sentence": "una scatola \u00e8 portato da una insegnante", "label": "Yes"}
+{"sentence": "una scatola \u00e8 portato da insegnante una", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dal donna", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato donna dal", "label": "No"}
+{"sentence": "un cappello \u00e8 portato da un uomo", "label": "Yes"}
+{"sentence": "un cappello \u00e8 portato da uomo un", "label": "No"}
+{"sentence": "un gesso \u00e8 tenuto da un gatto", "label": "Yes"}
+{"sentence": "un gesso \u00e8 tenuto da gatto un", "label": "No"}
+{"sentence": "un giocattolo \u00e8 preso da un ragazzo", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 preso da ragazzo un", "label": "No"}
+{"sentence": "una pizza \u00e8 mangiato da una gatto", "label": "Yes"}
+{"sentence": "una pizza \u00e8 mangiato da gatto una", "label": "No"}
+{"sentence": "una pera \u00e8 mangiato da una cane", "label": "Yes"}
+{"sentence": "una pera \u00e8 mangiato da cane una", "label": "No"}
+{"sentence": "un cappello \u00e8 portato da un ragazza", "label": "Yes"}
+{"sentence": "un cappello \u00e8 portato da ragazza un", "label": "No"}
+{"sentence": "il giornale \u00e8 portato dal ragazza", "label": "Yes"}
+{"sentence": "il giornale \u00e8 portato ragazza dal", "label": "No"}
+{"sentence": "un giocattolo \u00e8 portato da un ragazza", "label": "Yes"}
+{"sentence": "un giocattolo \u00e8 portato da ragazza un", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dai gatti", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato gatti dai", "label": "No"}
+{"sentence": "il giornale \u00e8 tenuto dal gatto", "label": "Yes"}
+{"sentence": "il giornale \u00e8 tenuto gatto dal", "label": "No"}
+{"sentence": "la scatola \u00e8 portato dai cani", "label": "Yes"}
+{"sentence": "la scatola \u00e8 portato cani dai", "label": "No"}
+{"sentence": "il capitolo \u00e8 letto dal ragazzo", "label": "Yes"}
+{"sentence": "il capitolo \u00e8 letto ragazzo dal", "label": "No"}
+{"sentence": "il poema \u00e8 letto dagli' insegnanti", "label": "Yes"}
+{"sentence": "il poema \u00e8 letto insegnanti dagli'", "label": "No"}
+{"sentence": "il pesce \u00e8 portato dal cane", "label": "Yes"}
+{"sentence": "il pesce \u00e8 portato cane dal", "label": "No"}
+{"sentence": "un giornale \u00e8 preso da un donna", "label": "Yes"}
+{"sentence": "un giornale \u00e8 preso da donna un", "label": "No"}
+{"sentence": "la bottiglia \u00e8 preso dagli' uomini", "label": "Yes"}
+{"sentence": "la bottiglia \u00e8 preso uomini dagli'", "label": "No"}
+{"sentence": "una frutta \u00e8 mangiato da una insegnante", "label": "Yes"}
+{"sentence": "una frutta \u00e8 mangiato da insegnante una", "label": "No"}
+{"sentence": "l' albero \u00e8 scalato dall' ragazza", "label": "Yes"}
+{"sentence": "l' albero \u00e8 scalato ragazza dall'", "label": "No"}
+{"sentence": "il cappello \u00e8 portato dagli' insegnanti", "label": "Yes"}
+{"sentence": "il cappello \u00e8 portato insegnanti dagli'", "label": "No"}
+{"sentence": "il gesso \u00e8 portato dal insegnante", "label": "Yes"}
+{"sentence": "il gesso \u00e8 portato insegnante dal", "label": "No"}
