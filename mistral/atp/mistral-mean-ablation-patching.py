@@ -32,12 +32,11 @@ PATCH_PICKLES_PATH = config_file["patch_pickles_path"]
 PATCH_PICKLES_SUBPATH = config_file["patch_pickles_sub_path"]
 
 og = pd.read_csv(DATA_PATH)
-types = [col for col in og.columns if not 'ng-' in col]
+types = [col for col in sorted(og.columns) if (('en' in col[:2]) or ('ita' in col[:3]) or ('jap' in col[:3])) and (not 'qsub' in col) and (not 'null_subject' in col)]
 sType = col = types[args.stype]
 
 print('######## COLUMN: ', sType)
-if (not os.path.exists(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{col}.pkl') or not os.path.exists(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/{col}.pkl')):
-
+if (not os.path.exists(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/mean-{col}.pkl') or not os.path.exists(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/mean-{col}.pkl')):
     if (MODEL_NAME == "llama"):
         os.environ["HF_TOKEN"] = config_file["hf_token"]
         MODEL_CACHE_PATH = config_file["model_cache_path"]
@@ -71,7 +70,6 @@ if (not os.path.exists(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{col}
     
     def getPaddedTrainTokens(prompts, golds):
         max_len = 0
-        test_prefixes = []
         train_prefixes = []
         train_tokens = []
         for idx, prompt in enumerate(prompts):
@@ -90,11 +88,11 @@ if (not os.path.exists(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{col}
     prompts, questions, golds = get_prompt_from_df(f'{PROMPT_FILES_PATH}/{sType}.csv')
     train_prefixes, max_len = getPaddedTrainTokens(prompts, golds)
 
-    mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 2, model.model.layers[0].self_attn.o_proj.out_features)).to("cuda")
-    attn_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 2, model.model.layers[0].mlp.down_proj.out_features)).to("cuda")
+    mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 1, model.model.layers[0].self_attn.o_proj.out_features)).to("cuda")
+    attn_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 1, model.model.layers[0].mlp.down_proj.out_features)).to("cuda")
 
     for tr_prefix in tqdm(train_prefixes):
-        with model.trace(tr_prefix, scan=False, validate=False) as tracer:
+        with model.trace(tr_prefix.rstrip(), scan=False, validate=False) as tracer:
             for layer in range(len(model.model.layers)):
                 self_attn = model.model.layers[layer].self_attn.o_proj.output
                 mlp = model.model.layers[layer].mlp.down_proj.output
@@ -104,8 +102,9 @@ if (not os.path.exists(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{col}
     attn_mean_cache /= len(train_prefixes)
     mlp_mean_cache /= len(train_prefixes)
     
-    with open(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/{sType}.pkl', 'wb') as f:
+    print(f"Writing to {PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/mean-{sType}.pkl")
+    with open(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/mean-{sType}.pkl', 'wb') as f:
         pickle.dump(mlp_mean_cache[:, :, :], f)
     
-    with open(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sType}.pkl', 'wb') as f:
+    with open(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/mean-{sType}.pkl', 'wb') as f:
         pickle.dump(attn_mean_cache[:, :, :], f)

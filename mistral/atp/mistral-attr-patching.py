@@ -31,9 +31,9 @@ PATCH_PICKLES_PATH = config_file["patch_pickles_path"]
 PATCH_PICKLES_SUBPATH = config_file["patch_pickles_sub_path"]
 
 og = pd.read_csv(DATA_PATH)
-types = [col for col in og.columns if (not 'ng' in col) and ('en' in col[:2] or 'jap' in col[:3] or 'ita' in col[:3])]
+types = sorted([col for col in og.columns if ('en' in col[:2] or 'jap' in col[:3] or 'ita' in col[:3]) and (not 'qsub' in col) and (not 'null_subject' in col)])
 sType = types[args.stype]
-
+print(types)
 if (not os.path.exists(f"{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sType}.pkl") or not os.path.exists(f"{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/{sType}.pkl")):
     print(f"Running for {sType}")
     
@@ -80,25 +80,22 @@ if (not os.path.exists(f"{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sTyp
         mlp_layer_cache_patch = {}
 
         if gold == 'Yes':
-            testQ = q
-            patch = og[og[sType] == testQ][f"ng-{sType}"].head(1).item()
-            patchPrompt = cleanPrompt.replace(testQ, patch)
+            patch = og[og[sType] == q][f"ng-{sType}"].head(1).item()
+            patchPrompt = cleanPrompt.replace(q, patch)
+            notGold = "No"
         else:
-            patchPrompt = cleanPrompt
-            testQ = q
-            clean = og[og[f"ng-{sType}"] == testQ][sType].head(1).item()
-            cleanPrompt = patchPrompt.replace(testQ, clean)
-            gold = "Yes"
+            patch = og[og[f"ng-{sType}"] == q][sType].head(1).item()
+            patchPrompt = cleanPrompt.replace(q, patch)
+            notGold = "Yes"
 
         if model.tokenizer(cleanPrompt, return_tensors="pt").input_ids.shape[-1] != \
             model.tokenizer(patchPrompt, return_tensors="pt").input_ids.shape[-1]:
             return
 
-        notGold = "No"
         gold = model.tokenizer(gold)["input_ids"]
         notGold = model.tokenizer(notGold)["input_ids"]
         
-        with model.trace(cleanPrompt, scan=False, validate=False) as tracer:
+        with model.trace(cleanPrompt.rstrip(), scan=False, validate=False) as tracer:
             for layer in range(len(model.model.layers)):
                 self_attn = model.model.layers[layer].self_attn.o_proj.output
                 mlp = model.model.layers[layer].mlp.down_proj.output
@@ -113,7 +110,7 @@ if (not os.path.exists(f"{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sTyp
         loss = loss.sum()
         loss.backward()
 
-        with model.trace(patchPrompt, scan=False, validate=False) as tracer:
+        with model.trace(patchPrompt.rstrip(), scan=False, validate=False) as tracer:
             for layer in range(len(model.model.layers)):
                 self_attn = model.model.layers[layer].self_attn.o_proj.output
                 mlp = model.model.layers[layer].mlp.down_proj.output

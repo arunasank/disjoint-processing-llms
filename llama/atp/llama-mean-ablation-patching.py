@@ -32,7 +32,7 @@ PATCH_PICKLES_PATH = config_file["patch_pickles_path"]
 PATCH_PICKLES_SUBPATH = config_file["patch_pickles_sub_path"]
 
 og = pd.read_csv(DATA_PATH)
-types = [col for col in og.columns if not 'ng-' in col]
+types = [col for col in sorted(og.columns) if (('en' in col[:2]) or ('ita' in col[:3]) or ('jap' in col[:3])) and (not 'qsub' in col) and (not 'null_subject' in col)]
 
 if (MODEL_NAME == "llama"):
     os.environ["HF_TOKEN"] = config_file["hf_token"]
@@ -67,16 +67,11 @@ def get_prompt_from_df(filename):
 
 def getPaddedTrainTokens(prompts, questions, golds):
     max_len = 0
-    test_prefixes = []
     train_prefixes = []
     train_tokens = []
-    for idx, prompt in enumerate(prompts):
-        if (MODEL_NAME == 'mistral'):
-            train_example = prompt
-        else:
-            train_example = f"{prompt}Q: Is this sentence grammatical? Yes or No: {questions[idx]}\nA: " 
-        train_prefixes.append(train_example)
-        max_len = max(max_len, len(model.tokenizer(train_example)['input_ids']))
+    for prompt in prompts:
+        train_prefixes.append(prompt)
+        max_len = max(max_len, len(model.tokenizer(prompt)['input_ids']))
         
     for t in train_prefixes:
         train_tokens.append(tokenizer.decode(model.tokenizer(t, padding='max_length', max_length=max_len)["input_ids"]))
@@ -87,11 +82,11 @@ def callWithsType(sType):
     prompts, questions, golds = get_prompt_from_df(f'{PROMPT_FILES_PATH}/{sType}.csv')
     train_prefixes, max_len = getPaddedTrainTokens(prompts, questions, golds)
 
-    mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 2, model.model.layers[0].self_attn.o_proj.out_features)).to("cuda")
-    attn_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 2, model.model.layers[0].mlp.down_proj.out_features)).to("cuda")
+    mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 1, model.model.layers[0].self_attn.o_proj.out_features)).to("cuda")
+    attn_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 1, model.model.layers[0].mlp.down_proj.out_features)).to("cuda")
 
     for tr_prefix in tqdm(train_prefixes):
-        with model.trace(tr_prefix, scan=False, validate=False) as tracer:
+        with model.trace(tr_prefix.rstrip(), scan=False, validate=False) as tracer:
             for layer in range(len(model.model.layers)):
                 self_attn = model.model.layers[layer].self_attn.o_proj.output
                 mlp = model.model.layers[layer].mlp.down_proj.output
@@ -101,16 +96,16 @@ def callWithsType(sType):
     attn_mean_cache /= len(train_prefixes)
     mlp_mean_cache /= len(train_prefixes)
 
-    with open(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/{sType}.pkl', 'wb') as f:
+    with open(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/mean-{sType}.pkl', 'wb') as f:
         pickle.dump(mlp_mean_cache[:, -1, :], f)
     
-    with open(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sType}.pkl', 'wb') as f:
+    with open(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/mean-{sType}.pkl', 'wb') as f:
         pickle.dump(attn_mean_cache[:, -1, :], f)
 
 #for sType in types[::-1]:
 sType = types[args.stype]
 try:
-    if (not (os.path.exists(f"{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/{sType}.pkl")) or not (os.path.exists(f"{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sType}.pkl"))):
+    if (not (os.path.exists(f"{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/mean-{sType}.pkl")) or not (os.path.exists(f"{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/{sType}.pkl"))):
         callWithsType(sType)
 except Exception as e:
     print(f"Error with {sType}")
