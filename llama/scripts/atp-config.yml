@@ -1,0 +1,45 @@
+expt: "atp-map"
+
+gpu_ids:
+  - "0"
+  - "1"
+  - "2"
+  - "3"
+
+run_script_paths:
+  - "atp/seed-1.sh"
+  - "atp/seed-2.sh"
+  - "atp/seed-3.sh"
+  - "atp/seed-4.sh"
+
+# These alone have to be changed when running new experiments ---------------------
+main_dirs:
+  - &main_dir0 "synthetic-10"
+  - &main_dir1 "synthetic-10-seed-1"
+  - &main_dir2 "synthetic-10-seed-10"
+  - &main_dir3 "synthetic-10-seed-34"
+
+config_base_path: &config_base_path "llama-atp-config"
+#----------------------------------------------------------------------------------
+atp_script_path: "/mnt/align4_drive/arunas/broca/llama/atp/llama-attr-patching.py"
+map_script_path: "/mnt/align4_drive/arunas/broca/llama/atp/llama-mean-ablation-patching.py"
+script_template: "/mnt/align4_drive/arunas/broca/llama/scripts/atp-template.sh"
+#---------------------------------------------------------------------------------- 
+
+config_paths:
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir0/<< *config_base_path"
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir1/<< *config_base_path"
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir2/<< *config_base_path"
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir3/<< *config_base_path"
+
+attn_output_paths:
+  - "/mnt/align4_drive/arunas/broca/llama/atp/patches/attn/<< *main_dir0"
+  - "/mnt/align4_drive/arunas/broca/llama/atp/patches/attn/<< *main_dir1"
+  - "/mnt/align4_drive/arunas/broca/llama/atp/patches/attn/<< *main_dir2"
+  - "/mnt/align4_drive/arunas/broca/llama/atp/patches/attn/<< *main_dir3"
+
+mlp_output_paths:
+  - "/mnt/align4_drive/arunas/broca/llama/atp/patches/mlp/<< *main_dir0"
+  - "/mnt/align4_drive/arunas/broca/llama/atp/patches/mlp/<< *main_dir1"
+  - "/mnt/align4_drive/arunas/broca/llama/atp/patches/mlp/<< *main_dir2"
+  - "/mnt/align4_drive/arunas/broca/llama/atp/patches/mlp/<< *main_dir3"

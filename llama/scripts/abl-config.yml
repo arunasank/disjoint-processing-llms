@@ -1,0 +1,64 @@
+expt: "abl"
+
+gpu_ids:
+  - "0"
+  - "1"
+  - "2"
+  - "3"
+
+run_script_paths:
+  - "abl/seed-1.sh"
+  - "abl/seed-2.sh"
+  - "abl/seed-3.sh"
+  - "abl/seed-4.sh"
+
+# These alone have to be changed when running new experiments ---------------------
+main_dirs:
+    - &main_dir0 "synthetic-10"
+    - &main_dir1 "synthetic-10-seed-1"
+    - &main_dir2 "synthetic-10-seed-10"
+    - &main_dir3 "synthetic-10-seed-34"
+
+real_config_base_path: &real_config_base_path "llama-icl-config-real"
+unreal_config_base_path: &unreal_config_base_path "llama-icl-config-unreal"
+random_config_base_path: &random_config_base_path "llama-icl-config-random"
+# ---------------------------------------------------------------------------------
+script_path: "/mnt/align4_drive/arunas/broca/behav-scripts/behavioural.py"
+script_template: "/mnt/align4_drive/arunas/broca/llama/scripts/abl-template.sh"
+# ---------------------------------------------------------------------------------
+
+real_config_paths:
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir0/<< *real_config_base_path"
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir1/<< *real_config_base_path"
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir2/<< *real_config_base_path"
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir3/<< *real_config_base_path"
+
+unreal_config_paths:
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir0/<< *unreal_config_base_path"
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir1/<< *unreal_config_base_path"
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir2/<< *unreal_config_base_path"
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir3/<< *unreal_config_base_path"
+
+random_config_paths:
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir0/<< *random_config_base_path"
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir1/<< *random_config_base_path"
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir2/<< *random_config_base_path"
+  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir3/<< *random_config_base_path"
+
+real_output_paths:
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir0-real"
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir1-real"
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir2-real"
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir3-real"
+
+unreal_output_paths:
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir0-unreal"
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir1-unreal"
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir2-unreal"
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir3-unreal"
+
+random_output_paths:
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir0-random"
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir1-random"
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir2-random"
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir3-random"
