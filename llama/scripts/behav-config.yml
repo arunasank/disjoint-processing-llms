@@ -1,36 +1,26 @@
 expt: "behav"
+# These alone have to be changed when running new experiments ---------------------
+config_paths:
+  - "/mnt/align4_drive/arunas/broca/configs/synthetic-10/llama-icl-config"
+  - "/mnt/align4_drive/arunas/broca/configs/synthetic-10-seed-1/llama-icl-config"
+  - "/mnt/align4_drive/arunas/broca/configs/synthetic-10-seed-10/llama-icl-config"
+  - "/mnt/align4_drive/arunas/broca/configs/synthetic-10-seed-34/llama-icl-config"
 
+expt_output_paths:
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/synthetic-10"
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/synthetic-10-seed-1"
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/synthetic-10-seed-10"
+  - "/mnt/align4_drive/arunas/broca/llama/experiments/synthetic-10-seed-34"
+#----------------------------------------------------------------------------------
 gpu_ids:
   - "0"
   - "1"
   - "2"
   - "3"
-# These alone have to be changed when running new experiments ---------------------
-main_dirs:
-    - &main_dir0 "synthetic-10"
-    - &main_dir1 "synthetic-10-seed-1"
-    - &main_dir2 "synthetic-10-seed-10"
-    - &main_dir3 "synthetic-10-seed-34"
-
-config_base_path: &config_base_path "llama-icl-config"
-# ---------------------------------------------------------------------------------
-script_path: "/mnt/align4_drive/arunas/broca/behav-scripts/behavioural.py"
-script_template: "/mnt/align4_drive/arunas/broca/llama/scripts/behav-template.sh"
-# ---------------------------------------------------------------------------------
 run_script_paths:
   - "behav/seed-1.sh"
   - "behav/seed-2.sh"
   - "behav/seed-3.sh"
   - "behav/seed-4.sh"
-
-config_paths:
-  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir0/<< *config_base_path"
-  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir1/<< *config_base_path"
-  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir2/<< *config_base_path"
-  - "/mnt/align4_drive/arunas/broca/configs/<< *main_dir3/<< *config_base_path"
-
-expt_output_paths:
-  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir0"
-  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir1"
-  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir2"
-  - "/mnt/align4_drive/arunas/broca/llama/experiments/<< *main_dir3"
+script_path: "/mnt/align4_drive/arunas/broca/behav-scripts/behavioural.py"
+script_template: "/mnt/align4_drive/arunas/broca/llama/scripts/behav-template.sh"
