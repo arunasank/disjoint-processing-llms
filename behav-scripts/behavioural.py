@@ -27,6 +27,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description='Model training script.')
     parser.add_argument('--config', type=str, help='Path to the model config file.')
     parser.add_argument('--stype', type=int, help='Column number for grammar structure.')
+    parser.add_argument('--idx', type=int, default=None, help='Index of the column to run the experiment on.')
     return parser.parse_args()
 
 # Load configuration from a YAML file
@@ -36,8 +37,10 @@ def load_config(config_path):
     
 # Set environment variables
 def set_environment():
+    config = load_config(args.config)
     os.environ['HF_HOME'] = "/mnt/align4_drive/data/huggingface"
     os.environ['HF_TOKEN'] = os.getenv('HF_TOKEN')
+    os.makedirs(f"{config.get('prefix')}/broca/{config.get('model_name')}/experiments/{config.get('final_csv_subpath')}/", exist_ok=True)
     
 # Initialize tokenizer and model based on the configuration
 def initialize_model():
@@ -56,37 +59,33 @@ def initialize_model():
     )
     tokenizer.pad_token = tokenizer.eos_token
 
-    if model_name == 'mistral':
-        if ablation:
+    if ablation:
+        if model_path in ['meta-llama/Llama-3.1-70B']:
             model = LanguageModel(model_path, 
-                                  quantization_config=nf4_config, 
-                                  device_map='auto', 
-                                  cache_dir=cache_dir)
+                device_map='auto', 
+                quantization_config=nf4_config, 
+                cache_dir=cache_dir
+            )
         else:
-            model_config = AutoConfig.from_pretrained(model_path)
+            model = LanguageModel(model_path, 
+                device_map='auto', 
+                cache_dir=cache_dir
+            ) 
+    else:
+        if model_path in ['meta-llama/Llama-3.1-70B']:
+            model = AutoModelForCausalLM.from_pretrained(
+                    model_path, 
+                    quantization_config=nf4_config,
+                    device_map='auto', 
+                    cache_dir=cache_dir
+                )
+        else:
             model = AutoModelForCausalLM.from_pretrained(
                 model_path, 
-                quantization_config=nf4_config, 
-                config=model_config, 
                 device_map='auto', 
                 cache_dir=cache_dir
             )
-    elif model_name == 'llama':
-        if ablation:
-            model = LanguageModel(model_path, 
-                                  device_map='auto', 
-                                  quantization_config=nf4_config, 
-                                  cache_dir=cache_dir) 
-        else:
-            model = AutoModelForCausalLM.from_pretrained(
-            model_path, 
-            quantization_config=nf4_config, 
-            config=AutoConfig.from_pretrained(model_path), 
-            device_map='auto', 
-            cache_dir=cache_dir
-        )
-    else:
-        raise ValueError(f"Unsupported model: {model_name}")
+
     return tokenizer, model
     
 # Compute accuracy between predictions and gold labels
@@ -108,6 +107,8 @@ def get_dataset_from_df(filename):
 
 # Retrieve top K neurons for ablation
 def retrieve_top_k_neurons(col, component):
+    assert component in ['mlp', 'attn'], "Component must be either 'mlp' or 'attn'."
+    assert col in get_g_cols(), f"Column {col} not found in g_cols."
     config = load_config(args.config)
     path = config.get("patch_pickles_path")
     subpath = config.get("patch_pickles_subpath")
@@ -156,16 +157,7 @@ def retrieve_union_top_k(component):
     final_csv_subpath = config.get("final_csv_subpath")
     df = pd.read_csv(data_path)
     nonce = (datatype == "nonce")
-    g_cols = []
-    if datatype == "nonce":
-        g_cols = [col for col in sorted(df.columns) \
-            if not ('ng-' in col) and '_S' in col]
-    elif datatype == "standard":
-        g_cols = sorted([col for col in df.columns \
-            if (not '_S' in col) and (not 'ng-' in col) \
-            and (not 'qsub' in col) and (not 'null_subject' in col) \
-            and ('ita-' in col  or 'en-' in col or 'jap-' in col)
-        ])
+    g_cols = get_g_cols()
     
     assert len(g_cols) > 0, "No columns found."
     def retrieve_union_set(nonce, real):
@@ -179,7 +171,7 @@ def retrieve_union_top_k(component):
         if os.path.exists(union_file_path):
             return pd.read_csv(union_file_path)
     
-        union_set = set()
+        union_set = pd.DataFrame(columns=['layer', 'neuron', 'value'])
         for _, c in enumerate(g_cols):
             col_is_real = '-r-' in c
             nonce_col = '_S' in c
@@ -192,16 +184,44 @@ def retrieve_union_top_k(component):
             for layer, neuron, value in top_k_neurons.to_numpy():
                 l_n_v.append((layer, neuron, value)) 
             l_n_v = set(l_n_v)
-            union_set = set.union(union_set, l_n_v)
-        union_set_df = pd.DataFrame(union_set, columns =['layer', 'neuron', 'value'])
-        union_set_df = union_set_df.loc[union_set_df.groupby(['layer', 'neuron'])['value'].idxmax()]
-        union_set_df[['layer', 'neuron']] = union_set_df[['layer', 'neuron']].astype(int)
-        union_set_df.to_csv(union_file_path, index=False)
-        return union_set_df.sort_values(by=['layer', 'neuron', 'value'], ascending=[True, True, False] )
+            if len(union_set) == 0:
+                union_set = pd.DataFrame(l_n_v, columns =['layer', 'neuron', 'value'])
+            else:
+                _union_set = pd.DataFrame(l_n_v, columns =['layer', 'neuron', 'value'])
+                # use how='inner' for intersection, how='outer' for union
+                union_set = pd.merge(union_set, _union_set, on=['layer', 'neuron'], how='outer', suffixes=('_agg', '_new'))
+                union_set['value'] = union_set[['value_agg', 'value_new']].max(axis=1)
+                union_set = union_set[['layer', 'neuron', 'value']]
+        union_set[['layer', 'neuron']] = union_set[['layer', 'neuron']].astype(int)
+        union_set.to_csv(union_file_path, index=False)
+        return union_set.sort_values(by=['layer', 'neuron', 'value'], ascending=[True, True, False] )
     
     real_count = []
     unreal_count = []
     if (real):
+        # real_union_df = retrieve_union_set(nonce, real=True)
+        # unreal_union_df = retrieve_union_set(nonce, real=False)
+        # total_diff = []
+        # for layer in unreal_union_df['layer'].unique():
+        #     real_language_neuron_count = len(real_union_df[real_union_df['layer'] == layer])
+        #     unreal_language_neuron_count = len(unreal_union_df[unreal_union_df['layer'] == layer])
+        #     real_count.append(real_language_neuron_count)
+        #     unreal_count.append(unreal_language_neuron_count)
+        #     difference = real_language_neuron_count - unreal_language_neuron_count
+        #     if len(total_diff) == layer:
+        #         total_diff.append(difference)
+        #     else:
+        #         while len(total_diff) < layer:
+        #             total_diff.append(0)
+        #             real_count.append(0)
+        #             unreal_count.append(0)
+        #         total_diff.append(difference)
+        #     if ( difference > 0 ):
+        #         real_union_df.drop(real_union_df[real_union_df['layer'] == layer].tail(difference).index, inplace=True)
+        # with open(f'{prefix}/broca/{model_name}/experiments/{final_csv_subpath}/difference.txt', 'a') as f:
+        #     for layer, diff in enumerate(total_diff):
+        #         f.write(f"Layer {layer}: {diff}, {real_count[layer]}, {unreal_count[layer]}\n")
+        # real_union_df.to_csv(f'{prefix}/broca/{model_name}/experiments/{final_csv_subpath}/r-diagonal.csv', index=False)
         return retrieve_union_set(nonce, real=True)
     else:
         real_union_df = retrieve_union_set(nonce, real=True)
@@ -229,25 +249,56 @@ def retrieve_union_top_k(component):
         unreal_union_df.to_csv(f'{prefix}/broca/{model_name}/experiments/{final_csv_subpath}/u-diagonal.csv', index=False)
         return unreal_union_df
 
-def get_mean_ablation_vals(component, col):
+def get_mean_ablation_vals(component, col, abl_type='grammar-specific', tok_type='all'):
+    print('### get_mean_ablation_vals ### ', abl_type, tok_type)
     config = load_config(args.config)
     path = config.get("patch_pickles_path")
     subpath = config.get("patch_pickles_subpath")
     # which neurons to ablate?
-    neurons_to_abl = ablate_neurons(component, col)    
-    mean_ablations_filepath =  f'{path}/{component}/{subpath}/mean-{col}.pkl'
+    neurons_to_abl = ablate_neurons(component, col)
+    g_cols = get_g_cols()
+    language = ''
+    if 'en' in col[:2]:
+        language = 'en'
+    elif 'ita' in col[:3]:
+        language = 'ita'
+    elif 'jap' in col[:3]:
+        language = 'jap'
     
-    with open(mean_ablations_filepath, 'rb') as f:
-        mean_abl_file = pickle.load(f)
+    assert not language is None, f"language {language} cannot be None"
+    mean_ablations_filepath = []
+    if abl_type == 'grammar-specific':
+        mean_ablations_filepath.append(f'{path}/{component}/{subpath}/mean-{col}.pkl')
+    elif abl_type == 'language-specific':
+        for c in g_cols:
+            if c[:len(language)] == language:
+                mean_ablations_filepath.append(f'{path}/{component}/{subpath}/mean-{c}.pkl')
     
-    mean_abl_file = mean_abl_file.detach().cpu()
-    mean_vals = []
-    for _, row in neurons_to_abl.iterrows():
-        # print(row['layer'], row['neuron'])  
-        mean_vals.append(list(mean_abl_file[row['layer'], :, row['neuron']].detach().cpu().flatten()))
-    # set ablation_values
-    neurons_to_abl['values'] = mean_vals
-    return neurons_to_abl, mean_abl_file.shape[1]
+    print(len(mean_ablations_filepath))
+    mean_abl_file = []
+    for maf in mean_ablations_filepath:
+        with open(maf, 'rb') as f:
+            mean_file = pickle.load(f)
+            mean_abl_file.append(mean_file.detach().cpu())
+    assert not mean_abl_file == None, "mean_abl_file should have been set"
+    if tok_type == 'all':
+        mean_vals = []
+        mean_abl_file = sum([mean_abl_file[i].mean(dim=1) for i in range(len(mean_abl_file))])
+        for _, row in neurons_to_abl.iterrows():
+            mean_vals.append(list(mean_abl_file[row['layer'], row['neuron']].detach().cpu().flatten()))
+        neurons_to_abl['values'] = mean_vals
+        return neurons_to_abl, mean_abl_file.shape[1]
+    elif tok_type == 'last':
+        mean_vals = []
+        print('### BEFORE ', mean_abl_file[0].shape)
+        mean_abl_file = sum([mean_abl_file[i].mean(dim=1) for i in range(len(mean_abl_file))])
+        print('### AFTER ', mean_abl_file.shape)
+        for _, row in neurons_to_abl.iterrows():
+            mean_vals.append(list(mean_abl_file[row['layer'], row['neuron']].detach().cpu().flatten()))
+        neurons_to_abl['values'] = mean_vals
+        return neurons_to_abl, mean_abl_file.shape[1]
+    else:
+        assert False, f"tok_type {tok_type} is not supported"
         
 # Perform ablation for model layers
 def ablate_neurons(component, col):
@@ -262,17 +313,22 @@ def ablate_neurons(component, col):
     # In all other cases, return top k neurons
     return retrieve_top_k_neurons(col, component)[['layer', 'neuron']].astype(int)
 
-def run_ablation_experiment(config, col):
+def run_ablation_experiment(config, col, ablation_type='grammar-specific', token_pos='all'):
     print("Performing ablation...")
     batch_size = config.get("batch_size")
+    batch_size = 1
     final_csv_subpath = config.get("final_csv_subpath")
     prefix = config.get("prefix")
     model_name = config.get("model_name")
-    mlp_ablate, max_prompt_len_mlp = get_mean_ablation_vals('mlp', col)
-    attn_ablate, max_prompt_len_attn = get_mean_ablation_vals('attn', col)
+    max_prompt_len = None
+    mlp_ablate, max_prompt_len_mlp = get_mean_ablation_vals('mlp', col, ablation_type, token_pos)
+    attn_ablate, max_prompt_len_attn = get_mean_ablation_vals('attn', col, ablation_type, token_pos)
+    print("MLP ", mlp_ablate.columns, len(mlp_ablate))
+    print("Attn ", attn_ablate.columns, len(attn_ablate))
     assert max_prompt_len_mlp == max_prompt_len_attn, "Prompt lengths must match."
     max_prompt_len = max_prompt_len_mlp
     
+    assert max_prompt_len is not None, "Prompt length must be set."
     tokenizer, model = initialize_model()
     
     file_store = pd.DataFrame(columns=["type", "prompt", "q", "prediction", "gold", "surprisal"])
@@ -284,36 +340,45 @@ def run_ablation_experiment(config, col):
     prompts = [p.strip() for p in prompts]
     preds = []
     # Processing predictions
+    print('BATCH SIZE PROMPTS ', batch_size, len(prompts))
     for i in tqdm(range(0, len(prompts), batch_size)):
         batch_prompts = prompts[i:i + batch_size]
         batch_golds = golds[i:i + batch_size]
         batch_questions = questions[i:i + batch_size]
         
-        tokenizer_inputs = tokenizer(batch_prompts, padding='max_length', max_length=max_prompt_len, return_tensors="pt")
+        tokenizer_inputs = tokenizer(batch_prompts, padding='max_length', max_length=max_prompt_len, return_tensors="pt", return_overflowing_tokens=True)
+        
+        assert len(tokenizer_inputs['overflowing_tokens']) == 0, "No overflowing tokens allowed."
+
         with model.trace(tokenizer_inputs, labels=tokenizer_inputs['input_ids'], scan=False, validate=False) as _:
             for _, row in mlp_ablate.iterrows():
-                # assert model.model.layers[row['layer']].mlp.down_proj.output.shape[1] == max_prompt_len
-                model.model.layers[row['layer']].mlp.down_proj.output[:, :, row['neuron']] = torch.tensor(row['values'])
+                if token_pos == 'all':
+                    model.model.layers[row['layer']].mlp.down_proj.output[:, :, row['neuron']] = torch.tensor(row['values'])
+                elif token_pos == 'last':
+                    # print(row['values'][0].expand(batch_size).view(1, -1).shape)    
+                    value_tensor = row['values'][0].expand(batch_size)
+                    model.model.layers[row['layer']].mlp.down_proj.output[:, -1, row['neuron']] = value_tensor
             for _, row in attn_ablate.iterrows():
-                # assert model.model.layers[row['layer']].self_attn.o_proj.output.shape[1] == max_prompt_len
-                model.model.layers[row['layer']].self_attn.o_proj.output[:, :, row['neuron']] = torch.tensor(row['values'])
+                if token_pos == 'all':
+                    model.model.layers[row['layer']].self_attn.o_proj.output[:, :, row['neuron']] = torch.tensor(row['values'])
+                elif token_pos == 'last':
+                    value_tensor = row['values'][0].expand(batch_size)
+                    model.model.layers[row['layer']].self_attn.o_proj.output[:, -1, row['neuron']] = value_tensor
             logits = model.lm_head.output.detach().cpu().save()
-        
         yes_answers = logits.value[:,-1, yes_token_id][:, -1]
         no_answers = logits.value[:,-1, no_token_id][:, -1]
         answer_ids = torch.where(yes_answers > no_answers, 0, torch.where(yes_answers < no_answers, 1, -1))
-        batch_predictions = ["Yes" if idx == 0 else "No" if idx == 1 else "Equal" for idx in answer_ids.tolist()]
+        batch_predictions = ["Yes" if ix == 0 else "No" if ix == 1 else "Equal" for ix in answer_ids.tolist()]
         preds = preds + batch_predictions
-        # print(preds, batch_golds)
-        batch_surprisals = get_surprisals(logits, tokenizer_inputs['input_ids'], tokenizer.eos_token_id)
+        batch_surprisals = get_surprisals(logits, tokenizer_inputs['input_ids'], tokenizer.eos_token_id, model.device)
         
-        for idx in range(len(batch_prompts)):
+        for ix in range(len(batch_prompts)):
             batch_file_store = pd.DataFrame([{'type': col, 
-                'prompt': batch_prompts[idx], 
-                'q' :batch_questions[idx], 
-                'prediction': batch_predictions[idx], 
-                'gold': batch_golds[idx],
-                'surprisal': batch_surprisals[idx]
+                'prompt': batch_prompts[ix], 
+                'q' :batch_questions[ix], 
+                'prediction': batch_predictions[ix], 
+                'gold': batch_golds[ix],
+                'surprisal': batch_surprisals[ix]
             }])
             file_store = pd.concat([file_store, batch_file_store]).reset_index(drop=True)
     file_store.to_csv(f"{prefix}/broca/{model_name}/experiments/{final_csv_subpath}/{col}.csv", index=False)
@@ -324,9 +389,9 @@ def run_ablation_experiment(config, col):
         f.write(f"lang,acc\n")
         f.write(f"{col},{accuracy:.2f}\n")
 
-def get_surprisals(logits, ip_tokens, padding_token):
-    log_probs = torch.nn.functional.log_softmax(logits, dim=-1)
-    target_log_probs =  log_probs[:,:-1].gather(2, ip_tokens[:, 1:].unsqueeze(-1)).squeeze(-1)
+def get_surprisals(logits, ip_tokens, padding_token, device):
+    log_probs = torch.nn.functional.log_softmax(logits, dim=-1).to(device)
+    target_log_probs =  log_probs[:,:-1].gather(2, ip_tokens[:, 1:].unsqueeze(-1)).squeeze(-1).to(device)
     target_surprisal = -(target_log_probs / torch.log(torch.tensor(2.0, device=log_probs.device)))
     
     final_list = []
@@ -347,51 +412,58 @@ def get_surprisals(logits, ip_tokens, padding_token):
 
 def run_standard_experiment(config, col):
     print("Running standard experiment...")
+    args = parse_arguments()
     batch_size = config.get("batch_size")
     final_csv_subpath = config.get("final_csv_subpath")
     prefix = config.get("prefix")
     model_name = config.get("model_name")
     output_path = f"{prefix}/broca/{model_name}/experiments/{final_csv_subpath}/"
+    idx = args.idx
     
     tokenizer, model = initialize_model()
     yes_token_id = tokenizer(" Yes")['input_ids']
     no_token_id = tokenizer(" No")['input_ids']
 
     file_store = pd.DataFrame(columns=["type", "prompt", "q", "prediction", "gold", "surprisal"])
-    prompts, questions, golds = get_dataset_from_df(f"{config['prompts_path']}/{col}.csv")
+    if idx is not None:
+        prompts, questions, golds = get_dataset_from_df(f"{config['prompts_path']}/{col}-gen-{idx}.csv")
+    else:
+        prompts, questions, golds = get_dataset_from_df(f"{config['prompts_path']}/{col}.csv")
     prompts = [p.strip() for p in prompts]
     preds = []
+    # prompts = prompts[:250]
+    # golds = golds[:250]
     for i in tqdm(range(0, len(prompts), batch_size)):
         batch_prompts = prompts[i:i + batch_size]
         batch_golds = golds[i:i + batch_size]
         batch_questions = questions[i:i + batch_size]
         
-        tokenizer_inputs = tokenizer(batch_prompts, return_tensors="pt", padding=True)
+        tokenizer_inputs = tokenizer(batch_prompts, return_tensors="pt", padding=True).to(model.device)
         batch_predictions = model(**tokenizer_inputs, labels=tokenizer_inputs['input_ids'])
         logits = batch_predictions[1].detach().cpu()     
         yes_answers = logits[:,-1, yes_token_id][:, -1]
         no_answers = logits[:,-1, no_token_id][:, -1]
         answer_ids = torch.where(yes_answers > no_answers, 0, torch.where(yes_answers < no_answers, 1, -1))
-        batch_predictions = ["Yes" if idx == 0 else "No" if idx == 1 else "Equal" for idx in answer_ids.tolist()]
+        batch_predictions = ["Yes" if ix == 0 else "No" if ix == 1 else "Equal" for ix in answer_ids.tolist()]
         preds = preds + batch_predictions
         
-        batch_surprisals = get_surprisals(logits, tokenizer_inputs['input_ids'], tokenizer.eos_token_id)    
+        batch_surprisals = get_surprisals(logits, tokenizer_inputs['input_ids'], tokenizer.eos_token_id, model.device)    
         
-        for idx in range(len(batch_prompts)):
+        for ix in range(len(batch_prompts)):
             batch_file_store = pd.DataFrame([{
                 'type': col, 
-                'prompt': batch_prompts[idx], 
-                'q' :batch_questions[idx], 
-                'prediction': batch_predictions[idx], 
-                'gold': batch_golds[idx],
-                'surprisal': batch_surprisals[idx]
+                'prompt': batch_prompts[ix], 
+                'q' :batch_questions[ix], 
+                'prediction': batch_predictions[ix], 
+                'gold': batch_golds[ix],
+                'surprisal': batch_surprisals[ix]
             }])
             file_store = pd.concat([file_store, batch_file_store]).reset_index(drop=True)
-    file_store.to_csv(f"{prefix}/broca/{model_name}/experiments/{final_csv_subpath}/{col}.csv", index=False)
+    file_store.to_csv(f"{output_path}/{col}-{idx}-alphabet.csv", index=False)
     
     accuracy = compute_accuracy(preds, golds)
     print(f"{col} -- Accuracy: {accuracy:.2f}\n")
-    with open(f"{prefix}/broca/{model_name}/experiments/{final_csv_subpath}/{col}-accuracy.csv", "w") as f:
+    with open(f"{output_path}/{col}-{idx}-alphabet-accuracy.csv", "w") as f:
         f.write(f"lang,acc\n")
         f.write(f"{col},{accuracy:.2f}\n")
 
@@ -402,30 +474,21 @@ def run_experiment(config, args):
     config = load_config(args.config)
     
     ablation = config.get("ablation")
-    datatype = config.get("datatype")
-    # Load data and run the experiment
-    data_path = config["data_path"]
-    df = pd.read_csv(data_path)
-    print(df.columns)
-    g_cols = []
-    if datatype == "standard":
-        g_cols = sorted([col for col in df.columns \
-            if not '_S' in col \
-            and (not 'qsub' in col) and (not 'null_subject' in col) \
-            and ('ita-' in col  or 'en-' in col or 'jap-' in col)
-        ])
-    elif datatype == "nonce":
-        g_cols = [col for col in sorted(df.columns) \
-            if not ('ng-' in col) and '_S' in col]
     
-    print("Columns ", g_cols)
+    g_cols = get_g_cols()
     col = g_cols[args.stype]
     print(f"Selected column: {col}")
     
-    file_path = f'{config["prefix"]}/broca/{config["model_name"]}/experiments/{config["final_csv_subpath"]}/{col}.csv'
-    file_path_accuracy = f'{config["prefix"]}/broca/{config["model_name"]}/experiments/{config["final_csv_subpath"]}/{col}-accuracy.csv'
+    idx = args.idx
     
-    print(file_path)
+    if idx is None:
+        file_path = f'{config["prefix"]}/broca/{config["model_name"]}/experiments/{config["final_csv_subpath"]}/{col}.csv'
+        file_path_accuracy = f'{config["prefix"]}/broca/{config["model_name"]}/experiments/{config["final_csv_subpath"]}/{col}-accuracy.csv'
+    else:
+        file_path = f'{config["prefix"]}/broca/{config["model_name"]}/experiments/{config["final_csv_subpath"]}/{col}-{idx}-alphabet.csv'
+        file_path_accuracy = f'{config["prefix"]}/broca/{config["model_name"]}/experiments/{config["final_csv_subpath"]}/{col}-{idx}-alphabet-accuracy.csv'
+    
+    print(idx, file_path)
     if os.path.exists(file_path) and \
        os.path.exists(file_path_accuracy):
            print("Path exists!")
@@ -433,9 +496,33 @@ def run_experiment(config, args):
     else:
         # Conditional logic for ablation
         if ablation:
-            run_ablation_experiment(config, col)
+            ablation_type = config.get("ablation_type")
+            token_pos = config.get("token_pos_type")
+            print(f"Running ablation experiment for {col} with {ablation_type} ablation on {token_pos} tokens.")
+            run_ablation_experiment(config, col, ablation_type, token_pos)
         else:
             run_standard_experiment(config, col)
+            
+def get_g_cols():
+    config = load_config(args.config)
+    datatype = config.get("datatype")
+    # Load data and run the experiment
+    data_path = config["data_path"]
+    df = pd.read_csv(data_path)
+    g_cols = []
+    if datatype == "standard":
+        g_cols = sorted([col for col in df.columns \
+            if not ('_S' in col) and not('ng-' in col) \
+            and (not 'qsub' in col) and (not 'null_subject' in col) \
+            and ('ita-' in col  or 'en-' in col or 'jap-' in col)
+        ])
+    elif datatype == "nonce":
+        g_cols = [col for col in sorted(df.columns) \
+            if not ('ng-' in col) and '_S' in col]
+    
+    assert len(g_cols) != 0, f"g_cols cannot be empty {g_cols}"
+    return g_cols
+    
 
 # Run if executed as a script
 if __name__ == "__main__":
