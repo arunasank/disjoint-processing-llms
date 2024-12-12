@@ -17,11 +17,13 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument('--config_file', type=str, help='path to the model training config file, found in broca/config')
 parser.add_argument('--stype', type=int, help='structure type idx. Can range from 0-30')
+parser.add_argument('--batch_size', type=int, required=False, default=8, help='batch size for the model')
 
 args = parser.parse_args()
 with open(args.config_file, 'r') as f:
     config_file = yaml.safe_load(f)
 
+batch_size = args.batch_size
 # print(json.dumps(config_file, indent=4))
 PREFIX = config_file["prefix"]
 MODEL_NAME = config_file["model_name"]
@@ -36,39 +38,28 @@ og = pd.read_csv(DATA_PATH)
 types = []
 # types = [col for col in sorted(og.columns) if (('en' in col[:2]) or ('ita' in col[:3]) or ('jap' in col[:3])) and (not 'qsub' in col) and (not 'null_subject' in col)]
 if DATATYPE == "nonce":
-    types = sorted([col for col in sorted(og.columns) if not ('ng-' in col) and '_S' in col])
-elif DATATYPE == "standard":
+    types = sorted([col for col in sorted(og.columns) if not ('ng-' in col) and '_S' in col and 'en_S-' in col])
+elif DATATYPE == "conventional":
     types = sorted([col for col in og.columns \
             if not '_S' in col \
             and (not 'qsub' in col) and (not 'null_subject' in col) \
             and ('ita-' in col  or 'en-' in col or 'jap-' in col)])
 sType = col = types[args.stype]
 if (not os.path.exists(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/mean-{col}.pkl') or not os.path.exists(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/mean-{col}.pkl')):
-    if (MODEL_NAME == "llama"):
-        # os.environ["HF_TOKEN"] = config_file["hf_token"]
-        # MODEL_CACHE_PATH = config_file["model_cache_path"]
+    config = AutoConfig.from_pretrained(MODEL_PATH)
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, config=config, device_map="auto", padding_side="left")
+    tokenizer.pad_token = tokenizer.eos_token
+    if '7b' in MODEL_NAME or '8b' in MODEL_NAME or '70b' in MODEL_NAME or 'v0.3' in MODEL_NAME:
+        print(f"quantizing {MODEL_NAME}")
         nf4_config = BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_quant_type="nf4",
             bnb_4bit_compute_dtype=torch.bfloat16
         )
-        config = AutoConfig.from_pretrained(MODEL_PATH)
-        tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, config=config, device_map="auto", padding_side="left")
-        
-        tokenizer.pad_token = tokenizer.eos_token
         model = LanguageModel(MODEL_PATH, quantization_config=nf4_config, tokenizer=tokenizer, device_map='auto') # Load the model
-    
-    elif (MODEL_NAME == "mistral"):
-        nf4_config = BitsAndBytesConfig(
-            load_in_4bit=True,
-            bnb_4bit_quant_type="nf4",
-            bnb_4bit_compute_dtype=torch.bfloat16
-        )
-        config = AutoConfig.from_pretrained(MODEL_PATH)
-        tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, config=config, device_map="auto", padding_side="left")
-        tokenizer.pad_token = tokenizer.eos_token
-        model = LanguageModel(MODEL_PATH, quantization_config=nf4_config, tokenizer=tokenizer, device_map='auto') # Load the model
-    
+    else:
+        model = LanguageModel(MODEL_PATH, tokenizer=tokenizer, device_map='auto') # Load the model
+
     def get_prompt_from_df(filename):
         data = list(pd.read_csv(filename)['prompt'])
         questions = list(pd.read_csv(filename)['q'])
@@ -90,22 +81,46 @@ if (not os.path.exists(f'{PATCH_PICKLES_PATH}/attn/{PATCH_PICKLES_SUBPATH}/mean-
     
     
     prompts, questions, golds = get_prompt_from_df(f'{PROMPT_FILES_PATH}/{sType}.csv')
+    prompts = [p.rstrip() for p in prompts]
     train_prefixes, max_len = getPaddedTrainTokens(prompts, golds)
 
-    mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 1, model.model.layers[0].self_attn.o_proj.out_features)).to("cuda")
-    attn_mean_cache = torch.zeros((model.config.num_hidden_layers, max_len + 1, model.model.layers[0].mlp.down_proj.out_features)).to("cuda")
-
-    for tr_prefix in tqdm(train_prefixes):
-        with model.trace(tr_prefix.rstrip(), scan=False, validate=False) as tracer:
-            for layer in range(len(model.model.layers)):
-                self_attn = model.model.layers[layer].self_attn.o_proj.output
-                mlp = model.model.layers[layer].mlp.down_proj.output
-                attn_mean_cache[layer] += self_attn[0,:,:].detach().save()
-                mlp_mean_cache[layer] += mlp[0,:,:].detach().save()
-
-    attn_mean_cache /= len(train_prefixes)
-    mlp_mean_cache /= len(train_prefixes)
+    print("Num layers ", model.config.num_hidden_layers)
+    print(model)
+    if MODEL_NAME == 'gpt-2-xl':
+        layers = model.transformer.h
+        mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, batch_size, max_len, len(layers[0].attn.resid_dropout.out_features))).to("cuda")
+        attn_mean_cache = torch.zeros((model.config.num_hidden_layers, batch_size, max_len, len(layers[0].mlp.dropout.out_features))).to("cuda")
+   
+    else:
+        layers = model.model.layers
+        if MODEL_NAME == 'llama-2-7b':
+            mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, batch_size, max_len + 2, layers[0].self_attn.o_proj.out_features)).to("cuda")
+            attn_mean_cache = torch.zeros((model.config.num_hidden_layers, batch_size, max_len + 2, layers[0].mlp.down_proj.out_features)).to("cuda")
+        elif MODEL_NAME in ['llama-3.1-8b', 'mistral-v0.3']:
+            mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, batch_size, max_len + 1, layers[0].self_attn.o_proj.out_features)).to("cuda")
+            attn_mean_cache = torch.zeros((model.config.num_hidden_layers, batch_size, max_len + 1, layers[0].mlp.down_proj.out_features)).to("cuda")
+        else:
+            mlp_mean_cache = torch.zeros((model.config.num_hidden_layers, batch_size, max_len, layers[0].self_attn.o_proj.out_features)).to("cuda")
+            attn_mean_cache = torch.zeros((model.config.num_hidden_layers, batch_size, max_len, layers[0].mlp.down_proj.out_features)).to("cuda")
+   
     
+    for tr_prefix in tqdm(train_prefixes):
+        with model.trace(tr_prefix, scan=False, validate=False) as tracer:
+            for layer in range(len(layers)):
+                if MODEL_NAME == 'gpt-2-xl':
+                    self_attn = layers[layer].attn.c_proj.output
+                    mlp = layers[layer].mlp.c_proj.output
+                else:
+                    self_attn = layers[layer].self_attn.o_proj.output
+                    mlp = layers[layer].mlp.down_proj.output
+                attn_mean_cache[layer] += self_attn[:,:,:].detach().save()
+                mlp_mean_cache[layer] += mlp[:,:,:].detach().save()
+
+    attn_mean_cache = torch.mean(attn_mean_cache, dim=1) 
+    mlp_mean_cache = torch.mean(mlp_mean_cache, dim=1) 
+    
+    print(attn_mean_cache.shape)
+    print(mlp_mean_cache.shape)
     print(f"Writing to {PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/mean-{sType}.pkl")
     with open(f'{PATCH_PICKLES_PATH}/mlp/{PATCH_PICKLES_SUBPATH}/mean-{sType}.pkl', 'wb') as f:
         
