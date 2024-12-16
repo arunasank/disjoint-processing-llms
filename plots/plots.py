@@ -1159,10 +1159,9 @@ class Expt2_1_nonce_conv:
         print(f"{comp:<15} | {real_unreal_real_ratio:<25.2f} | {real_unreal_unreal_ratio:<25.2f}")
 
     def get_stat_sig(self, reals, unreals, reals_unreals, component, lang):
-        print(reals)
-        t_reals = [val for key in reals.keys() for val_list in reals[key] for val in val_list]
-        t_unreals = [val for key in reals.keys() for val_list in unreals[key]  for val in val_list]
-        t_reals_unreals = [val for key in reals.keys() for val_list in reals_unreals[key]  for val in val_list]
+        t_reals = [val[0] for val in reals]
+        t_unreals = [val[0] for val in unreals]
+        t_reals_unreals = [val[0] for val in reals_unreals]
         print('REALS ', len(t_reals), len(t_unreals), len(t_reals_unreals))
         print(f'############## {component}-{lang} ################')
         print('CxC vs NXN', stats.mannwhitneyu(t_reals, t_unreals))
