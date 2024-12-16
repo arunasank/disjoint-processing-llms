@@ -14,7 +14,6 @@ import scipy
 import statistics
 from matplotlib.ticker import MaxNLocator
 import ast
-from collections import Counter
 import scipy.stats as stats
 from scipy.stats import ttest_ind, mannwhitneyu, shapiro
 from scipy.stats import chi2_contingency
@@ -582,7 +581,7 @@ class Expt2:
             # ax.xaxis.set_major_formatter(formatter)
             # ax.yaxis.set_major_formatter(formatter)
             im = ax.imshow(average_df, cmap='binary', aspect='auto', interpolation='nearest')
-            ax.set_yticks(range(len(sorted(average_df.index))), labels=[self.grammar_names[col] for col in fig_column_order], fontsize=18, rotation=-45, ha='left')
+            ax.set_yticks(range(len(sorted(average_df.index))), labels=[self.grammar_names[col] for col in fig_column_order], fontsize=18, rotation=45)
             
             ax.set_title(f'{self.labels[model_name]} {compPath.title()}', fontsize=15)
             # -------------------------------- Draw lines -------------------------------------------------
@@ -783,57 +782,15 @@ class Expt2:
                         reals_unreals['jp'].append(ru_jap)
         return reals, unreals, reals_unreals
 
-    def stat_sig(self, mlp_values, attn_values, model_name):
-        def get_contingency_table(A, B):
-            # print(A)
-            # Create frequency tables
-            freq_A = Counter(A)
-            freq_B = Counter(B)
-
-            # print(freq_A)
-            # Create a combined contingency table
-            all_items = set(freq_A.keys()).union(set(freq_B.keys()))
-
-            contingency_table = [[freq_A.get(item, 0), freq_B.get(item, 0)] for item in all_items]
-            # print(contingency_table)
-            return contingency_table
-        
-        for component in ["attn", "mlp"]:
-            comp_values = attn_values if component == "attn" else mlp_values
-            languages = []
-            if self.token_type == 'conventional':
-                languages = ["en", "ita", "jap"]
-            else:
-                languages = ["en"]
-            hxh = []
-            lxl = []
-            hxl = []
-            for lang in languages:
-                for g1 in self.grammar_names:
-                    if lang not in g1[:len(lang)]:
-                        continue
-                    for g2 in self.grammar_names:
-                        if lang not in g2[:len(lang)]:
-                            continue
-                        if '-r-' in g1 and '-r-' in g2:
-                            hxh.append(set(self.get_values_for_substr(g1, comp_values).keys()).intersection(set(self.get_values_for_substr(g2, comp_values).keys())))
-                        elif '-u-' in g1 and '-u-' in g2:
-                            lxl.append(set(self.get_values_for_substr(g1, comp_values).keys()).intersection(set(self.get_values_for_substr(g2, comp_values).keys())))
-            hxl = hxh.intersection(lxl)
-            
-            # print(list(hxh))
-            print(f"###################### {component}:{model_name} ######################")
-            print(len(hxh), len(lxl), len(hxl))
-            observed = get_contingency_table(list(hxh), list(lxl))
-            chi2, p, _, _ = chi2_contingency(observed, lambda_="log-likelihood")
-            print(f"HxH vs LxL: Chi-square: {chi2}, p-value: {p}")
-            observed = get_contingency_table(list(hxh), list(hxl))
-            chi2, p, _, _ = chi2_contingency(observed, lambda_="log-likelihood")
-            print(f"HxH vs HxL: Chi-square: {chi2}, p-value: {p}")
-            observed = get_contingency_table(list(lxl), list(hxl))
-            chi2, p, _, _ = chi2_contingency(observed, lambda_="log-likelihood")
-            print(f"LxL vs HxL: Chi-square: {chi2}, p-value: {p}")
-            print("##########################################################")
+    def stat_sig(self, reals, unreals, reals_unreals, component, lang):
+        t_reals = [val for key in reals.keys() for val_list in reals[key] for val in val_list]
+        t_unreals = [val for key in reals.keys() for val_list in unreals[key]  for val in val_list]
+        t_reals_unreals = [val for key in reals.keys() for val_list in reals_unreals[key]  for val in val_list]
+        print('REALS ', len(t_reals), len(t_unreals), len(t_reals_unreals))
+        print(f'############## {component} {lang} ################')
+        print('H-H vs L-L', stats.mannwhitneyu(t_reals, t_unreals))
+        print('H-H vs H-L', stats.mannwhitneyu(t_reals, t_reals_unreals))
+        print('L-L vs H-L', stats.mannwhitneyu(t_unreals, t_reals_unreals))
         
     def draw_overlap_bars_plot(self):
         model_names = self.model_names
@@ -849,8 +806,7 @@ class Expt2:
         ctr = 0
         for model, ax in zip(model_names, axes):
             a_reals, a_unreals, a_reals_unreals = self.get_overlaps(a_overlap[ctr], model)
-            m_reals, m_unreals, m_reals_unreals = self.get_overlaps(m_overlap[ctr], model)
-            self.stat_sig(m_values[ctr], a_values[ctr], model)            
+            m_reals, m_unreals, m_reals_unreals = self.get_overlaps(m_overlap[ctr], model)            
             reals = {}
             unreals = {}
             reals_unreals = {}
@@ -908,8 +864,8 @@ class Expt2:
         axes[-1].legend(ncol=1, handlelength=1, handleheight=1, columnspacing=1, frameon=False, bbox_to_anchor=(1, 1), loc='upper left')
         fig.savefig(f'{self.op_dir}/{self.op_dir.split('/')[-1]}-{img_prefix}-{self.token_type}-mean-overlaps.png')
         
-        
-        self.stat_sig(m_avg_reals, m_avg_unreals, m_avg_reals_unreals, 'attn+mlp')
+        for lang in m_avg_reals.keys():
+            self.stat_sig(m_avg_reals, m_avg_unreals, m_avg_reals_unreals, 'attn+mlp', lang)
         m_reals_bar = [mean([val for item in m_avg_reals[lang] for val in item]) for lang in languages]
         m_unreals_bar = [mean([val for item in m_avg_unreals[lang] for val in item]) for lang in languages]
         m_reals_unreals_bar = [mean([val for item in m_avg_reals_unreals[lang] for val in item]) for lang in languages]
@@ -1068,7 +1024,7 @@ class Expt2_1_nonce_conv:
             average_df = average_df.apply(pd.to_numeric)
 
             im = ax.imshow(average_df, cmap='binary', aspect='auto', interpolation='nearest')
-            ax.set_yticks(range(len(sorted(average_df.index))), labels=[self.grammar_names[col] for col in average_df.index], fontsize=18, rotation=-45, ha='left')
+            ax.set_yticks(range(len(sorted(average_df.index))), labels=[self.grammar_names[col] for col in average_df.index], fontsize=18, rotation=45, ha='left')
             ax.set_title(f'{self.labels[model]} {compPath.title()}', fontsize=15)
 
             # -------------------------------- Draw lines -------------------------------------------------
@@ -1202,66 +1158,29 @@ class Expt2_1_nonce_conv:
         # Print formatted results
         print(f"{comp:<15} | {real_unreal_real_ratio:<25.2f} | {real_unreal_unreal_ratio:<25.2f}")
 
-    def stat_sig(self, mlp_values, attn_values, model_name):
-        def get_contingency_table(A, B):
-            print(A)
-            # Create frequency tables
-            freq_A = Counter(A)
-            freq_B = Counter(B)
-
-            print(freq_A)
-            # Create a combined contingency table
-            all_items = set(freq_A.keys()).union(set(freq_B.keys()))
-
-            contingency_table = [[freq_A.get(item, 0), freq_B.get(item, 0)] for item in all_items]
-            print(contingency_table)
-            return contingency_table
-        
-        for component in ["attn", "mlp"]:
-            comp_values = attn_values if component == "attn" else mlp_values
-            hxh = set()
-            lxl = set()
-            hxl = set()
-            for grammar in self.grammar_names:
-                if '-r-' in grammar: # Jabberwocky and EN hierarchical
-                    if len(hxh) == 0:
-                        hxh = set(self.get_values_for_substr(grammar, comp_values).keys())
-                    else:
-                        hxh = hxh.intersection(set(self.get_values_for_substr(grammar, comp_values).keys()))
-                elif '-u-' in grammar: # Jabberwocky and EN linear
-                    if len(lxl) == 0:
-                        lxl = set(self.get_values_for_substr(grammar, comp_values).keys())
-                    else:
-                        lxl = lxl.intersection(set(self.get_values_for_substr(grammar, comp_values).keys()))
-                elif ('_S' in grammar and '-r-' in grammar) or (not '_S' in grammar and '-u-' in grammar):
-                    if len(hxl) == 0: # Jabberwocky hierarchical and EN linear
-                        hxl = set(self.get_values_for_substr(grammar, comp_values).keys())
-                    else:
-                        hxl = hxl.intersection(set(self.get_values_for_substr(grammar, comp_values).keys()))
-            
-            print(f"###################### {component}:{model_name} ######################")
-            observed = get_contingency_table(list(hxh), list(lxl))
-            chi2, p, _, _ = chi2_contingency(observed, lambda_="log-likelihood")
-            print(f"HxH vs LxL: Chi-square: {chi2}, p-value: {p}")
-            observed = get_contingency_table(list(hxh), list(hxl))
-            chi2, p, _, _ = chi2_contingency(observed, lambda_="log-likelihood")
-            print(f"HxH vs HxL: Chi-square: {chi2}, p-value: {p}")
-            observed = get_contingency_table(list(lxl), list(hxl))
-            chi2, p, _, _ = chi2_contingency(observed, lambda_="log-likelihood")
-            print(f"HxH vs HxL: Chi-square: {chi2}, p-value: {p}")
-            print("##########################################################")
+    def get_stat_sig(self, reals, unreals, reals_unreals, component, lang):
+        print(reals)
+        t_reals = [val for key in reals.keys() for val_list in reals[key] for val in val_list]
+        t_unreals = [val for key in reals.keys() for val_list in unreals[key]  for val in val_list]
+        t_reals_unreals = [val for key in reals.keys() for val_list in reals_unreals[key]  for val in val_list]
+        print('REALS ', len(t_reals), len(t_unreals), len(t_reals_unreals))
+        print(f'############## {component}-{lang} ################')
+        print('CxC vs NXN', stats.mannwhitneyu(t_reals, t_unreals))
+        print('C-C vs C-N', stats.mannwhitneyu(t_reals, t_reals_unreals))
+        print('N-N vs C-N', stats.mannwhitneyu(t_unreals, t_reals_unreals))
 
     def get_overlaps(self, conf_matrix, model_name):
         reals = { 'en': [], 'it': [], 'jp': [] }
         unreals = { 'en': [], 'it': [], 'jp': [] }
-        reals_unreals = { 'en': [], 'it': [], 'jp': [] } 
-        for ind in conf_matrix.index: # Jabberwocky
-            for col in conf_matrix.columns: # EN
+        reals_unreals = { 'en': [], 'it': [], 'jp': [] }
+        cols = conf_matrix.index
+        for ind in cols:
+            for col in conf_matrix.columns:
                 r_en = []
                 u_en = []
                 ru_en = []
                 
-                if ('-u-' in col) and (not '-u-' in ind):
+                if (not '-u-' in col) and (not '-u-' in ind):
                     r_en.append(conf_matrix[(conf_matrix.index == ind)][col].item())
                 elif ('-u-' in col) and ('-u-' in ind):
                     u_en.append(conf_matrix[(conf_matrix.index == ind)][col].item())
@@ -1277,12 +1196,12 @@ class Expt2_1_nonce_conv:
         t_reals = [val for key in reals.keys() for val_list in reals[key] for val in val_list]
         t_unreals = [val for key in reals.keys() for val_list in unreals[key]  for val in val_list]
         t_reals_unreals = [val for key in reals.keys() for val_list in reals_unreals[key]  for val in val_list]
-        print(f'############## {model_name} ################')
-        print('C-C vs N-N', stats.mannwhitneyu(t_reals, t_unreals))
-        print('C-C vs C-N', stats.mannwhitneyu(t_reals, t_reals_unreals))
-        print('N-N vs C-N', stats.mannwhitneyu(t_unreals, t_reals_unreals))
+        # print(f'############## {model_name} ################')
+        # print('C-C vs N-N', stats.mannwhitneyu(t_reals, t_unreals))
+        # print('C-C vs C-N', stats.mannwhitneyu(t_reals, t_reals_unreals))
+        # print('N-N vs C-N', stats.mannwhitneyu(t_unreals, t_reals_unreals))
         return reals, unreals, reals_unreals
-
+        
     def draw_overlap_bars_plot(self):
         model_names = self.model_names
         img_prefix = 'across-models'
@@ -1298,7 +1217,6 @@ class Expt2_1_nonce_conv:
         for model, ax in zip(model_names, axes):
             a_reals, a_unreals, a_reals_unreals = self.get_overlaps(a_overlap[ctr], model)
             m_reals, m_unreals, m_reals_unreals = self.get_overlaps(m_overlap[ctr], model)
-            self.stat_sig(m_values[ctr], a_values[ctr], model)
             reals = {}
             unreals = {}
             reals_unreals = {}    
@@ -1316,7 +1234,6 @@ class Expt2_1_nonce_conv:
                     m_avg_reals[lang] += reals[lang]
                     m_avg_unreals[lang] += unreals[lang]
                     m_avg_reals_unreals[lang] += reals_unreals[lang]
-                    
             languages = list(reals.keys())
             
             reals_bar = [mean([val for item in reals[lang] for val in item]) for lang in languages]
@@ -1349,6 +1266,9 @@ class Expt2_1_nonce_conv:
         axes[3].legend(ncol=3, handlelength=1, handleheight=1, columnspacing=1, frameon=False, bbox_to_anchor=(0, 1.2), loc='upper center')
         fig.savefig(f'{self.op_dir}/{self.op_dir.split('/')[-1]}-{self.token_type}-mean-overlaps.png')
         
+        for lang in m_avg_reals.keys():
+            print(f'############## {self.token_type} ################')
+            self.get_stat_sig(m_avg_reals[lang], m_avg_unreals[lang], m_avg_reals_unreals[lang], 'attn+mlp', lang)
         # Model average plot
         m_reals_bar = [mean([val for item in m_avg_reals[lang] for val in item]) for lang in languages]
         m_unreals_bar = [mean([val for item in m_avg_unreals[lang] for val in item]) for lang in languages]
@@ -1533,6 +1453,17 @@ class Expt3:
         plt.savefig(f'{self.op_dir}/{self.op_dir.split('/')[-1]}-{self.token_type}-{self.model_name}-grammars.png', dpi=300)
         plt.show()
 
+    def stat_sig(self, reals, unreals, randoms, component, lang):
+        t_reals = [val for key in reals.keys() for val_list in reals[key] for val in val_list]
+        t_unreals = [val for key in reals.keys() for val_list in unreals[key]  for val in val_list]
+        t_randoms = [val for key in reals.keys() for val_list in randoms[key]  for val in val_list]
+        print('REALS ', len(t_reals), len(t_unreals), len(t_randoms))
+        print(f'############## {component} {lang} ################')
+        print('H-H vs L-L', stats.mannwhitneyu(t_reals, t_unreals))
+        print('H-H vs H-L', stats.mannwhitneyu(t_reals, t_randoms))
+        print('L-L vs H-L', stats.mannwhitneyu(t_unreals, t_randoms))
+    
+    
     def create_plot_lang(self):
         # plt.rcParams.update({'font.size': 48})
         plt.rcParams.update({'font.size': 21})
@@ -1742,20 +1673,20 @@ def main():
     TOKEN_TYPES = ['nonce', 'conventional', 'nonce_conv']
     
     for token_type in TOKEN_TYPES:
-        if not token_type == 'nonce_conv':
+        # if not token_type == 'nonce_conv':
             # config = Config(MODEL_NAMES, token_type, 1)
             # expt_1 = Expt1(config)
             # expt_1.create_plot()
-            print('##################', token_type, '##################')
-            config = Config(MODEL_NAMES, token_type, 2)
-            expt_2 = Expt2(config)
-            expt_2.create_plot()
+        
+            # config = Config(MODEL_NAMES, token_type, 2)
+            # expt_2 = Expt2(config)
+            # expt_2.create_plot()
 
             # config = Config(MODEL_NAMES, token_type, 3)
             # expt_3 = Expt3(config)
             # expt_3.create_plot()
+        
         if token_type == 'nonce_conv':
-            print('##################', token_type, '##################')
             config = Config(MODEL_NAMES, token_type, 2)
             expt_2_1 = Expt2_1_nonce_conv(config)
             expt_2_1.create_plot()
