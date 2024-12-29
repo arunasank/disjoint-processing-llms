@@ -3,7 +3,6 @@ import sys
 import random
 import argparse
 import pickle
-from accelerate.utils import MODEL_NAME
 from numpy.random import random_sample
 import yaml
 import numpy as np
@@ -251,25 +250,64 @@ def retrieve_union_top_k(component):
         return unreal_union_df
 
 def get_mean_ablation_vals(component, col, num_hidden_states, abl_type='grammar-specific', tok_type='all'):
+    print('### get_mean_ablation_vals ### ', abl_type, tok_type)
     config = load_config(args.config)
     path = config.get("patch_pickles_path")
     subpath = config.get("patch_pickles_subpath")
     # which neurons to ablate?
-    neurons_to_abl = ablate_neurons(component, col, num_hidden_states)    
-    mean_ablations_filepath =  f'{path}/{component}/{subpath}/mean-{col}.pkl'
-
-    with open(mean_ablations_filepath, 'rb') as f:
-        mean_abl_file = pickle.load(f)
-
-    mean_abl_file = mean_abl_file.detach().cpu()
-    mean_vals = []
-    for _, row in neurons_to_abl.iterrows():
-        # print(row['layer'], row['neuron'])  
-        mean_vals.append(list(mean_abl_file[row['layer'], :, row['neuron']].detach().cpu().flatten()))
-    # set ablation_values
-    neurons_to_abl['values'] = mean_vals
-    return neurons_to_abl, mean_abl_file.shape[1]
-
+    neurons_to_abl = ablate_neurons(component, col, num_hidden_states)
+    g_cols = get_g_cols()
+    language = ''
+    if 'en' in col[:2]:
+        language = 'en'
+    elif 'ita' in col[:3]:
+        language = 'ita'
+    elif 'jap' in col[:3]:
+        language = 'jap'
+    
+    assert not language is None, f"language {language} cannot be None"
+    mean_ablations_filepath = []
+    if abl_type == 'grammar-specific':
+        mean_ablations_filepath.append(f'{path}/{component}/{subpath}/mean-{col}.pkl')
+    elif abl_type == 'language-specific':
+        for c in g_cols:
+            if c[:len(language)] == language:
+                mean_ablations_filepath.append(f'{path}/{component}/{subpath}/mean-{c}.pkl')
+    
+    print(len(mean_ablations_filepath))
+    mean_abl_file = []
+    for maf in mean_ablations_filepath:
+        with open(maf, 'rb') as f:
+            mean_file = pickle.load(f)
+            mean_abl_file.append(mean_file.detach().cpu())
+    assert not mean_abl_file == None, "mean_abl_file should have been set"
+    if tok_type == 'all':
+        if abl_type == 'language-specific':
+            mean_vals = []
+            mean_abl_file = sum([mean_abl_file[i].mean(dim=1) for i in range(len(mean_abl_file))])
+            for _, row in neurons_to_abl.iterrows():
+                mean_vals.append(list(mean_abl_file[row['layer'], row['neuron']].detach().cpu().flatten()))
+            neurons_to_abl['values'] = mean_vals
+            return neurons_to_abl, mean_abl_file.shape[1]
+        elif abl_type == 'grammar-specific':
+            mean_vals = []
+            print('### BEFORE ', mean_abl_file[0].shape, len(mean_abl_file))
+            for _, row in neurons_to_abl.iterrows():
+                mean_vals.append(list(mean_abl_file[0][row['layer'], :, row['neuron']].detach().cpu().flatten()))
+            print('### AFTER ', mean_abl_file[0].shape)
+            neurons_to_abl['values'] = mean_vals
+            return neurons_to_abl, mean_abl_file[0].size(1)
+    elif tok_type == 'last':
+        mean_vals = []
+        print('### BEFORE ', mean_abl_file[0].shape)
+        mean_abl_file = sum([mean_abl_file[i].mean(dim=1) for i in range(len(mean_abl_file))])
+        print('### AFTER ', mean_abl_file.shape)
+        for _, row in neurons_to_abl.iterrows():
+            mean_vals.append(list(mean_abl_file[row['layer'], row['neuron']].detach().cpu().flatten()))
+        neurons_to_abl['values'] = mean_vals
+        return neurons_to_abl, mean_abl_file.shape[1]
+    else:
+        assert False, f"tok_type {tok_type} is not supported"
         
 # Perform ablation for model layers
 def ablate_neurons(component, col, num_hidden_states):
@@ -277,12 +315,14 @@ def ablate_neurons(component, col, num_hidden_states):
     random_sample = config.get('random_ablate')
     union = config.get('intersection_ablate')
     if random_sample:
+        print('random ablate ', config['real'])
         return retrieve_random_k(component, num_hidden_states)[['layer', 'neuron']].astype(int)
     if union:
         print('intersection ablate ', config['real'])
         return retrieve_union_top_k(component)[['layer', 'neuron']].astype(int)
+    assert False, "Either random or intersection ablation must be set."
     # In all other cases, return top k neurons
-    return retrieve_top_k_neurons(col, component)[['layer', 'neuron']].astype(int)
+    # return retrieve_top_k_neurons(col, component)[['layer', 'neuron']].astype(int)
 
 def run_ablation_experiment(config, col, ablation_type='grammar-specific', token_pos='all'):
     print("Performing ablation...")
@@ -290,17 +330,23 @@ def run_ablation_experiment(config, col, ablation_type='grammar-specific', token
     num_hidden_states = model.config.hidden_size
     args = parse_arguments()
     batch_size = args.batch_size
-    batch_size = 1
+    # if config.get('datatype') == 'nonce':
+    #     batch_size = 32
+    # else:
+    #     batch_size = 32
     final_csv_subpath = config.get("final_csv_subpath")
     prefix = config.get("prefix")
     model_name = config.get("model_name")
     max_prompt_len = None
     mlp_ablate, max_prompt_len_mlp = get_mean_ablation_vals('mlp', col, num_hidden_states, ablation_type, token_pos)
     attn_ablate, max_prompt_len_attn = get_mean_ablation_vals('attn', col, num_hidden_states, ablation_type, token_pos)
-    # print("MLP ", mlp_ablate.columns, len(mlp_ablate))
-    # print("Attn ", attn_ablate.columns, len(attn_ablate))
+    print("MLP ", mlp_ablate.columns, len(mlp_ablate))
+    print("Attn ", attn_ablate.columns, len(attn_ablate))
     assert max_prompt_len_mlp == max_prompt_len_attn, "Prompt lengths must match."
     max_prompt_len = max_prompt_len_mlp
+    
+    assert any(x !=0 for x in list(mlp_ablate['values'])), "MLP ablation values must be set."
+    assert any(x !=0 for x in list(attn_ablate['values'])), "Attention ablation values must be set."
     
     assert max_prompt_len is not None, "Prompt length must be set."
     
@@ -310,36 +356,29 @@ def run_ablation_experiment(config, col, ablation_type='grammar-specific', token
     no_token_id = tokenizer(" No")['input_ids']
     
     prompts, questions, golds = get_dataset_from_df(f"{config['prompts_path']}/{col}.csv")
+    prompts = [p.strip() for p in prompts]
     preds = []
     
-    # prompts = prompts[:64]
-    # golds = golds[:64]
-    # questions = questions[:64]
-    
-    print(model)
     # Processing predictions
     print('BATCH SIZE PROMPTS ', batch_size, len(prompts))
     for i in tqdm(range(0, len(prompts), batch_size)):
-        print(f"Batch {i}")
         batch_prompts = prompts[i:i + batch_size]
         batch_golds = golds[i:i + batch_size]
         batch_questions = questions[i:i + batch_size]
-        tokenizer_inputs = tokenizer(batch_prompts, padding='max_length', max_length=max_prompt_len, return_tensors="pt", return_overflowing_tokens=True)
         
+        tokenizer_inputs = tokenizer(batch_prompts, padding='max_length', max_length=max_prompt_len, return_tensors="pt", return_overflowing_tokens=True)
+        if i == 0:
+            print('TOKEN SHAPE ', tokenizer_inputs['input_ids'].shape)
         # print(tokenizer_inputs['overflowing_tokens'])
         # assert len(tokenizer_inputs['overflowing_tokens']) == 0, "No overflowing tokens allowed."
-        print(tokenizer_inputs['input_ids'].shape)
+
         with model.trace(tokenizer_inputs, labels=tokenizer_inputs['input_ids'], scan=False, validate=False) as _:
             for _, row in mlp_ablate.iterrows():
-                # print(row['layer'], row['neuron'], torch.tensor(row['values'])) 
                 if token_pos == 'all':
                     if model_name == 'gpt-2-xl':
                         model.transformer.h[row['layer']].mlp.c_proj.output[:, :, row['neuron']] = torch.tensor(row['values'])
                     else:
-                        # print('#################################### here')
-                        # print(type(row['layer']), type(row['neuron']), type(row['values'][0].item()))
                         model.model.layers[row['layer']].mlp.down_proj.output[:, :, row['neuron']] = torch.tensor(row['values'])
-                        # print('#################################### here after')
                 elif token_pos == 'last':
                     value_tensor = row['values'][0].expand(batch_size)
                     if model_name == 'gpt-2-xl':
@@ -351,9 +390,7 @@ def run_ablation_experiment(config, col, ablation_type='grammar-specific', token
                     if model_name == 'gpt-2-xl':
                         model.transformer.h[row['layer']].attn.c_proj.output[:, :, row['neuron']] = torch.tensor(row['values'])
                     else:
-                        # print('#################################### here')
                         model.model.layers[row['layer']].self_attn.o_proj.output[:, :, row['neuron']] = torch.tensor(row['values'])
-                        # print('#################################### here after')
                 elif token_pos == 'last':
                     value_tensor = row['values'][0].expand(batch_size)
                     if model_name == 'gpt-2-xl':
@@ -364,10 +401,8 @@ def run_ablation_experiment(config, col, ablation_type='grammar-specific', token
         yes_answers = logits.value[:,-1, yes_token_id][:, -1]
         no_answers = logits.value[:,-1, no_token_id][:, -1]
         answer_ids = torch.where(yes_answers > no_answers, 0, torch.where(yes_answers < no_answers, 1, -1))
-        print(answer_ids)
         batch_predictions = ["Yes" if ix == 0 else "No" if ix == 1 else "Equal" for ix in answer_ids.tolist()]
         print(batch_predictions)
-        # print(golds)
         preds = preds + batch_predictions
         batch_surprisals = get_surprisals(logits, tokenizer_inputs['input_ids'], tokenizer.eos_token_id, model.device)
         
@@ -489,19 +524,19 @@ def run_experiment(config, args):
         file_path_accuracy = f'{config["prefix"]}/broca/{config["model_name"]}/experiments/{config["final_csv_subpath"]}/{col}-{idx}-alphabet-accuracy.csv'
     
     print(idx, file_path)
-    # if os.path.exists(file_path) and \
-    #    os.path.exists(file_path_accuracy):
-    #        print("Path exists!")
-    #     #    return
-    # else:
-        # Conditional logic for ablation
-    if ablation:
-        ablation_type = config.get("ablation_type")
-        token_pos = config.get("token_pos_type")
-        print(f"Running ablation experiment for {col} with {ablation_type} ablation on {token_pos} tokens.")
-        run_ablation_experiment(config, col, ablation_type, token_pos)
+    if os.path.exists(file_path) and \
+       os.path.exists(file_path_accuracy):
+           print("Path exists!")
+           return
     else:
-        run_standard_experiment(config, col)
+        # Conditional logic for ablation
+        if ablation:
+            ablation_type = config.get("ablation_type")
+            token_pos = config.get("token_pos_type")
+            print(f"Running ablation experiment for {col} with {ablation_type} ablation on {token_pos} tokens.")
+            run_ablation_experiment(config, col, ablation_type, token_pos)
+        else:
+            run_standard_experiment(config, col)
             
 def get_g_cols():
     config = load_config(args.config)

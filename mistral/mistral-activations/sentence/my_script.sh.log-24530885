@@ -1,7 +1,0 @@
-0 27
-Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:01<00:08,  1.63s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:03<00:06,  1.59s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:04<00:04,  1.60s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:06<00:03,  1.59s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:07<00:01,  1.57s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:09<00:00,  1.50s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:09<00:00,  1.55s/it]
-Layer: 27
-/home/gridsan/arunas/.local/lib/python3.10/site-packages/bitsandbytes/nn/modules.py:226: UserWarning: Input type into Linear4bit is torch.float16, but bnb_4bit_compute_type=torch.float32 (default). This will lead to slow inference or training speed.
-  warnings.warn(f'Input type into Linear4bit is torch.float16, but bnb_4bit_compute_type=torch.float32 (default). This will lead to slow inference or training speed.')
-Layer: 27
-sentence {27: {0: -0.07, 1: 0.0, 2: 0.0, 3: 0.0, 4: 0.0}}

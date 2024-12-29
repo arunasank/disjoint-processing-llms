@@ -3,7 +3,6 @@ import sys
 import random
 import argparse
 import pickle
-from accelerate.utils import MODEL_NAME
 from numpy.random import random_sample
 import yaml
 import numpy as np
@@ -110,12 +109,21 @@ def get_dataset_from_df(filename):
 # Retrieve top K neurons for ablation
 def retrieve_top_k_neurons(col, component):
     assert component in ['mlp', 'attn'], "Component must be either 'mlp' or 'attn'."
-    assert col in get_g_cols(), f"Column {col} not found in g_cols."
     config = load_config(args.config)
     path = config.get("patch_pickles_path")
     subpath = config.get("patch_pickles_subpath")
     top_k = config.get("topk")
-    comp_cache_file = f'{path}/{component}/{subpath}/{col}.pkl'
+    if config.get("datatype") == "nonce" and "conventional" in subpath:
+        assert col in get_g_cols(datatype="conventional"), f"Conventional column {col} not found in g_cols."
+    else:
+        assert col in get_g_cols(), f"Column {col} not found in g_cols."
+    if config.get("datatype") == "nonce" and "conventional" in subpath:
+        conv_columns = sorted(get_g_cols(datatype="conventional"))
+        nonce_stype = conv_columns.index(col) if 'en-' in col else None
+        print("Retrieving top k neurons for conv column ", conv_columns[nonce_stype])
+        comp_cache_file = f'{path}/{component}/{subpath}/{conv_columns[nonce_stype]}.pkl'
+    else:
+        comp_cache_file = f'{path}/{component}/{subpath}/{col}.pkl'
     with open(comp_cache_file, 'rb') as f:
         comp_cache = pickle.load(f).cpu()
         flattened_effects_cache = comp_cache.view(-1)
@@ -149,6 +157,7 @@ def retrieve_union_top_k(component):
     config = load_config(args.config)
     path = config.get("patch_pickles_path")
     subpath = config.get("patch_pickles_subpath")
+    
     real = config.get("real")
     datatype = config.get("datatype")
     prefix = config.get("prefix")
@@ -158,7 +167,13 @@ def retrieve_union_top_k(component):
     final_csv_subpath = config.get("final_csv_subpath")
     df = pd.read_csv(data_path)
     nonce = (datatype == "nonce")
-    g_cols = get_g_cols()
+    if datatype == "nonce" and "conventional" in subpath:
+        print("retrieving union top k for conventional neurons")
+        g_cols = get_g_cols(datatype="conventional")
+        g_cols = [c for c in g_cols if 'en-' in c]
+        nonce = False
+    else:
+        g_cols = get_g_cols()
     
     assert len(g_cols) > 0, "No columns found."
     def retrieve_union_set(nonce, real):
@@ -173,6 +188,7 @@ def retrieve_union_top_k(component):
             return pd.read_csv(union_file_path)
     
         union_set = pd.DataFrame(columns=['layer', 'neuron', 'value'])
+        print(g_cols)
         for _, c in enumerate(g_cols):
             col_is_real = '-r-' in c
             nonce_col = '_S' in c
@@ -255,8 +271,11 @@ def get_mean_ablation_vals(component, col, num_hidden_states, abl_type='grammar-
     config = load_config(args.config)
     path = config.get("patch_pickles_path")
     subpath = config.get("patch_pickles_subpath")
+    if config.get("datatype") == "nonce" and "conventional" in subpath:
+        subpath = 'nonce-10'
     # which neurons to ablate?
     neurons_to_abl = ablate_neurons(component, col, num_hidden_states)
+    assert len(neurons_to_abl) > 0, "Neurons to ablate must be set."
     g_cols = get_g_cols()
     language = ''
     if 'en' in col[:2]:
@@ -275,11 +294,12 @@ def get_mean_ablation_vals(component, col, num_hidden_states, abl_type='grammar-
             if c[:len(language)] == language:
                 mean_ablations_filepath.append(f'{path}/{component}/{subpath}/mean-{c}.pkl')
     
-    print(len(mean_ablations_filepath))
     mean_abl_file = []
     for maf in mean_ablations_filepath:
+        print(f"opening {maf} to get mean ablations file")    
         with open(maf, 'rb') as f:
             mean_file = pickle.load(f)
+            assert not torch.all(mean_file == 0), "mean abl file only contains zeros"
             mean_abl_file.append(mean_file.detach().cpu())
     assert not mean_abl_file == None, "mean_abl_file should have been set"
     if tok_type == 'all':
@@ -316,12 +336,14 @@ def ablate_neurons(component, col, num_hidden_states):
     random_sample = config.get('random_ablate')
     union = config.get('intersection_ablate')
     if random_sample:
+        print('random ablate ', config['real'])
         return retrieve_random_k(component, num_hidden_states)[['layer', 'neuron']].astype(int)
     if union:
         print('intersection ablate ', config['real'])
         return retrieve_union_top_k(component)[['layer', 'neuron']].astype(int)
+    assert False, "Either random or intersection ablation must be set."
     # In all other cases, return top k neurons
-    return retrieve_top_k_neurons(col, component)[['layer', 'neuron']].astype(int)
+    # return retrieve_top_k_neurons(col, component)[['layer', 'neuron']].astype(int)
 
 def run_ablation_experiment(config, col, ablation_type='grammar-specific', token_pos='all'):
     print("Performing ablation...")
@@ -329,10 +351,10 @@ def run_ablation_experiment(config, col, ablation_type='grammar-specific', token
     num_hidden_states = model.config.hidden_size
     args = parse_arguments()
     batch_size = args.batch_size
-    if config.get('datatype') == 'nonce':
-        batch_size = 1
-    else:
-        batch_size = 1
+    # if config.get('datatype') == 'nonce':
+    #     batch_size = 32
+    # else:
+    #     batch_size = 32
     final_csv_subpath = config.get("final_csv_subpath")
     prefix = config.get("prefix")
     model_name = config.get("model_name")
@@ -343,6 +365,9 @@ def run_ablation_experiment(config, col, ablation_type='grammar-specific', token
     print("Attn ", attn_ablate.columns, len(attn_ablate))
     assert max_prompt_len_mlp == max_prompt_len_attn, "Prompt lengths must match."
     max_prompt_len = max_prompt_len_mlp
+    
+    assert any(x !=0 for x in list(mlp_ablate['values'])), "MLP ablation values must be set."
+    assert any(x !=0 for x in list(attn_ablate['values'])), "Attention ablation values must be set."
     
     assert max_prompt_len is not None, "Prompt length must be set."
     
@@ -355,7 +380,6 @@ def run_ablation_experiment(config, col, ablation_type='grammar-specific', token
     prompts = [p.strip() for p in prompts]
     preds = []
     
-    print(model)
     # Processing predictions
     print('BATCH SIZE PROMPTS ', batch_size, len(prompts))
     for i in tqdm(range(0, len(prompts), batch_size)):
@@ -534,9 +558,10 @@ def run_experiment(config, args):
         else:
             run_standard_experiment(config, col)
             
-def get_g_cols():
+def get_g_cols(datatype=None):
     config = load_config(args.config)
-    datatype = config.get("datatype")
+    if datatype is None:
+        datatype = config.get("datatype")
     # Load data and run the experiment
     data_path = config["data_path"]
     df = pd.read_csv(data_path)

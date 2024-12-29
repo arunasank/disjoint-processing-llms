@@ -878,12 +878,13 @@ class Expt2:
             
         bar_width = 0.2
         index = np.arange(num_langs)
-        with plt.rc_context({'font.size': 18}):
-            if self.token_type == 'conventional':
-                plt.figure(figsize=(7, 5))
-            elif self.token_type == 'nonce':
-                plt.figure(figsize=(7, 7))
-            
+        if self.token_type == 'conventional':
+            plt.figure(figsize=(7, 4))
+            fontsize = 15    
+        elif self.token_type == 'nonce':
+            plt.figure(figsize=(7, 7))
+            fontsize = 21
+        with plt.rc_context({'font.size': fontsize}):
             plt.bar(index - bar_width, m_reals_bar, bar_width, label='HxH', color=self.real_color, edgecolor='black')
             plt.errorbar(index - bar_width, m_reals_bar, yerr=m_reals_var, fmt='none', c='black', capsize=5)
             plt.bar(index, m_unreals_bar, bar_width, label='LxL', color=self.unreal_color, edgecolor='black')
@@ -1024,7 +1025,7 @@ class Expt2_1_nonce_conv:
             average_df = average_df.apply(pd.to_numeric)
 
             im = ax.imshow(average_df, cmap='binary', aspect='auto', interpolation='nearest')
-            ax.set_yticks(range(len(sorted(average_df.index))), labels=[self.grammar_names[col] for col in average_df.index], fontsize=18, rotation=45, ha='left')
+            ax.set_yticks(range(len(sorted(average_df.index))), labels=[self.grammar_names[col] for col in average_df.index], fontsize=18, rotation=45)
             ax.set_title(f'{self.labels[model]} {compPath.title()}', fontsize=15)
 
             # -------------------------------- Draw lines -------------------------------------------------
@@ -1037,7 +1038,7 @@ class Expt2_1_nonce_conv:
         fig.colorbar(im, ax=axes[1], orientation='vertical', label='Overlap %')
         fig.colorbar(im, ax=axes[3], orientation='vertical', label='Overlap %')
         fig.colorbar(im, ax=axes[5], orientation='vertical', label='Overlap %')
-        fig.tight_layout(rect=[0, 0, 1, 1])
+        # fig.tight_layout(rect=[0, 0, 1, 1])
         fig.savefig(f'{self.op_dir}/{self.op_dir.split('/')[-1]}-{self.token_type}-{compPath}-overlap-{topK}.png')
         return all_comp_overlap, all_comp_values
     
@@ -1201,6 +1202,17 @@ class Expt2_1_nonce_conv:
         # print('N-N vs C-N', stats.mannwhitneyu(t_unreals, t_reals_unreals))
         return reals, unreals, reals_unreals
         
+    def get_stat_sig(self, reals, unreals, reals_unreals, component, lang):
+        real_vals = [val for key in reals.keys() for val_list in reals[key] for val in val_list]
+        unreal_vals = [val for key in reals.keys() for val_list in unreals[key]  for val in val_list]
+        real_unreal_vals = [val for key in reals.keys() for val_list in reals_unreals[key]  for val in val_list]
+        print('REALS ', len(real_vals), len(unreal_vals), len(real_unreal_vals))
+        print(f'############## {component} {lang} ################')
+        print('C-C vs N-N', stats.mannwhitneyu(real_vals, unreal_vals))
+        print('C-C vs C-N', stats.mannwhitneyu(real_vals, real_unreal_vals))
+        print('N-N vs C-N', stats.mannwhitneyu(unreal_vals, real_unreal_vals))
+        
+        
     def draw_overlap_bars_plot(self):
         model_names = self.model_names
         img_prefix = 'across-models'
@@ -1279,7 +1291,7 @@ class Expt2_1_nonce_conv:
         
         num_langs = len(languages)
         
-        with plt.rc_context({'font.size': 18}):
+        with plt.rc_context({'font.size': 21}):
             bar_width = 0.15
             index = np.arange(num_langs)
             plt.figure(figsize=(7, 7))
@@ -1291,6 +1303,7 @@ class Expt2_1_nonce_conv:
             plt.errorbar(index + bar_width, m_reals_unreals_bar, yerr=m_reals_unreals_var, fmt='none', c='black', capsize=5)
             # plt.legend(bbox_to_anchor=(0.5, 1.15), loc='lower center', ncol=3, frameon=False)
             plt.legend()
+            plt.yticks([0, 0.25, 0.5, 0.75,1])
             plt.ylabel('Mean Overlap \n Percentage')
             plt.xticks(index, labels=[f'{key.upper()}, ZZ' for key in m_avg_reals.keys()])
             plt.tight_layout()
@@ -1452,17 +1465,27 @@ class Expt3:
         plt.savefig(f'{self.op_dir}/{self.op_dir.split('/')[-1]}-{self.token_type}-{self.model_name}-grammars.png', dpi=300)
         plt.show()
 
-    def stat_sig(self, reals, unreals, randoms, component, lang):
-        t_reals = [val for key in reals.keys() for val_list in reals[key] for val in val_list]
-        t_unreals = [val for key in reals.keys() for val_list in unreals[key]  for val in val_list]
-        t_randoms = [val for key in reals.keys() for val_list in randoms[key]  for val in val_list]
-        print('REALS ', len(t_reals), len(t_unreals), len(t_randoms))
-        print(f'############## {component} {lang} ################')
-        print('H-H vs L-L', stats.mannwhitneyu(t_reals, t_unreals))
-        print('H-H vs H-L', stats.mannwhitneyu(t_reals, t_randoms))
-        print('L-L vs H-L', stats.mannwhitneyu(t_unreals, t_randoms))
-    
-    
+    def stat_sig(self, avg):
+        for l in avg:
+            # ABLATION_grammar
+            H_h = avg[l][0]
+            H_l = avg[l][1]
+            L_h = avg[l][2]
+            L_l = avg[l][3]
+            R_h = avg[l][4]
+            R_l = avg[l][5]
+            
+            print(len(H_h), len(H_l), len(L_h), len(L_l), len(R_h), len(R_l))
+            print(f'####################### {l} #######################')
+            print('H_h vs L_h', stats.mannwhitneyu(H_h, L_h))
+            print('H_h vs R_h', stats.mannwhitneyu(H_h, R_h))
+            print('L_h vs R_h', stats.mannwhitneyu(L_h, R_h))
+            
+            print('H_l vs L_l', stats.mannwhitneyu(H_l, L_l))
+            print('H_l vs R_l', stats.mannwhitneyu(H_l, R_l))
+            print('L_l vs R_l', stats.mannwhitneyu(L_l, R_l))
+        
+        
     def create_plot_lang(self):
         # plt.rcParams.update({'font.size': 48})
         plt.rcParams.update({'font.size': 21})
@@ -1517,7 +1540,7 @@ class Expt3:
             ax.yaxis.set_major_formatter(formatter)
             ax.bar(index, h_data, bar_width, label='H', color=[self.constants.real_color], edgecolor='black')
             ax.bar(index + bar_width, l_data, bar_width, label='L', color=[self.constants.unreal_color], edgecolor='black')
-            ax.bar(index + 2*bar_width, r_data, bar_width, label='R', color=['gray'], edgecolor='black')
+            ax.bar(index + 2*bar_width, r_data, bar_width, label='Random', color=['gray'], edgecolor='black')
             ax.errorbar(index, y=h_data, yerr=h_err, fmt='none', c='black', capsize=5)
             ax.errorbar(index + bar_width, y=l_data, yerr=l_err, fmt='none', c='black', capsize=5)
             ax.errorbar(index + 2*bar_width, y=r_data, yerr=r_err, fmt='none', c='black', capsize=5)
@@ -1541,6 +1564,7 @@ class Expt3:
         l_err = []
         r_err = []
         
+        self.stat_sig(avg)
         for l in avg:
             h_data += [mean(avg[l][0]), mean(avg[l][1])]
             l_data += [mean(avg[l][2]), mean(avg[l][3])]
@@ -1566,17 +1590,17 @@ class Expt3:
             plt.figure(figsize=(5, 5))
             plt.bar(index, h_data, bar_width, label='ZZ (H)', color=[self.constants.real_color], edgecolor='black')
             plt.bar(index + bar_width, l_data, bar_width, label='ZZ (L)', color=[self.constants.unreal_color], edgecolor='black')
-            plt.bar(index + 2*bar_width, r_data, bar_width, label='ZZ (R)', color=['gray'], edgecolor='black')
+            plt.bar(index + 2*bar_width, r_data, bar_width, label='ZZ (Random)', color=['gray'], edgecolor='black')
         elif self.token_type == 'nonce_conv':
             plt.figure(figsize=(5, 5))
             plt.bar(index, h_data, bar_width, label='EN (H)', color=[self.constants.real_color], edgecolor='black')
             plt.bar(index + bar_width, l_data, bar_width, label='EN (L)', color=[self.constants.unreal_color], edgecolor='black')
-            plt.bar(index + 2*bar_width, r_data, bar_width, label='EN (R)', color=['gray'], edgecolor='black')
+            plt.bar(index + 2*bar_width, r_data, bar_width, label='EN (Random)', color=['gray'], edgecolor='black')
         else:
             plt.figure(figsize=(5, 3))
             plt.bar(index, h_data, bar_width, label='(H)', color=[self.constants.real_color], edgecolor='black')
             plt.bar(index + bar_width, l_data, bar_width, label='(L)', color=[self.constants.unreal_color], edgecolor='black')
-            plt.bar(index + 2*bar_width, r_data, bar_width, label='(R)', color=['gray'], edgecolor='black')
+            plt.bar(index + 2*bar_width, r_data, bar_width, label='(Random)', color=['gray'], edgecolor='black')
         plt.errorbar(index, y=h_data, yerr=h_err, fmt='none', c='black', capsize=5)
         plt.errorbar(index + bar_width, y=l_data, yerr=l_err, fmt='none', c='black', capsize=5)
         plt.errorbar(index + 2*bar_width, y=r_data, yerr=r_err, fmt='none', c='black', capsize=5)
@@ -1584,14 +1608,14 @@ class Expt3:
         
         # plt.suptitle("Average ablations \n across models")
         plt.ylabel('Mean relative change \n in accuracy')
-        if self.token_type == 'nonce_conv':
-            plt.legend(frameon=False, ncol=3, title="Ablations: ", loc='lower center', bbox_to_anchor=(0.5, 1.05), fontsize=12)
-        plt.tight_layout(rect=[0, 0, 1, 0.95])
+        # if not self.token_type == 'nonce_conv':
+        plt.legend(frameon=False, ncol=3, title="Ablations: ", loc='lower center', bbox_to_anchor=(0.4, 1.05), fontsize=12)
+        plt.tight_layout(rect=[0, 0, 1, 1])
         plt.savefig(f'{self.op_dir}/{self.op_dir.split('/')[-1]}-{self.token_type}-avg-lang.png', dpi=300)
     
     def create_df(self, model_name, which):
         model_df = []
-        print("WHICH ", model_name, self.model_dirs)
+        # print("WHICH ", model_name, self.model_dirs)
         for m_dir in self.model_dirs[which]:
             if not model_name in m_dir:
                 continue
@@ -1672,27 +1696,27 @@ def main():
     TOKEN_TYPES = ['nonce', 'conventional', 'nonce_conv']
     
     for token_type in TOKEN_TYPES:
-        # if not token_type == 'nonce_conv':
+        if not token_type == 'nonce_conv':
             # config = Config(MODEL_NAMES, token_type, 1)
             # expt_1 = Expt1(config)
             # expt_1.create_plot()
         
-            # config = Config(MODEL_NAMES, token_type, 2)
+            # config = Config(MODEL_NAMES, token_type, 1)
             # expt_2 = Expt2(config)
             # expt_2.create_plot()
 
-            # config = Config(MODEL_NAMES, token_type, 3)
-            # expt_3 = Expt3(config)
-            # expt_3.create_plot()
+            config = Config(MODEL_NAMES, token_type, 3)
+            expt_3 = Expt3(config)
+            expt_3.create_plot()
         
         if token_type == 'nonce_conv':
-            config = Config(MODEL_NAMES, token_type, 2)
-            expt_2_1 = Expt2_1_nonce_conv(config)
-            expt_2_1.create_plot()
+        #     # config = Config(MODEL_NAMES, token_type, 2)
+        #     # expt_2_1 = Expt2_1_nonce_conv(config)
+        #     # expt_2_1.create_plot()
             
-        #     config = Config(MODEL_NAMES, token_type, 3)
-        #     expt_3 = Expt3(config)
-        #     expt_3.create_plot()
+            config = Config(MODEL_NAMES, token_type, 3)
+            expt_3 = Expt3(config)
+            expt_3.create_plot()
 if __name__ == "__main__":
     main()
     
