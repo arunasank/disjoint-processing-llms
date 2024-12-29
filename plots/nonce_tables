@@ -1,0 +1,322 @@
+########## Creating experiment 1 plots for gpt-2-xl and nonce tokens dataset
+########## Creating experiment 2 plots for gpt-2-xl and nonce tokens dataset
+Confusion Matrix Plots
+767
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+767
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11276072199972487)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003927417716945404)
+L-L vs H-L MannwhitneyuResult(statistic=57.0, pvalue=0.15447588988323974)
+en [[1.0], [0.5371577574967406], [0.4602346805736636], [0.5371577574967406], [1.0], [0.39765319426336376], [0.4602346805736636], [0.39765319426336376], [1.0]]
+ita []
+jap []
+[0.6433434738519485] [0.46400115891641314] [0.1820947414167753]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.00039000336008544956)
+L-L vs H-L MannwhitneyuResult(statistic=57.0, pvalue=0.15598561903018784)
+en [[1.0], [0.5658409387222947], [0.4406779661016949], [0.5658409387222947], [1.0], [0.4106910039113429], [0.4406779661016949], [0.4106910039113429], [1.0]]
+ita []
+jap []
+[0.6482688686078517] [0.4188034188034188] [0.11415326669563958]
+Language x Structure gpt-2-xl
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.00039000336008544956)
+L-L vs H-L MannwhitneyuResult(statistic=57.0, pvalue=0.15598561903018784)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.26                      | 0.20                          
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11276072199972487)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003927417716945404)
+L-L vs H-L MannwhitneyuResult(statistic=57.0, pvalue=0.15447588988323974)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.38                      | 0.29                          
+Structure gpt-2-xl
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.26                      | 0.20                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.38                      | 0.29                     
+########## Creating experiment 1 plots for llama-2-7b and nonce tokens dataset
+########## Creating experiment 2 plots for llama-2-7b and nonce tokens dataset
+Confusion Matrix Plots
+1309
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+1309
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003927417716945404)
+L-L vs H-L MannwhitneyuResult(statistic=53.0, pvalue=0.28756701104645377)
+en [[1.0], [0.5668449197860963], [0.5508021390374331], [0.5668449197860963], [1.0], [0.48663101604278075], [0.5508021390374331], [0.48663101604278075], [1.0]]
+ita []
+jap []
+[0.6898395721925134] [0.4518292165350989] [0.19090060266530856]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003927417716945404)
+L-L vs H-L MannwhitneyuResult(statistic=53.0, pvalue=0.28756701104645377)
+en [[1.0], [0.6279602750190986], [0.6852559205500381], [0.6279602750190986], [1.0], [0.573720397249809], [0.6852559205500381], [0.573720397249809], [1.0]]
+ita []
+jap []
+[0.752652576181988] [0.4823868941516] [0.2071980307274425]
+Language x Structure llama-2-7b
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003927417716945404)
+L-L vs H-L MannwhitneyuResult(statistic=53.0, pvalue=0.28756701104645377)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.44                      | 0.25                          
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003927417716945404)
+L-L vs H-L MannwhitneyuResult(statistic=53.0, pvalue=0.28756701104645377)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.40                      | 0.26                          
+Structure llama-2-7b
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.44                      | 0.25                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.40                      | 0.26                     
+########## Creating experiment 1 plots for llama-3.1-8b and nonce tokens dataset
+########## Creating experiment 2 plots for llama-3.1-8b and nonce tokens dataset
+Confusion Matrix Plots
+1309
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+1309
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=80.0, pvalue=0.0005367897993204956)
+L-L vs H-L MannwhitneyuResult(statistic=47.0, pvalue=0.5949081322315793)
+en [[1.0], [0.6470588235294118], [0.5966386554621849], [0.6470588235294118], [1.0], [0.5133689839572193], [0.5966386554621849], [0.5133689839572193], [1.0]]
+ita []
+jap []
+[0.7237925473219591] [0.5037772684831509] [0.3099057804940158]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=79.0, pvalue=0.0007580684105516928)
+L-L vs H-L MannwhitneyuResult(statistic=55.0, pvalue=0.2147092895616538)
+en [[1.0], [0.7005347593582888], [0.6073338426279603], [0.7005347593582888], [1.0], [0.5286478227654698], [0.6073338426279603], [0.5286478227654698], [1.0]]
+ita []
+jap []
+[0.7414480943892708] [0.5266955266955267] [0.3107546048722519]
+Language x Structure llama-3.1-8b
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=79.0, pvalue=0.0007580684105516928)
+L-L vs H-L MannwhitneyuResult(statistic=55.0, pvalue=0.2147092895616538)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.64                      | 0.45                          
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=80.0, pvalue=0.0005367897993204956)
+L-L vs H-L MannwhitneyuResult(statistic=47.0, pvalue=0.5949081322315793)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.61                      | 0.40                          
+Structure llama-3.1-8b
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.64                      | 0.45                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.61                      | 0.40                     
+########## Creating experiment 1 plots for mistral-v0.3 and nonce tokens dataset
+########## Creating experiment 2 plots for mistral-v0.3 and nonce tokens dataset
+Confusion Matrix Plots
+1309
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+1309
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003927417716945404)
+L-L vs H-L MannwhitneyuResult(statistic=41.0, pvalue=1.0)
+en [[1.0], [0.6149732620320856], [0.6065699006875478], [0.6149732620320856], [1.0], [0.4789915966386555], [0.6065699006875478], [0.4789915966386555], [1.0]]
+ita []
+jap []
+[0.7112299465240642] [0.457091927680163] [0.23104999575587812]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003927417716945404)
+L-L vs H-L MannwhitneyuResult(statistic=43.0, pvalue=0.8593154154470342)
+en [[1.0], [0.6058059587471352], [0.6165011459129106], [0.6058059587471352], [1.0], [0.46829640947288004], [0.6165011459129106], [0.46829640947288004], [1.0]]
+ita []
+jap []
+[0.7090230031406501] [0.4292504880740175] [0.21339444868856633]
+Language x Structure mistral-v0.3
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003927417716945404)
+L-L vs H-L MannwhitneyuResult(statistic=43.0, pvalue=0.8593154154470342)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.48                      | 0.31                          
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003927417716945404)
+L-L vs H-L MannwhitneyuResult(statistic=41.0, pvalue=1.0)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.46                      | 0.28                          
+Structure mistral-v0.3
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.48                      | 0.31                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.46                      | 0.28                     
+########## Creating experiment 1 plots for qwen-2-0.5b and nonce tokens dataset
+########## Creating experiment 2 plots for qwen-2-0.5b and nonce tokens dataset
+Confusion Matrix Plots
+214
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+214
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.00039000336008544956)
+L-L vs H-L MannwhitneyuResult(statistic=45.0, pvalue=0.7228325180058428)
+en [[1.0], [0.6495327102803738], [0.7336448598130841], [0.6495327102803738], [1.0], [0.6261682242990654], [0.7336448598130841], [0.6261682242990654], [1.0]]
+ita []
+jap []
+[0.7798546209761164] [0.43302180685358255] [0.1967808930425753]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003791855085969975)
+L-L vs H-L MannwhitneyuResult(statistic=40.0, pvalue=1.0)
+en [[1.0], [0.5467289719626168], [0.6401869158878505], [0.5467289719626168], [1.0], [0.5654205607476636], [0.6401869158878505], [0.5654205607476636], [1.0]]
+ita []
+jap []
+[0.7227414330218068] [0.3925233644859813] [0.12980269989615784]
+Language x Structure qwen-2-0.5b
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003791855085969975)
+L-L vs H-L MannwhitneyuResult(statistic=40.0, pvalue=1.0)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.32                      | 0.16                          
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.00039000336008544956)
+L-L vs H-L MannwhitneyuResult(statistic=45.0, pvalue=0.7228325180058428)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.46                      | 0.23                          
+Structure qwen-2-0.5b
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.32                      | 0.16                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.46                      | 0.23                     
+########## Creating experiment 1 plots for llama-3.1-70b and nonce tokens dataset
+########## Creating experiment 2 plots for llama-3.1-70b and nonce tokens dataset
+Confusion Matrix Plots
+6552
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+6552
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=79.0, pvalue=0.0007580684105516928)
+L-L vs H-L MannwhitneyuResult(statistic=55.0, pvalue=0.2147092895616538)
+en [[1.0], [0.5761599511599511], [0.5412087912087912], [0.5761599511599511], [1.0], [0.4062881562881563], [0.5412087912087912], [0.4062881562881563], [1.0]]
+ita []
+jap []
+[0.6719237552570886] [0.5005087505087505] [0.2578686745353412]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=79.0, pvalue=0.0007580684105516928)
+L-L vs H-L MannwhitneyuResult(statistic=57.0, pvalue=0.15620085278352133)
+en [[1.0], [0.572039072039072], [0.5175518925518926], [0.572039072039072], [1.0], [0.3876678876678877], [0.5175518925518926], [0.3876678876678877], [1.0]]
+ita []
+jap []
+[0.6616130782797449] [0.5194342694342694] [0.27457264957264954]
+Language x Structure llama-3.1-70b
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=79.0, pvalue=0.0007580684105516928)
+L-L vs H-L MannwhitneyuResult(statistic=57.0, pvalue=0.15620085278352133)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.59                      | 0.37                          
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=79.0, pvalue=0.0007580684105516928)
+L-L vs H-L MannwhitneyuResult(statistic=55.0, pvalue=0.2147092895616538)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.58                      | 0.34                          
+Structure llama-3.1-70b
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.59                      | 0.37                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.58                      | 0.34                     
+########## Creating experiment 1 plots for qwen-2-1.5b and nonce tokens dataset
+########## Creating experiment 2 plots for qwen-2-1.5b and nonce tokens dataset
+Confusion Matrix Plots
+214
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+214
+Gathered pickles
+['en_S-r-1', 'en_S-r-2-subordinate', 'en_S-r-3-passive', 'en_S-u-1-negation', 'en_S-u-2-inversion', 'en_S-u-3-wh']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.00039000336008544956)
+L-L vs H-L MannwhitneyuResult(statistic=45.0, pvalue=0.7228325180058428)
+en [[1.0], [0.6495327102803738], [0.7336448598130841], [0.6495327102803738], [1.0], [0.6261682242990654], [0.7336448598130841], [0.6261682242990654], [1.0]]
+ita []
+jap []
+[0.7798546209761164] [0.43302180685358255] [0.1967808930425753]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003791855085969975)
+L-L vs H-L MannwhitneyuResult(statistic=40.0, pvalue=1.0)
+en [[1.0], [0.5467289719626168], [0.6401869158878505], [0.5467289719626168], [1.0], [0.5654205607476636], [0.6401869158878505], [0.5654205607476636], [1.0]]
+ita []
+jap []
+[0.7227414330218068] [0.3925233644859813] [0.12980269989615784]
+Language x Structure qwen-2-1.5b
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.0003791855085969975)
+L-L vs H-L MannwhitneyuResult(statistic=40.0, pvalue=1.0)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.32                      | 0.16                          
+H-H vs L-L MannwhitneyuResult(statistic=58.5, pvalue=0.11432343795285556)
+H-H vs H-L MannwhitneyuResult(statistic=81.0, pvalue=0.00039000336008544956)
+L-L vs H-L MannwhitneyuResult(statistic=45.0, pvalue=0.7228325180058428)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.46                      | 0.23                          
+Structure qwen-2-1.5b
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.32                      | 0.16                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.46                      | 0.23                     

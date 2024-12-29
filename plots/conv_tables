@@ -1,0 +1,350 @@
+########## Creating experiment 1 plots for gpt-2-xl and conventional tokens dataset
+########## Creating experiment 2 plots for gpt-2-xl and conventional tokens dataset
+Confusion Matrix Plots
+767
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+767
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=526.5, pvalue=0.004399030196889586)
+H-H vs H-L MannwhitneyuResult(statistic=725.0, pvalue=4.259820798453971e-10)
+L-L vs H-L MannwhitneyuResult(statistic=481.0, pvalue=0.04418541904759811)
+en [[1.0], [0.5319426336375489], [0.6153846153846154], [0.5319426336375489], [1.0], [0.49674054758800523], [0.6153846153846154], [0.49674054758800523], [1.0]]
+ita [[1.0], [0.7105606258148631], [0.4211212516297262], [0.7105606258148631], [1.0], [0.40808344198174706], [0.4211212516297262], [0.40808344198174706], [1.0]]
+jap [[1.0], [0.3767926988265971], [0.4745762711864407], [0.3767926988265971], [1.0], [0.45632333767926986], [0.4745762711864407], [0.45632333767926986], [1.0]]
+[0.6986817325800376, 0.6755034043169637, 0.6239316239316239] [0.4692162827756048, 0.4370563523105896, 0.5132551064754455] [0.16659423439084456, 0.14558887440243373, 0.30262204838476026]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=526.5, pvalue=0.004392795762442059)
+H-H vs H-L MannwhitneyuResult(statistic=727.0, pvalue=3.4206138770313724e-10)
+L-L vs H-L MannwhitneyuResult(statistic=415.0, pvalue=0.38576884435731085)
+en [[1.0], [0.5189048239895697], [0.6153846153846154], [0.5189048239895697], [1.0], [0.4876140808344198], [0.6153846153846154], [0.4876140808344198], [1.0]]
+ita [[1.0], [0.7014341590612777], [0.41851368970013036], [0.7014341590612777], [1.0], [0.44198174706649285], [0.41851368970013036], [0.44198174706649285], [1.0]]
+jap [[1.0], [0.3559322033898305], [0.4015645371577575], [0.3559322033898305], [1.0], [0.42894393741851367], [0.4015645371577575], [0.42894393741851367], [1.0]]
+[0.6937563378241345, 0.6804287990728669, 0.5969868173258004] [0.42170070983630303, 0.39185861219759527, 0.43357960307112847] [0.11835433869332174, 0.11980298420976387, 0.20976387078081993]
+Language x Structure gpt-2-xl
+H-H vs L-L MannwhitneyuResult(statistic=526.5, pvalue=0.004392795762442059)
+H-H vs H-L MannwhitneyuResult(statistic=727.0, pvalue=3.4206138770313724e-10)
+L-L vs H-L MannwhitneyuResult(statistic=415.0, pvalue=0.38576884435731085)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.27                      | 0.19                          
+MLP             | ita        | 0.29                      | 0.21                          
+MLP             | jap        | 0.46                      | 0.38                          
+H-H vs L-L MannwhitneyuResult(statistic=526.5, pvalue=0.004399030196889586)
+H-H vs H-L MannwhitneyuResult(statistic=725.0, pvalue=4.259820798453971e-10)
+L-L vs H-L MannwhitneyuResult(statistic=481.0, pvalue=0.04418541904759811)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.34                      | 0.24                          
+ATTN            | ita        | 0.34                      | 0.26                          
+ATTN            | jap        | 0.55                      | 0.48                          
+Structure gpt-2-xl
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.49                      | 0.37                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.55                      | 0.44                     
+########## Creating experiment 1 plots for llama-2-7b and conventional tokens dataset
+########## Creating experiment 2 plots for llama-2-7b and conventional tokens dataset
+Confusion Matrix Plots
+1309
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+1309
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=526.5, pvalue=0.004399030196889586)
+H-H vs H-L MannwhitneyuResult(statistic=717.0, pvalue=1.0297096032398607e-09)
+L-L vs H-L MannwhitneyuResult(statistic=452.0, pvalue=0.13131728039741472)
+en [[1.0], [0.5485103132161956], [0.6783804430863254], [0.5485103132161956], [1.0], [0.4919786096256685], [0.6783804430863254], [0.4919786096256685], [1.0]]
+ita [[1.0], [0.6546982429335371], [0.6302521008403361], [0.6546982429335371], [1.0], [0.5584415584415584], [0.6302521008403361], [0.5584415584415584], [1.0]]
+jap [[1.0], [0.4346829640947288], [0.5767761650114591], [0.4346829640947288], [1.0], [0.40641711229946526], [0.5767761650114591], [0.40641711229946526], [1.0]]
+[0.7153043035395976, 0.7429759782700959, 0.6484169425345896] [0.4514896867838044, 0.4277226041931924, 0.5127748068924539] [0.19938884644766997, 0.12808759867583397, 0.36372124607418727]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=526.5, pvalue=0.004399030196889586)
+H-H vs H-L MannwhitneyuResult(statistic=717.0, pvalue=1.0274504402565731e-09)
+L-L vs H-L MannwhitneyuResult(statistic=442.0, pvalue=0.18169168701959582)
+en [[1.0], [0.6310160427807486], [0.7501909854851031], [0.6310160427807486], [1.0], [0.5653170359052712], [0.7501909854851031], [0.5653170359052712], [1.0]]
+ita [[1.0], [0.6860198624904508], [0.6615737203972498], [0.6860198624904508], [1.0], [0.6004583651642476], [0.6615737203972498], [0.6004583651642476], [1.0]]
+jap [[1.0], [0.5882352941176471], [0.6111535523300229], [0.5882352941176471], [1.0], [0.4423223834988541], [0.6111535523300229], [0.4423223834988541], [1.0]]
+[0.7658942364824718, 0.7662337662337663, 0.6981580510992276] [0.49138443256090314, 0.45624310330192686, 0.5353535353535354] [0.2508276037687802, 0.191240132416603, 0.42967490026313554]
+Language x Structure llama-2-7b
+H-H vs L-L MannwhitneyuResult(statistic=526.5, pvalue=0.004399030196889586)
+H-H vs H-L MannwhitneyuResult(statistic=717.0, pvalue=1.0274504402565731e-09)
+L-L vs H-L MannwhitneyuResult(statistic=442.0, pvalue=0.18169168701959582)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.51                      | 0.29                          
+MLP             | ita        | 0.41                      | 0.25                          
+MLP             | jap        | 0.76                      | 0.59                          
+H-H vs L-L MannwhitneyuResult(statistic=526.5, pvalue=0.004399030196889586)
+H-H vs H-L MannwhitneyuResult(statistic=717.0, pvalue=1.0297096032398607e-09)
+L-L vs H-L MannwhitneyuResult(statistic=452.0, pvalue=0.13131728039741472)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.43                      | 0.27                          
+ATTN            | ita        | 0.31                      | 0.18                          
+ATTN            | jap        | 0.65                      | 0.53                          
+Structure llama-2-7b
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.69                      | 0.47                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.63                      | 0.43                     
+########## Creating experiment 1 plots for llama-3.1-8b and conventional tokens dataset
+########## Creating experiment 2 plots for llama-3.1-8b and conventional tokens dataset
+Confusion Matrix Plots
+1309
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+1309
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=522.5, pvalue=0.005477986621940403)
+H-H vs H-L MannwhitneyuResult(statistic=715.0, pvalue=1.2796330676934886e-09)
+L-L vs H-L MannwhitneyuResult(statistic=473.0, pvalue=0.06106727749215583)
+en [[1.0], [0.7333842627960275], [0.7769289533995416], [0.7333842627960275], [1.0], [0.7081741787624141], [0.7769289533995416], [0.7081741787624141], [1.0]]
+ita [[1.0], [0.7364400305576776], [0.7280366692131398], [0.7364400305576776], [1.0], [0.6218487394957983], [0.7280366692131398], [0.6218487394957983], [1.0]]
+jap [[1.0], [0.5943468296409473], [0.7012987012987013], [0.5943468296409473], [1.0], [0.5187165775401069], [0.7012987012987013], [0.5187165775401069], [1.0]]
+[0.8263305322128851, 0.7969612087259146, 0.7365249129955013] [0.5322977675918853, 0.48289618877854174, 0.5956200662083015] [0.28817587641117054, 0.20040743570155337, 0.49545878957643663]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=522.5, pvalue=0.005477986621940403)
+H-H vs H-L MannwhitneyuResult(statistic=679.0, pvalue=5.1601554295408886e-08)
+L-L vs H-L MannwhitneyuResult(statistic=436.0, pvalue=0.21816444096577403)
+en [[1.0], [0.7501909854851031], [0.7738731856378915], [0.7501909854851031], [1.0], [0.7677616501145913], [0.7738731856378915], [0.7677616501145913], [1.0]]
+ita [[1.0], [0.6898395721925134], [0.7669977081741788], [0.6898395721925134], [1.0], [0.6310160427807486], [0.7669977081741788], [0.6310160427807486], [1.0]]
+jap [[1.0], [0.6867838044308633], [0.6386554621848739], [0.6867838044308633], [1.0], [0.5118411000763942], [0.6386554621848739], [0.5118411000763942], [1.0]]
+[0.8426279602750191, 0.7973007384772091, 0.7416178592649181] [0.5401069518716578, 0.46574993633817163, 0.6054664289958408] [0.354978354978355, 0.1834309481368305, 0.5507172565996096]
+Language x Structure llama-3.1-8b
+H-H vs L-L MannwhitneyuResult(statistic=522.5, pvalue=0.005477986621940403)
+H-H vs H-L MannwhitneyuResult(statistic=679.0, pvalue=5.1601554295408886e-08)
+L-L vs H-L MannwhitneyuResult(statistic=436.0, pvalue=0.21816444096577403)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.62                      | 0.41                          
+MLP             | ita        | 0.46                      | 0.36                          
+MLP             | jap        | 0.90                      | 0.81                          
+H-H vs L-L MannwhitneyuResult(statistic=522.5, pvalue=0.005477986621940403)
+H-H vs H-L MannwhitneyuResult(statistic=715.0, pvalue=1.2796330676934886e-09)
+L-L vs H-L MannwhitneyuResult(statistic=473.0, pvalue=0.06106727749215583)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.50                      | 0.31                          
+ATTN            | ita        | 0.41                      | 0.28                          
+ATTN            | jap        | 0.78                      | 0.64                          
+Structure llama-3.1-8b
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.84                      | 0.62                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.75                      | 0.48                     
+########## Creating experiment 1 plots for mistral-v0.3 and conventional tokens dataset
+########## Creating experiment 2 plots for mistral-v0.3 and conventional tokens dataset
+Confusion Matrix Plots
+1309
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+1309
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=522.5, pvalue=0.005477986621940403)
+H-H vs H-L MannwhitneyuResult(statistic=713.0, pvalue=1.5871867488924622e-09)
+L-L vs H-L MannwhitneyuResult(statistic=472.0, pvalue=0.06348606525151113)
+en [[1.0], [0.760122230710466], [0.7883880825057296], [0.760122230710466], [1.0], [0.6982429335370511], [0.7883880825057296], [0.6982429335370511], [1.0]]
+ita [[1.0], [0.7448433919022154], [0.6287242169595111], [0.7448433919022154], [1.0], [0.6294881588999236], [0.6287242169595111], [0.6294881588999236], [1.0]]
+jap [[1.0], [0.40183346065699005], [0.599694423223835], [0.40183346065699005], [1.0], [0.41787624140565316], [0.599694423223835], [0.41787624140565316], [1.0]]
+[0.8326118326118326, 0.7784568372803666, 0.6487564722858841] [0.5054749172396231, 0.46473134708428826, 0.5929038281979458] [0.28995840760546643, 0.1895424836601307, 0.42127153891859775]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=502.5, pvalue=0.015300776304802506)
+H-H vs H-L MannwhitneyuResult(statistic=689.0, pvalue=1.9203911458896113e-08)
+L-L vs H-L MannwhitneyuResult(statistic=450.0, pvalue=0.1403638745647363)
+en [[1.0], [0.7845683728036669], [0.8189457601222307], [0.7845683728036669], [1.0], [0.7799847211611918], [0.8189457601222307], [0.7799847211611918], [1.0]]
+ita [[1.0], [0.7647058823529411], [0.6333078686019863], [0.7647058823529411], [1.0], [0.6050420168067226], [0.6333078686019863], [0.6050420168067226], [1.0]]
+jap [[1.0], [0.3865546218487395], [0.7265087853323148], [0.3865546218487395], [1.0], [0.36363636363636365], [0.7265087853323148], [0.36363636363636365], [1.0]]
+[0.8629997453526865, 0.7784568372803666, 0.6614888379594263] [0.5102283337577456, 0.4275528393175452, 0.5971479500891266] [0.3326542738307444, 0.1532976827094474, 0.4548001018589254]
+Language x Structure mistral-v0.3
+H-H vs L-L MannwhitneyuResult(statistic=502.5, pvalue=0.015300776304802506)
+H-H vs H-L MannwhitneyuResult(statistic=689.0, pvalue=1.9203911458896113e-08)
+L-L vs H-L MannwhitneyuResult(statistic=450.0, pvalue=0.1403638745647363)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.58                      | 0.30                          
+MLP             | ita        | 0.34                      | 0.33                          
+MLP             | jap        | 0.76                      | 0.58                          
+H-H vs L-L MannwhitneyuResult(statistic=522.5, pvalue=0.005477986621940403)
+H-H vs H-L MannwhitneyuResult(statistic=713.0, pvalue=1.5871867488924622e-09)
+L-L vs H-L MannwhitneyuResult(statistic=472.0, pvalue=0.06348606525151113)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.53                      | 0.29                          
+ATTN            | ita        | 0.36                      | 0.28                          
+ATTN            | jap        | 0.69                      | 0.52                          
+Structure mistral-v0.3
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.70                      | 0.35                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.68                      | 0.37                     
+########## Creating experiment 1 plots for qwen-2-0.5b and conventional tokens dataset
+########## Creating experiment 2 plots for qwen-2-0.5b and conventional tokens dataset
+Confusion Matrix Plots
+214
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+214
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=526.5, pvalue=0.004392795762442059)
+H-H vs H-L MannwhitneyuResult(statistic=729.0, pvalue=2.7138160249128503e-10)
+L-L vs H-L MannwhitneyuResult(statistic=427.0, pvalue=0.28208970396545063)
+en [[1.0], [0.6074766355140186], [0.7289719626168224], [0.6074766355140186], [1.0], [0.5887850467289719], [0.7289719626168224], [0.5887850467289719], [1.0]]
+ita [[1.0], [0.7757009345794392], [0.705607476635514], [0.7757009345794392], [1.0], [0.7149532710280374], [0.705607476635514], [0.7149532710280374], [1.0]]
+jap [[1.0], [0.5093457943925234], [0.6822429906542056], [0.5093457943925234], [1.0], [0.5093457943925234], [0.6822429906542056], [0.5093457943925234], [1.0]]
+[0.7611630321910695, 0.8213914849428868, 0.711318795430945] [0.45898234683281414, 0.41329179646936653, 0.5109034267912772] [0.20820353063343716, 0.13187954309449637, 0.3930425752855659]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=526.5, pvalue=0.004361699349753662)
+H-H vs H-L MannwhitneyuResult(statistic=723.0, pvalue=5.295016020024016e-10)
+L-L vs H-L MannwhitneyuResult(statistic=398.0, pvalue=0.5666299202343487)
+en [[1.0], [0.5841121495327103], [0.7009345794392523], [0.5841121495327103], [1.0], [0.5841121495327103], [0.7009345794392523], [0.5841121495327103], [1.0]]
+ita [[1.0], [0.7289719626168224], [0.6355140186915887], [0.7289719626168224], [1.0], [0.5794392523364486], [0.6355140186915887], [0.5794392523364486], [1.0]]
+jap [[1.0], [0.411214953271028], [0.5747663551401869], [0.411214953271028], [1.0], [0.37383177570093457], [0.5747663551401869], [0.37383177570093457], [1.0]]
+[0.7487019730010385, 0.7653167185877466, 0.6355140186915887] [0.40602284527518173, 0.38525441329179644, 0.4402907580477674] [0.13291796469366562, 0.1142263759086189, 0.29075804776739356]
+Language x Structure qwen-2-0.5b
+H-H vs L-L MannwhitneyuResult(statistic=526.5, pvalue=0.004361699349753662)
+H-H vs H-L MannwhitneyuResult(statistic=723.0, pvalue=5.295016020024016e-10)
+L-L vs H-L MannwhitneyuResult(statistic=398.0, pvalue=0.5666299202343487)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.31                      | 0.18                          
+MLP             | ita        | 0.29                      | 0.13                          
+MLP             | jap        | 0.63                      | 0.41                          
+H-H vs L-L MannwhitneyuResult(statistic=526.5, pvalue=0.004392795762442059)
+H-H vs H-L MannwhitneyuResult(statistic=729.0, pvalue=2.7138160249128503e-10)
+L-L vs H-L MannwhitneyuResult(statistic=427.0, pvalue=0.28208970396545063)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.45                      | 0.22                          
+ATTN            | ita        | 0.37                      | 0.23                          
+ATTN            | jap        | 0.76                      | 0.50                          
+Structure qwen-2-0.5b
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.44                      | 0.29                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.51                      | 0.36                     
+########## Creating experiment 1 plots for llama-3.1-70b and conventional tokens dataset
+########## Creating experiment 2 plots for llama-3.1-70b and conventional tokens dataset
+Confusion Matrix Plots
+6552
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+6552
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=518.5, pvalue=0.006790358686055033)
+H-H vs H-L MannwhitneyuResult(statistic=713.0, pvalue=1.5871867488924622e-09)
+L-L vs H-L MannwhitneyuResult(statistic=459.0, pvalue=0.10305697657279637)
+en [[1.0], [0.7704517704517705], [0.7895299145299145], [0.7704517704517705], [1.0], [0.7261904761904762], [0.7895299145299145], [0.7261904761904762], [1.0]]
+ita [[1.0], [0.7336691086691086], [0.7269536019536019], [0.7336691086691086], [1.0], [0.657967032967033], [0.7269536019536019], [0.657967032967033], [1.0]]
+jap [[1.0], [0.5366300366300366], [0.7058913308913309], [0.5366300366300366], [1.0], [0.554945054945055], [0.7058913308913309], [0.554945054945055], [1.0]]
+[0.8413715913715913, 0.8041310541310541, 0.7327703161036494] [0.504341337674671, 0.4338285171618505, 0.5899810066476733] [0.2651098901098901, 0.163698955365622, 0.47864943698277035]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=518.5, pvalue=0.006790358686055033)
+H-H vs H-L MannwhitneyuResult(statistic=695.0, pvalue=1.04609936302927e-08)
+L-L vs H-L MannwhitneyuResult(statistic=449.0, pvalue=0.14517600951523196)
+en [[1.0], [0.7599206349206349], [0.8226495726495726], [0.7599206349206349], [1.0], [0.7268009768009768], [0.8226495726495726], [0.7268009768009768], [1.0]]
+ita [[1.0], [0.7257326007326007], [0.7269536019536019], [0.7257326007326007], [1.0], [0.6662087912087912], [0.7269536019536019], [0.6662087912087912], [1.0]]
+jap [[1.0], [0.5480769230769231], [0.7304639804639804], [0.5480769230769231], [1.0], [0.5848595848595849], [0.7304639804639804], [0.5848595848595849], [1.0]]
+[0.8465269298602631, 0.8041988875322208, 0.7474223307556641] [0.53998778998779, 0.42395875729209065, 0.5971713471713471] [0.3386243386243386, 0.15879799213132548, 0.5032220865554199]
+Language x Structure llama-3.1-70b
+H-H vs L-L MannwhitneyuResult(statistic=518.5, pvalue=0.006790358686055033)
+H-H vs H-L MannwhitneyuResult(statistic=695.0, pvalue=1.04609936302927e-08)
+L-L vs H-L MannwhitneyuResult(statistic=449.0, pvalue=0.14517600951523196)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.67                      | 0.41                          
+MLP             | ita        | 0.42                      | 0.36                          
+MLP             | jap        | 0.80                      | 0.77                          
+H-H vs L-L MannwhitneyuResult(statistic=518.5, pvalue=0.006790358686055033)
+H-H vs H-L MannwhitneyuResult(statistic=713.0, pvalue=1.5871867488924622e-09)
+L-L vs H-L MannwhitneyuResult(statistic=459.0, pvalue=0.10305697657279637)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.59                      | 0.33                          
+ATTN            | ita        | 0.41                      | 0.33                          
+ATTN            | jap        | 0.78                      | 0.71                          
+Structure llama-3.1-70b
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.75                      | 0.64                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.75                      | 0.61                     
+########## Creating experiment 1 plots for qwen-2-1.5b and conventional tokens dataset
+########## Creating experiment 2 plots for qwen-2-1.5b and conventional tokens dataset
+Confusion Matrix Plots
+429
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+429
+Gathered pickles
+['en-r-1', 'en-r-2-subordinate', 'en-r-3-passive', 'ita-r-1', 'ita-r-2-subordinate', 'ita-r-3-passive', 'jap-r-1', 'jap-r-2-subordinate', 'jap-r-3-passive', 'en-u-1-negation', 'en-u-2-inversion', 'en-u-3-wh', 'ita-u-1-negation', 'ita-u-2-inversion', 'ita-u-3-gender', 'jap-u-1-negation', 'jap-u-2-inversion', 'jap-u-3-past-tense']
+Mean plots
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=502.5, pvalue=0.015316979560605251)
+H-H vs H-L MannwhitneyuResult(statistic=687.0, pvalue=2.3415836811781534e-08)
+L-L vs H-L MannwhitneyuResult(statistic=481.0, pvalue=0.04423417437578811)
+en [[1.0], [0.5710955710955711], [0.7948717948717948], [0.5710955710955711], [1.0], [0.5920745920745921], [0.7948717948717948], [0.5920745920745921], [1.0]]
+ita [[1.0], [0.7016317016317016], [0.7995337995337995], [0.7016317016317016], [1.0], [0.703962703962704], [0.7995337995337995], [0.703962703962704], [1.0]]
+jap [[1.0], [0.351981351981352], [0.6503496503496503], [0.351981351981352], [1.0], [0.3146853146853147], [0.6503496503496503], [0.3146853146853147], [1.0]]
+[0.7684537684537684, 0.8233618233618234, 0.626003626003626] [0.44366744366744365, 0.40585340585340585, 0.5912975912975913] [0.222999222999223, 0.1225071225071225, 0.4219114219114219]
+ATTN
+H-H vs L-L MannwhitneyuResult(statistic=514.5, pvalue=0.0083787224461972)
+H-H vs H-L MannwhitneyuResult(statistic=697.0, pvalue=8.490128311981503e-09)
+L-L vs H-L MannwhitneyuResult(statistic=497.0, pvalue=0.02205059997859552)
+en [[1.0], [0.5594405594405595], [0.7435897435897436], [0.5594405594405595], [1.0], [0.6153846153846154], [0.7435897435897436], [0.6153846153846154], [1.0]]
+ita [[1.0], [0.634032634032634], [0.7738927738927739], [0.634032634032634], [1.0], [0.6526806526806527], [0.7738927738927739], [0.6526806526806527], [1.0]]
+jap [[1.0], [0.3776223776223776], [0.5664335664335665], [0.3776223776223776], [1.0], [0.2773892773892774], [0.5664335664335665], [0.2773892773892774], [1.0]]
+[0.7596477596477597, 0.7912457912457912, 0.6047656047656048] [0.3840973840973841, 0.46594146594146596, 0.5358715358715359] [0.1489251489251489, 0.07459207459207459, 0.37037037037037035]
+Language x Structure qwen-2-1.5b
+H-H vs L-L MannwhitneyuResult(statistic=514.5, pvalue=0.0083787224461972)
+H-H vs H-L MannwhitneyuResult(statistic=697.0, pvalue=8.490128311981503e-09)
+L-L vs H-L MannwhitneyuResult(statistic=497.0, pvalue=0.02205059997859552)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+MLP             | en         | 0.41                      | 0.17                          
+MLP             | ita        | 0.21                      | 0.14                          
+MLP             | jap        | 0.72                      | 0.57                          
+H-H vs L-L MannwhitneyuResult(statistic=502.5, pvalue=0.015316979560605251)
+H-H vs H-L MannwhitneyuResult(statistic=687.0, pvalue=2.3415836811781534e-08)
+L-L vs H-L MannwhitneyuResult(statistic=481.0, pvalue=0.04423417437578811)
+Component       | LANG       | HxL/HxH                   | HxL/LxL                       
+-------------------------------------------------------------------------------------
+ATTN            | en         | 0.51                      | 0.26                          
+ATTN            | ita        | 0.33                      | 0.22                          
+ATTN            | jap        | 0.74                      | 0.60                          
+Structure qwen-2-1.5b
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+MLP             | 0.59                      | 0.31                     
+Component       | HxL/HxH                   | HxL/LxL                       
+---------------------------------------------------------------------------
+ATTN            | 0.64                      | 0.39                     
