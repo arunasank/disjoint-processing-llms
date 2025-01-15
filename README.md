@@ -12,12 +12,12 @@ To run experiment 1:
 * Generate the config file for experiment 1 using the `utils/gen-config.py` file: `python utils/gen-config.py --which beh --tok conventional` or `python utils/gen-config.py --which beh --tok nonce` depending on whether you are replicating the experiment with the conventional or jabberwocky sentences. 
 * Call `python ./exp-1-4-5/behavioural.py --config <path to the generated config file> --stype <grammar structure index> --batch_size`
 
-## Experiment 2
+### Experiment 2
 Experiment 2 locates model components that are important for processing hierarchical and linear structures by treating hierarchical and linear inputs as counterfactuals
 * Generate the config file for experiment 2 using the `utils/gen-config.py` file: `python utils/gen-config.py --which atp --tok conventional` or `python utils/gen-config.py --which atp --tok nonce`
 * Call `python ./exp-2-3-5/atp.py --config <path to the generated config file> --stype <grammar structure index>`
 
-## Experiment 3
+### Experiment 3
 Experiment 3 investigates the causal role of these components by ablating them and then measuring changes in grammaticality judgment performance
 * Generate the config file for experiment 3 using the `utils/gen-config.py` file:
   * Ablate random components: `python utils/gen-config.py --which abl-ra --tok conventional` or `python utils/gen-config.py --which abl-ra --tok nonce`
@@ -25,7 +25,7 @@ Experiment 3 investigates the causal role of these components by ablating them a
   * Ablate components sensitive to unreal grammars: `python utils/gen-config.py --which abl-u --tok conventional` or `python utils/gen-config.py --which abl-u --tok nonce`
 * Call `python ./exp-1-4-5/behavioural.py --config <path to the generated config file> --stype <grammar structure index> --batch_size`. Depending on the config files provided, components will be ablated.
 
-## Experiment 4
+### Experiment 4
 Experiment 4 investigates whether the components identified in Experiment 2 merely   distinguish grammars that are in-distribution with the training data, or show a more abstract universal sensitivity to hierarchical and linear structure on nonce sentences. For this experiment, we ablate components sensitive to the conventional hierarchical and linear structures when testing the model's performance on the nonce structures. Generate config files accordingly for this task, based on instructions for experiments 1, 2, and 3.
 
 
