@@ -1,8 +1,0 @@
-model_name: "llama-3.1-8b"
-model_path: "meta-llama/Llama-3.1-8B"
-prefix: "/mnt/align4_drive/arunas/"
-data_path: "/mnt/align4_drive/arunas/broca/data-gen/prompts/10/full-dataset.csv"
-prompt_files_path: "/mnt/align4_drive/arunas/broca/data-gen/prompts/10-seed-10"
-patch_pickles_path: "/mnt/align4_drive/arunas/broca/llama-3.1-8b/atp/patches"
-patch_pickles_sub_path: "10-seed-10"
-datatype: "standard"

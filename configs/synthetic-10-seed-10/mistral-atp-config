@@ -1,7 +1,0 @@
-model_name: "mistral"
-model_path: "mistralai/Mistral-7B-v0.1"
-prefix: "/mnt/align4_drive/arunas/"
-data_path: "/mnt/align4_drive/arunas/broca/data-gen/ngs-08-01-2024-synthetic-grammars-nonce.csv"
-prompt_files_path: "/mnt/align4_drive/arunas/broca/data-gen/prompts/synthetic/10-seed-10"
-patch_pickles_path: "/mnt/align4_drive/arunas/broca/mistral/atp/patches"
-patch_pickles_sub_path: "synthetic-10-seed-10"

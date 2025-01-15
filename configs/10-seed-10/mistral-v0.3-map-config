@@ -1,8 +1,0 @@
-model_name: "mistral-v0.3"
-model_path: "huggingface/mistral-v0.3"
-prefix: "/mnt/align4_drive/arunas/"
-data_path: "/mnt/align4_drive/arunas/broca/data-gen/prompts/10/full-dataset.csv"
-prompt_files_path: "/mnt/align4_drive/arunas/broca/data-gen/prompts/10-seed-10"
-patch_pickles_path: "/mnt/align4_drive/arunas/broca/mistral-v0.3/atp/patches"
-patch_pickles_sub_path: "10-seed-10"
-datatype: "standard"

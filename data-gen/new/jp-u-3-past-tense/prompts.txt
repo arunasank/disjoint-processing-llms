@@ -1,2 +1,0 @@
-1. We will give you examples of English sentences stylized to Japanese syntax that follow or violate the rules of a shared grammar, along with labels 'Yes' or 'No'. You will then generate a label, 'Yes' or 'No', for a new unlabeled sentence that may follow or violate the same grammar rules.
-2. The sentences use Japanese topic markers and suffixes such as wa (commonly used after the subject); o, ni, ga, o-ta (commonly used after the object); reru(used after the verb).
