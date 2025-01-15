@@ -3,7 +3,7 @@
 > All natural languages are structured hierarchically. In humans, this structural restriction is neurologically coded: when two grammars are presented with identical vocabularies, brain areas responsible for language processing are only sensitive to hierarchical grammars. Using large language models (LLMs), we investigate whether such functionally distinct hierarchical processing regions can arise solely from exposure to large-scale language distributions. We generate inputs using English, Italian, Japanese, or nonce words, varying the underlying grammars to conform to either hierarchical or linear/positional rules. Using these grammars, we first observe that language models show distinct behaviors on hierarchical versus linearly structured inputs. Then, we find that the components responsible for processing hierarchical grammars are distinct from those that process linear grammars; we causally verify this in ablation experiments. Finally, we observe that hierarchy-selective components are also active on nonce grammars; this suggests that hierarchy sensitivity is not tied to meaning, nor in-distribution inputs.
 
 ## What is this repository?
-This repository contains datasets (./data) and code (./exp-1-4-5 and ./exp-2-3-5) to replicate the experiments in our paper.
+This repository contains datasets (`./data`) and code (`./exp-1-4-5` and `./exp-2-3-5`) to replicate the experiments in our paper.
 
 ### Experiment 1
 Experiment 1 compares the performance of a pre-trained LLM on grammaticality judgment
@@ -27,6 +27,9 @@ Experiment 3 investigates the causal role of these components by ablating them a
 
 ### Experiment 4
 Experiment 4 investigates whether the components identified in Experiment 2 merely   distinguish grammars that are in-distribution with the training data, or show a more abstract universal sensitivity to hierarchical and linear structure on nonce sentences. For this experiment, we ablate components sensitive to the conventional hierarchical and linear structures when testing the model's performance on the nonce structures. Generate config files accordingly for this task, based on instructions for experiments 1, 2, and 3.
+
+## Plots
+Once results have been collected for experiments 1, 2, 3, and 4, plots can be geenrated using `plots/plots.py`
 
 
 
